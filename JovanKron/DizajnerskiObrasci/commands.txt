@@ -1,0 +1,36 @@
+Add Point ( 211 , 304 )
+Add Line Point ( 228 , 135 ) --> Point ( 418 , 400 )
+Add Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
+Set Fill Color: 204 , 204 , 0
+Set Edge Color: 153 , 51 , 255
+Add Circle Center = Point ( 1108 , 382 ) , radius = 100
+Add Donut Circle Center = Point ( 510 , 553 ) , radius = 200 , inner radius = 100
+Add Hexagon x = 1308 , y = 629 , radius = 100
+Set Fill Color: 255 , 204 , 51
+Select Hexagon x = 1308 , y = 629 , radius = 100
+Update Hexagon x = 1308 , y = 629 , radius = 100 to Hexagon x = 1308 , y = 629 , radius = 50
+Select Circle Center = Point ( 1108 , 382 ) , radius = 100
+Select Donut Circle Center = Point ( 510 , 553 ) , radius = 200 , inner radius = 100
+Delete next 3 shapes
+Remove Hexagon x = 1308 , y = 629 , radius = 50
+Remove Circle Center = Point ( 1108 , 382 ) , radius = 100
+Remove Donut Circle Center = Point ( 510 , 553 ) , radius = 200 , inner radius = 100
+Select Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
+Deselect next 1 shapes
+Unselect Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
+Undo
+Undo
+Undo
+Redo
+Redo
+Redo
+Select Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
+Select Line Point ( 228 , 135 ) --> Point ( 418 , 400 )
+Select Point ( 211 , 304 )
+Deselect next 3 shapes
+Unselect Point ( 211 , 304 )
+Unselect Line Point ( 228 , 135 ) --> Point ( 418 , 400 )
+Unselect Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
+Select Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
+Delete next 1 shapes
+Remove Rectangle Upper Left Point ( 578 , 303 ) , Height = 100 , Width = 200
