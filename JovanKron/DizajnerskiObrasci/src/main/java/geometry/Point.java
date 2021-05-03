@@ -17,9 +17,9 @@ public class Point extends Shape {
 		setY(y);
 	}
 	
-	public Point(int x, int y, boolean selected) {
+	public Point(int x, int y, Color edgeColor) {
 		this(x, y);
-		setSelected(selected);
+		setEdgeColor(edgeColor);
 	}
 
 	@Override
