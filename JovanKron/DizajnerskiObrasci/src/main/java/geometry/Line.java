@@ -15,6 +15,12 @@ public class Line extends Shape {
 		this.startPoint = startPoint;
 		setEndPoint(endPoint);
 	}
+	
+	public Line(Point startPoint, Point endPoint, Color edgeColor) {
+		this.startPoint = startPoint;
+		setEndPoint(endPoint);
+		setEdgeColor(edgeColor);
+	}
 
 	@Override
 	public void draw(Graphics gr) {

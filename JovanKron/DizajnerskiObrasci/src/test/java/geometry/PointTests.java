@@ -46,10 +46,44 @@ public class PointTests {
 		assertTrue(point.equals(new Point(3, 7)));
 	}
 	
+	@Test
+	public void testEqualsWithWrongCoordinateForXExpectedFalse() {
+		assertFalse(point.equals(new Point(1, 7)));
+	}
+	
+	@Test
+	public void testEqualsWithWrongCoordinateForYExpectedFalse() {
+		assertFalse(point.equals(new Point(3, 1)));
+	}
+
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testEqualsWithDifferentTypeExpectedFalse() {
 		assertFalse(point.equals(new Line(new Point(1, 1), new Point(3, 3))));
 	}
 
+	@Test
+	public void testMoveByXWithPositiveNumberExpectedTrue() {
+		point.moveBy(5, 0);
+		assertEquals(8, point.getX());
+	}
+	
+	@Test
+	public void testMoveByXWithNegativeNumberExpectedTrue() {
+		point.moveBy(-2, 0);
+		assertEquals(1, point.getX());
+	}
+	
+	@Test
+	public void testMoveByYWithPositiveNumberExpectedTrue() {
+		point.moveBy(0, 5);
+		assertEquals(12, point.getY());
+	}
+	
+	@Test
+	public void testMoveByYWithNegativeNumberExpectedTrue() {
+		point.moveBy(0, -2);
+		assertEquals(5, point.getY());
+	}
+	
 }
