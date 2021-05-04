@@ -20,11 +20,6 @@ public class HexagonAdapter extends SurfaceShape {
     }
 
     @Override
-    public boolean contains(Point p) {
-        return this.hexagon.doesContain(p.getX(), p.getY());
-    }
-
-    @Override
     public boolean contains(int x, int y) {
         return this.hexagon.doesContain(x, y);
     }

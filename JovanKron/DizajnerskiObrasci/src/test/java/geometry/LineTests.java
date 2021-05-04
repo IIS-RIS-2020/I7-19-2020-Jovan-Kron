@@ -1,5 +1,6 @@
 package geometry;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -50,4 +51,45 @@ public class LineTests {
 	public void testEqualsWithDifferentTypeExpectedFalse() {
 		assertFalse(line.equals(new Point(3, 3)));
 	}
+	
+	@Test
+	public void testMoveByXWithPositiveNumberExpectedTrue() {
+		line.moveBy(5, 0);
+		assertEquals(6, line.getStartPoint().getX());
+	}
+	
+	@Test
+	public void testMoveByXWithNegativeNumberExpectedTrue() {
+		line.moveBy(-1, 0);
+		assertEquals(0, line.getStartPoint().getX());
+	}
+	
+	@Test
+	public void testMoveByYWithPositiveNumberExpectedTrue() {
+		line.moveBy(0, 5);
+		assertEquals(10, line.getEndPoint().getY());
+	}
+	
+	@Test
+	public void testMoveByYWithNegativeNumberExpectedTrue() {
+		line.moveBy(0, -2);
+		assertEquals(3, line.getEndPoint().getY());
+	}
+	
+	@Test
+	public void testMiddleOfLineExpectedTrue() {
+		assertEquals(new Point(3,3), line.middleOfLine());
+	}
+	
+	@Test
+	public void testCompareToExpectedTrue() {
+		Line l = new Line(new Point(2,2), new Point(8,8));
+		assertEquals(-2, line.compareTo(l));
+	}
+	
+	@Test
+	public void testCompareToWithDifferentTypeExpectedTrue() {
+		assertEquals(0, line.compareTo(new Point()));
+	}
+	
 }

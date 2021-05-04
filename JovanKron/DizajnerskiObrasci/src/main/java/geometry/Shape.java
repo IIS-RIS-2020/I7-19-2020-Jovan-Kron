@@ -14,7 +14,7 @@ public abstract class Shape implements Movable, Comparable, Serializable {
 		this.selected = selected;
 	}
 
-	public abstract boolean contains(Point p);
+	//public abstract boolean contains(Point p);
 	
 	public abstract boolean contains(int x, int y);
 	

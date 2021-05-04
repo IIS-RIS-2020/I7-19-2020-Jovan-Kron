@@ -101,12 +101,6 @@ public class Point extends Shape {
 	public String toString() {
 		return "Point ( " + x + " , " + y + " )";
 	}
-
-	@Override
-	public boolean contains(Point p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
     public Point clone(Shape s) {

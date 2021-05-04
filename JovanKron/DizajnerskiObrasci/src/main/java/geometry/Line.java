@@ -114,12 +114,6 @@ public class Line extends Shape {
 	public String toString() {
 		return "Line " + startPoint + " --> " + endPoint;
 	}
-
-	@Override
-	public boolean contains(Point p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
     public Line clone(Shape s) {

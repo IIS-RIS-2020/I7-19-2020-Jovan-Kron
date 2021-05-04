@@ -86,4 +86,17 @@ public class PointTests {
 		assertEquals(5, point.getY());
 	}
 	
+	@Test
+	public void testCompareToExpectedTrue() {
+		Point p = new Point();
+		p.setX(5);
+		p.setY(9);
+		assertEquals(-2, point.compareTo(p));
+	}
+	
+	@Test
+	public void testCompareToWithDifferentTypeExpectedTrue() {
+		assertEquals(0, point.compareTo(new Line()));
+	}
+	
 }

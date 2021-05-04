@@ -2,6 +2,7 @@ package geometry;
 
 import java.awt.*;
 
+
 public class Circle extends SurfaceShape {
 	private Point center;
 	private int radius;
@@ -20,6 +21,12 @@ public class Circle extends SurfaceShape {
 	public Circle(Point center, int radius, boolean selected) {
 		this(center, radius);
 		setSelected(selected);
+	}
+	
+	public Circle(Point center, int radius, Color edgeColor, Color fillColor) {
+		this(center, radius);
+		setEdgeColor(edgeColor);
+		setFillColor(fillColor);
 	}
 
 	@Override
@@ -67,10 +74,10 @@ public class Circle extends SurfaceShape {
 	public boolean contains(int x, int y) {
 		return this.getCenter().distance(x, y) <= radius;
 	}
-	
+	/*
 	public boolean contains(Point p) {
 		return p.distance(getCenter().getX(), getCenter().getY()) <= radius;
-	}
+	}*/
 	
 	public boolean equals(Object obj) {
 		if (obj instanceof Circle) {
