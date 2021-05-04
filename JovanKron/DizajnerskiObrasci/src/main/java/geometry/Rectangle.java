@@ -23,6 +23,12 @@ public class Rectangle extends SurfaceShape {
 		this(upperLeftPoint, height, width);
 		setSelected(selected);
 	}
+	
+	public Rectangle(Point upperLeft, int width, int height, Color edgeColor, Color fillColor) {
+		this(upperLeft, width, height);
+		setEdgeColor(edgeColor);
+		setFillColor(fillColor);
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -69,7 +75,7 @@ public class Rectangle extends SurfaceShape {
 			return false;
 		}
 	}
-	
+	/*
 	public boolean contains(Point p) {
 		if (this.getUpperLeftPoint().getX() <= p.getX() 
 				&& p.getX() <= this.getUpperLeftPoint().getX() + width
@@ -79,7 +85,7 @@ public class Rectangle extends SurfaceShape {
 		} else {
 			return false;
 		}
-	}
+	}*/
 
 	public boolean equals(Object obj) {
 		if (obj instanceof Rectangle) {
