@@ -18,6 +18,12 @@ public class HexagonAdapter extends SurfaceShape {
     public HexagonAdapter(int x, int y, int r) {
         this.hexagon = new Hexagon(x, y, r);
     }
+    
+    public HexagonAdapter(Hexagon hexagon,Color edgeColor, Color fillColor) {
+    	this.hexagon = hexagon;
+		setEdgeColor(edgeColor);
+		setFillColor(fillColor);
+	}
 
     @Override
     public boolean contains(int x, int y) {
@@ -31,12 +37,16 @@ public class HexagonAdapter extends SurfaceShape {
 
     @Override
     public void moveBy(int byX, int byY) {
-
+    	hexagon.setX(hexagon.getX() + byX);
+		hexagon.setY(hexagon.getY() + byY);
     }
 
     @Override
     public int compareTo(Object o) {
-        return 0;
+    	if (o instanceof HexagonAdapter) {
+			return hexagon.getR() - ((HexagonAdapter) o).getR();
+		}
+		return 0;
     }
 
     public void setEdgeColor(Color c) {
