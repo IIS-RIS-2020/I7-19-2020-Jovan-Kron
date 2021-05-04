@@ -22,6 +22,12 @@ public class Donut extends Circle {
 		setSelected(selected);
 	}
 	
+	public Donut(Point center, int radius, int innerRadius, Color edgeColor, Color fillColor) {
+		this(center, radius, innerRadius);
+		setEdgeColor(edgeColor);
+		setFillColor(fillColor);
+	}
+	
 	public void draw(Graphics gr) {
 		Graphics2D g = (Graphics2D)gr;
 
@@ -80,11 +86,11 @@ public class Donut extends Circle {
 		double dFromCenter = this.getCenter().distance(x, y);
 		return super.contains(x, y) && dFromCenter > innerRadius;
 	}
-	
+	/*
 	public boolean contains(Point p) {
 		double dFromCenter = this.getCenter().distance(p.getX(), p.getY());
 		return super.contains(p.getX(), p.getY()) && dFromCenter > innerRadius;
-	}
+	}*/
 	
 	public double area() {
 		return super.area() - innerRadius * innerRadius * Math.PI;
