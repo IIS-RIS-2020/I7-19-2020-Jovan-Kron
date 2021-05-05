@@ -75,42 +75,42 @@ public class RectangleTests {
 	}
 	
 	@Test
-	public void testMoveByXWithPositiveNumberExpectedTrue() {
+	public void testMoveByXWithPositiveNumberExpectedEqual() {
 		rectangle.moveBy(5, 0);
 		assertEquals(10, rectangle.getUpperLeftPoint().getX());
 	}
 	
 	@Test
-	public void testMoveByXWithNegativeNumberExpectedTrue() {
+	public void testMoveByXWithNegativeNumberExpectedEqual() {
 		rectangle.moveBy(-1, 0);
 		assertEquals(4, rectangle.getUpperLeftPoint().getX());
 	}
 	
 	@Test
-	public void testMoveByYWithPositiveNumberExpectedTrue() {
+	public void testMoveByYWithPositiveNumberExpectedEqual() {
 		rectangle.moveBy(0, 5);
 		assertEquals(10, rectangle.getUpperLeftPoint().getY());
 	}
 	
 	@Test
-	public void testMoveByYWithNegativeNumberExpectedTrue() {
+	public void testMoveByYWithNegativeNumberExpectedEqual() {
 		rectangle.moveBy(0, -2);
 		assertEquals(3, rectangle.getUpperLeftPoint().getY());
 	}
 	
 	@Test
-	public void testCompareToExpectedTrue() {
+	public void testCompareToExpectedEqual() {
 		Rectangle r = new Rectangle(new Point(2,2), 20, 5);
 		assertEquals(100, rectangle.compareTo(r));
 	}
 	
 	@Test
-	public void testCompareToWithDifferentTypeExpectedTrue() {
+	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, rectangle.compareTo(new Point()));
 	}
 	
 	@Test
-	public void testAreaExpectedTrue() {
+	public void testAreaExpectedEqual() {
 		//the last parameter is the maximum delta between expected and actual for which both numbers are still considered equal
 		assertEquals(200, rectangle.area(), 1e-15);
 	}

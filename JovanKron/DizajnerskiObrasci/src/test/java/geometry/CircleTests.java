@@ -50,42 +50,42 @@ public class CircleTests {
 	}
 	
 	@Test
-	public void testMoveByXWithPositiveNumberExpectedTrue() {
+	public void testMoveByXWithPositiveNumberExpectedEqual() {
 		circle.moveBy(5, 0);
 		assertEquals(10, circle.getCenter().getX());
 	}
 	
 	@Test
-	public void testMoveByXWithNegativeNumberExpectedTrue() {
+	public void testMoveByXWithNegativeNumberExpectedEqual() {
 		circle.moveBy(-1, 0);
 		assertEquals(4, circle.getCenter().getX());
 	}
 	
 	@Test
-	public void testMoveByYWithPositiveNumberExpectedTrue() {
+	public void testMoveByYWithPositiveNumberExpectedEqual() {
 		circle.moveBy(0, 5);
 		assertEquals(10, circle.getCenter().getY());
 	}
 	
 	@Test
-	public void testMoveByYWithNegativeNumberExpectedTrue() {
+	public void testMoveByYWithNegativeNumberExpectedEqual() {
 		circle.moveBy(0, -2);
 		assertEquals(3, circle.getCenter().getY());
 	}
 	
 	@Test
-	public void testCompareToExpectedTrue() {
+	public void testCompareToExpectedEqual() {
 		Circle c = new Circle(new Point(2,2), 10);
 		assertEquals(15, circle.compareTo(c));
 	}
 	
 	@Test
-	public void testCompareToWithDifferentTypeExpectedTrue() {
+	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, circle.compareTo(new Point()));
 	}
 	
 	@Test
-	public void testAreaExpectedTrue() {
+	public void testAreaExpectedEqual() {
 		//the last parameter is the maximum delta between expected and actual for which both numbers are still considered equal
 		assertEquals(1963.4954084936207, circle.area(), 1e-15);
 	}

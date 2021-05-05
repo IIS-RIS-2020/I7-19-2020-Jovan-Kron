@@ -70,18 +70,18 @@ public class DonutTests {
 	}
 
 	@Test
-	public void testCompareToExpectedTrue() {
+	public void testCompareToExpectedEqual() {
 		Donut d = new Donut(new Point(5, 5), 20, 15);
 		assertEquals(392, donut.compareTo(d));
 	}
 	
 	@Test
-	public void testCompareToWithDifferentTypeExpectedTrue() {
+	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, donut.compareTo(new Point()));
 	}
 	
 	@Test
-	public void testAreaExpectedTrue() {
+	public void testAreaExpectedEqual() {
 		//the last parameter is the maximum delta between expected and actual for which both numbers are still considered equal
 		assertEquals(942.4777960769379, donut.area(), 1e-15);
 	}

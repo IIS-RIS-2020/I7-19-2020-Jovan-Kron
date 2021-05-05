@@ -62,37 +62,37 @@ public class HexagonAdapterTests {
 	}
 	
 	@Test
-	public void testMoveByXWithPositiveNumberExpectedTrue() {
+	public void testMoveByXWithPositiveNumberExpectedEqual() {
 		hexagonAdapter.moveBy(5, 0);
 		assertEquals(10, hexagonAdapter.getX());
 	}
 	
 	@Test
-	public void testMoveByXWithNegativeNumberExpectedTrue() {
+	public void testMoveByXWithNegativeNumberExpectedEqual() {
 		hexagonAdapter.moveBy(-1, 0);
 		assertEquals(4, hexagonAdapter.getX());
 	}
 	
 	@Test
-	public void testMoveByYWithPositiveNumberExpectedTrue() {
+	public void testMoveByYWithPositiveNumberExpectedEqual() {
 		hexagonAdapter.moveBy(0, 5);
 		assertEquals(10, hexagonAdapter.getY());
 	}
 	
 	@Test
-	public void testMoveByYWithNegativeNumberExpectedTrue() {
+	public void testMoveByYWithNegativeNumberExpectedEqual() {
 		hexagonAdapter.moveBy(0, -2);
 		assertEquals(3, hexagonAdapter.getY());
 	}
 	
 	@Test
-	public void testCompareToExpectedTrue() {
+	public void testCompareToExpectedEqual() {
 		HexagonAdapter h = new HexagonAdapter(5, 5, 15);
 		assertEquals(10, hexagonAdapter.compareTo(h));
 	}
 	
 	@Test
-	public void testCompareToWithDifferentTypeExpectedTrue() {
+	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, hexagonAdapter.compareTo(new Point()));
 	}
 	

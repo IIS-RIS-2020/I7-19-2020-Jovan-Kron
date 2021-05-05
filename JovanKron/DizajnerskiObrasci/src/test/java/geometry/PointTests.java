@@ -59,31 +59,31 @@ public class PointTests {
 	}
 
 	@Test
-	public void testMoveByXWithPositiveNumberExpectedTrue() {
+	public void testMoveByXWithPositiveNumberExpectedEqual() {
 		point.moveBy(5, 0);
 		assertEquals(8, point.getX());
 	}
 	
 	@Test
-	public void testMoveByXWithNegativeNumberExpectedTrue() {
+	public void testMoveByXWithNegativeNumberExpectedEqual() {
 		point.moveBy(-2, 0);
 		assertEquals(1, point.getX());
 	}
 	
 	@Test
-	public void testMoveByYWithPositiveNumberExpectedTrue() {
+	public void testMoveByYWithPositiveNumberExpectedEqual() {
 		point.moveBy(0, 5);
 		assertEquals(12, point.getY());
 	}
 	
 	@Test
-	public void testMoveByYWithNegativeNumberExpectedTrue() {
+	public void testMoveByYWithNegativeNumberExpectedEqual() {
 		point.moveBy(0, -2);
 		assertEquals(5, point.getY());
 	}
 	
 	@Test
-	public void testCompareToExpectedTrue() {
+	public void testCompareToExpectedEqual() {
 		Point p = new Point();
 		p.setX(5);
 		p.setY(9);
@@ -91,7 +91,7 @@ public class PointTests {
 	}
 	
 	@Test
-	public void testCompareToWithDifferentTypeExpectedTrue() {
+	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, point.compareTo(new Line()));
 	}
 	

@@ -15,7 +15,6 @@ import org.junit.Test;
 public class LineTests {
 
 	private Line line;
-	private Graphics graphics;
 	private Graphics2D graphics2D;
 	
 	@Before
@@ -24,7 +23,6 @@ public class LineTests {
 		Point endPoint = new Point(5,5);
 		Color edgeColor = Color.RED;
 		line = new Line(stratPoint, endPoint, edgeColor);
-		graphics = mock(Graphics.class);
 		graphics2D = mock(Graphics2D.class);
 	}
 	
@@ -60,42 +58,42 @@ public class LineTests {
 	}
 	
 	@Test
-	public void testMoveByXWithPositiveNumberExpectedTrue() {
+	public void testMoveByXWithPositiveNumberExpectedEqual() {
 		line.moveBy(5, 0);
 		assertEquals(6, line.getStartPoint().getX());
 	}
 	
 	@Test
-	public void testMoveByXWithNegativeNumberExpectedTrue() {
+	public void testMoveByXWithNegativeNumberExpectedEqual() {
 		line.moveBy(-1, 0);
 		assertEquals(0, line.getStartPoint().getX());
 	}
 	
 	@Test
-	public void testMoveByYWithPositiveNumberExpectedTrue() {
+	public void testMoveByYWithPositiveNumberExpectedEqual() {
 		line.moveBy(0, 5);
 		assertEquals(10, line.getEndPoint().getY());
 	}
 	
 	@Test
-	public void testMoveByYWithNegativeNumberExpectedTrue() {
+	public void testMoveByYWithNegativeNumberExpectedEqual() {
 		line.moveBy(0, -2);
 		assertEquals(3, line.getEndPoint().getY());
 	}
 	
 	@Test
-	public void testMiddleOfLineExpectedTrue() {
+	public void testMiddleOfLineExpectedEqual() {
 		assertEquals(new Point(3,3), line.middleOfLine());
 	}
 	
 	@Test
-	public void testCompareToExpectedTrue() {
+	public void testCompareToExpectedEqual() {
 		Line l = new Line(new Point(2,2), new Point(8,8));
 		assertEquals(-2, line.compareTo(l));
 	}
 	
 	@Test
-	public void testCompareToWithDifferentTypeExpectedTrue() {
+	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, line.compareTo(new Point()));
 	}
 	
