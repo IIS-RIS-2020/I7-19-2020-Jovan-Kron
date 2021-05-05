@@ -3,8 +3,11 @@ package geometry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +15,8 @@ import org.junit.Test;
 public class LineTests {
 
 	private Line line;
+	private Graphics graphics;
+	private Graphics2D graphics2D;
 	
 	@Before
 	public void setUp() {
@@ -19,6 +24,8 @@ public class LineTests {
 		Point endPoint = new Point(5,5);
 		Color edgeColor = Color.RED;
 		line = new Line(stratPoint, endPoint, edgeColor);
+		graphics = mock(Graphics.class);
+		graphics2D = mock(Graphics2D.class);
 	}
 	
 	@Test
@@ -92,4 +99,25 @@ public class LineTests {
 		assertEquals(0, line.compareTo(new Point()));
 	}
 	
+	@Test
+	public void testDrawWhenColorChosenAndLineSelected() {
+		line.setSelected(true);
+		line.setColor(Color.RED);
+		//Mock Graphics class cannot be cast to Graphics2D class within draw method, using Graphics2D object directly for testing purposes
+		line.draw(graphics2D);
+		verify(graphics2D).setColor(Color.RED);
+		verify(graphics2D).drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(), line.getEndPoint().getX(),line.getEndPoint().getY());
+		verify(graphics2D).setColor(Color.BLUE);
+		verify(graphics2D).drawRect(line.getStartPoint().getX() - 3, line.getStartPoint().getY() - 3, 6, 6);
+		verify(graphics2D).drawRect(line.getEndPoint().getX() - 3, line.getEndPoint().getY() - 3, 6, 6);
+		verify(graphics2D).drawRect(line.middleOfLine().getX() - 3, line.middleOfLine().getY() - 3, 6, 6);
+	}
+	
+	@Test
+	public void testDrawWhenNoColorChosenAndLineNotSelected() {
+		line.setSelected(false);
+		line.draw(graphics2D);
+		verify(graphics2D, times(1)).setColor(Color.BLACK);
+		verify(graphics2D).drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(), line.getEndPoint().getX(),line.getEndPoint().getY());
+	}
 }

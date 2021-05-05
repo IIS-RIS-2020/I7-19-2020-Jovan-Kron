@@ -2,23 +2,19 @@ package geometry;
 
 import static org.junit.Assert.*;
 import org.junit.*;
+import static org.mockito.Mockito.*;
 
-import geometry.Point;
-import geometry.Line;
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class PointTests {
-	private int xCoordinate;
-	private int yCoordinate;
-	private Color edgeColor;
 	private Point point;
+	private Graphics graphics;
 
 	@Before
 	public void setUp() {
-		xCoordinate = 3;
-		yCoordinate = 7;
-		edgeColor = Color.RED;
-		point = new Point(xCoordinate, yCoordinate, edgeColor);
+		point = new Point(3, 7, Color.RED);
+		graphics = mock(Graphics.class);
 	}
 
 	@Test
@@ -99,4 +95,23 @@ public class PointTests {
 		assertEquals(0, point.compareTo(new Line()));
 	}
 	
+	@Test
+	public void testDrawWhenSelected() {
+		point.setSelected(true);
+		point.draw(graphics);
+		verify(graphics).setColor(point.getColor());
+		verify(graphics).drawLine(point.getX() - 2, point.getY(), point.getX() + 2, point.getY());
+		verify(graphics).drawLine(point.getX(), point.getY() - 2, point.getX(), point.getY() + 2);
+		verify(graphics).setColor(Color.BLUE);
+		verify(graphics).drawRect(point.getX() - 3, point.getY() - 3, 6, 6);
+	}
+	
+	@Test
+	public void testDrawWhenNotSelected() {
+		point.setSelected(false);
+		point.draw(graphics);
+		verify(graphics).setColor(point.getColor());
+		verify(graphics).drawLine(point.getX() - 2, point.getY(), point.getX() + 2, point.getY());
+		verify(graphics).drawLine(point.getX(), point.getY() - 2, point.getX(), point.getY() + 2);
+	}
 }

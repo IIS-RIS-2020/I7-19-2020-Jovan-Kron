@@ -29,10 +29,11 @@ public class Line extends Shape {
 		g.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setColor(Color.BLACK);
-		if (color != null) {
+		//g.setColor(Color.BLACK);
+		if (color != null)
 			g.setColor(color);
-		}
+		else
+			g.setColor(Color.BLACK);
 		g.drawLine(this.getStartPoint().getX(), this.getStartPoint().getY(), this.getEndPoint().getX(),
 				this.getEndPoint().getY());
 		if (isSelected()) {

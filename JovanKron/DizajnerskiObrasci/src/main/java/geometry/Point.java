@@ -27,7 +27,7 @@ public class Point extends Shape {
 		g.setColor(color);
 		g.drawLine(this.x-2, y, this.x+2, y);
 		g.drawLine(x, this.y-2, x, this.y+2);
-		g.setColor(new Color(0, 0, 0));
+		//g.setColor(new Color(0, 0, 0));
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(this.x-3, this.y-3, 6, 6);
