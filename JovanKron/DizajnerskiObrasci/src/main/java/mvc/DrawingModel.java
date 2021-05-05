@@ -18,8 +18,8 @@ public class DrawingModel {
 	private Stack<Command> redoStack = new Stack<Command>();
 	private StringBuilder allCommands = new StringBuilder();
 	private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
-	private Color edgeColor;
-    private Color fillColor;
+	private Color edgeColor = Color.BLACK;
+    private Color fillColor = Color.YELLOW;
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private DefaultListModel<String> listModel = new DefaultListModel<>();
 	

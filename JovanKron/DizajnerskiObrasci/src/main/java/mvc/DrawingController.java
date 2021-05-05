@@ -1,5 +1,6 @@
 package mvc;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -501,21 +502,27 @@ public class DrawingController {
 	    }
 	    
 	    public void setEdgeColor() throws Exception {
-	        cmd = new CmdSetEdgeColor(model.getEdgeColor(), JColorChooser.showDialog(null, "Choose a color:", null));
-	        cmd.setModel(model);
-	        model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
-	        model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
-	        cmd.execute();
-	        model.getRedoStack().clear();
+	    	Color chosenEdgeColor = JColorChooser.showDialog(null, "Choose the edge color:", model.getEdgeColor());
+	    	if (chosenEdgeColor != null) {
+		        cmd = new CmdSetEdgeColor(model.getEdgeColor(), chosenEdgeColor);
+		        cmd.setModel(model);
+		        model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
+		        model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
+		        cmd.execute();
+		        model.getRedoStack().clear();
+	    	}
 	    }
 
 	    public void setFillColor() throws Exception {
-	        cmd = new CmdSetFillColor(model.getFillColor(), JColorChooser.showDialog(null, "Choose a color:", null));
-	        cmd.setModel(model);
-	        model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
-	        model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
-	        cmd.execute();
-	        model.getRedoStack().clear();
+	    	Color chosenFillColor = JColorChooser.showDialog(null, "Choose the fill color:", model.getFillColor());
+	    	if (chosenFillColor != null) {
+		        cmd = new CmdSetFillColor(model.getFillColor(), chosenFillColor);
+		        cmd.setModel(model);
+		        model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
+		        model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
+		        cmd.execute();
+		        model.getRedoStack().clear();
+	    	}
 	    }
 	    
 	    public void onSaveShapes() throws IOException {

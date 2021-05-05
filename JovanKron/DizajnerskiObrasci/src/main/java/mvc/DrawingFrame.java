@@ -251,6 +251,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
 
         tglbtnEdgeColor = new JToggleButton("Edge Color");
         tglbtnEdgeColor.setPreferredSize(dimensionForButton);
+        tglbtnEdgeColor.setBackground(Color.BLACK);
         GridBagConstraints gbc_tglbtnEdgeColor = new GridBagConstraints();
         gbc_tglbtnEdgeColor.insets = new Insets(5, 0, 5, 5);
         gbc_tglbtnEdgeColor.gridx = 15;
@@ -260,6 +261,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
 
         tglbtnFillColor = new JToggleButton("Fill Color");
         tglbtnFillColor.setPreferredSize(dimensionForButton);
+        tglbtnFillColor.setBackground(Color.YELLOW);
         GridBagConstraints gbc_tglbtnFillColor = new GridBagConstraints();
         gbc_tglbtnFillColor.insets = new Insets(5, 0, 5, 5);
         gbc_tglbtnFillColor.gridx = 16;
