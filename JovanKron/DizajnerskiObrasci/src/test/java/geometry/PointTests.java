@@ -114,4 +114,38 @@ public class PointTests {
 		verify(graphics).drawLine(point.getX() - 2, point.getY(), point.getX() + 2, point.getY());
 		verify(graphics).drawLine(point.getX(), point.getY() - 2, point.getX(), point.getY() + 2);
 	}
+	
+	@Test
+	public void testCloneExpectedEqual() {
+		Point p = new Point();
+		p = point.clone(p);
+		assertEquals(3, p.getX());
+		assertEquals(7, p.getY());
+		assertEquals(Color.RED, p.getEdgeColor());
+	}
+	
+	@Test
+	public void testCloneWithWrongShapeSubclassExpectedEqual() {
+		Point p = new Point();
+		Line l = new Line();
+		p = point.clone(l);
+		assertEquals(3, p.getX());
+		assertEquals(7, p.getY());
+		assertEquals(Color.RED, p.getEdgeColor());
+	}
+	
+	@Test
+	public void testCloneReferencesExpectedEqual() {
+		Point p1 = new Point();
+		Point p2 = new Point();
+		assertEquals(p1.hashCode(), p2.clone(p1).hashCode());
+	}
+	
+	@Test
+	public void testCloneReferencesWithWrongShapeSubclassExpectedNotEqual() {
+		Point p1 = new Point();
+		Point p2 = new Point();
+		Line l = new Line();
+		assertNotEquals(p1.hashCode(), p2.clone(l).hashCode());
+	}
 }

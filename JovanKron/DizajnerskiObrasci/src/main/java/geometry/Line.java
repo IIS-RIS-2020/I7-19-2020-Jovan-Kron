@@ -5,7 +5,6 @@ import java.awt.*;
 public class Line extends Shape {
 	private Point startPoint;
 	private Point endPoint;
-	private Color color;
 	
 	public Line() {
 		
@@ -29,11 +28,7 @@ public class Line extends Shape {
 		g.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		//g.setColor(Color.BLACK);
-		if (color != null)
-			g.setColor(color);
-		else
-			g.setColor(Color.BLACK);
+	    g.setColor(getEdgeColor());
 		g.drawLine(this.getStartPoint().getX(), this.getStartPoint().getY(), this.getEndPoint().getX(),
 				this.getEndPoint().getY());
 		if (isSelected()) {
@@ -104,14 +99,6 @@ public class Line extends Shape {
 		this.endPoint = endPoint;
 	}
 	
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	
 	public String toString() {
 		return "Line " + startPoint + " --> " + endPoint;
 	}
@@ -127,7 +114,7 @@ public class Line extends Shape {
         l.getStartPoint().setY(this.getStartPoint().getY());
         l.getEndPoint().setX(this.getEndPoint().getX());
         l.getEndPoint().setY(this.getEndPoint().getY());
-        l.setColor(this.getColor());
+        l.setEdgeColor(this.getEdgeColor());
 
         return l;
     }

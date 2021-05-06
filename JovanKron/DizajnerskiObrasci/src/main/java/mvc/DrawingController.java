@@ -79,7 +79,7 @@ public class DrawingController {
 
                 if (dialog.isOk()) {
                 	Line line = new Line(startPoint, new Point(e.getX(), e.getY()));
-                    line.setColor(model.getEdgeColor());
+                    line.setEdgeColor(model.getEdgeColor());
 
                     cmd = new CmdShapeAdd(line, model);
                 	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
@@ -289,7 +289,7 @@ public class DrawingController {
 	                ml.setTxtStartY(Integer.toString(oldState.getStartPoint().getY()));
 	                ml.setTxtEndX(Integer.toString(oldState.getEndPoint().getX()));
 	                ml.setTxtEndY(Integer.toString(oldState.getEndPoint().getY()));
-	                ml.setColor(oldState.getColor());
+	                ml.setColor(oldState.getEdgeColor());
 	                ml.setVisible(true);
 
 	                if(ml.isOk()) {
@@ -297,7 +297,7 @@ public class DrawingController {
 		                Point newEndPoint = new Point(Integer.parseInt(ml.getTxtEndX()), Integer.parseInt(ml.getTxtEndY()));
 
 		                Line newState = new Line(newStartPoint, newEndPoint);
-		                newState.setColor(model.getEdgeColor());
+		                newState.setEdgeColor(model.getEdgeColor());
 
 		                cmd = new CmdUpdate(oldState, newState);
 	                	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);

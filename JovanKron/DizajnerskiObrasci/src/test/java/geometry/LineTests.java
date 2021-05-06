@@ -2,11 +2,11 @@ package geometry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class LineTests {
 	@Test
 	public void testDrawWhenColorChosenAndLineSelected() {
 		line.setSelected(true);
-		line.setColor(Color.RED);
+		line.setEdgeColor(Color.RED);
 		//Mock Graphics class cannot be cast to Graphics2D class within draw method, using Graphics2D object directly for testing purposes
 		line.draw(graphics2D);
 		verify(graphics2D).setColor(Color.RED);
@@ -115,7 +115,49 @@ public class LineTests {
 	public void testDrawWhenNoColorChosenAndLineNotSelected() {
 		line.setSelected(false);
 		line.draw(graphics2D);
-		verify(graphics2D, times(1)).setColor(Color.BLACK);
+		verify(graphics2D, times(1)).setColor(Color.RED);
 		verify(graphics2D).drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(), line.getEndPoint().getX(),line.getEndPoint().getY());
+	}
+	
+	@Test
+	public void testCloneExpectedEqual() {
+		Line l = new Line(new Point(0, 0), new Point(0, 0));
+		l = line.clone(l);
+		assertEquals(line, l);
+		assertEquals(1, l.getStartPoint().getX());
+		assertEquals(1, l.getStartPoint().getY());
+		assertEquals(5, l.getEndPoint().getX());
+		assertEquals(5, l.getEndPoint().getY());
+		assertEquals(Color.RED, l.getEdgeColor());
+	}
+	
+	@Test
+	public void testCloneWithWrongShapeSubclassExpectedEqual() {
+		Point p = new Point();
+		Line l = new Line(new Point(), new Point());
+		l = line.clone(p);
+		assertEquals(line, l);
+		assertEquals(1, l.getStartPoint().getX());
+		assertEquals(1, l.getStartPoint().getY());
+		assertEquals(5, l.getEndPoint().getX());
+		assertEquals(5, l.getEndPoint().getY());
+		assertEquals(Color.RED, l.getEdgeColor());
+	}
+	
+	@Test
+	public void testCloneReferencesExpectedEqual() {
+		Line l1 = new Line(new Point(), new Point());
+		Line l2 = new Line(new Point(), new Point());
+		assertEquals(l1.hashCode(), l2.clone(l1).hashCode());
+	}
+	
+	@Test
+	public void testCloneReferencesWithWrongShapeSubclassExpectedNotEqual() {
+		Line l1 = new Line();
+		l1.setStartPoint(new Point());
+		l1.setEndPoint(new Point());
+		Line l2 = new Line(new Point(), new Point());
+		Point p = new Point();
+		assertNotEquals(l1.hashCode(), l2.clone(p).hashCode());
 	}
 }
