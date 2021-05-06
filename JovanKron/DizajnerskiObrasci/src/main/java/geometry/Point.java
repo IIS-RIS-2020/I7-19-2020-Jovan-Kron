@@ -6,7 +6,6 @@ import java.awt.Graphics;
 public class Point extends Shape {
 	private int x;
 	private int y;
-	private Color color;
 	
 	public Point() {
 		
@@ -24,10 +23,9 @@ public class Point extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(color);
+		g.setColor(getEdgeColor());
 		g.drawLine(this.x-2, y, this.x+2, y);
 		g.drawLine(x, this.y-2, x, this.y+2);
-		//g.setColor(new Color(0, 0, 0));
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(this.x-3, this.y-3, 6, 6);
@@ -90,14 +88,6 @@ public class Point extends Shape {
 		this.y = y;
 	}
 	
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	
 	public String toString() {
 		return "Point ( " + x + " , " + y + " )";
 	}
@@ -111,7 +101,7 @@ public class Point extends Shape {
 
         p.setX(this.getX());
         p.setY(this.getY());
-        p.setColor(this.getColor());
+        p.setEdgeColor(this.getEdgeColor());
 
         return p;
     }

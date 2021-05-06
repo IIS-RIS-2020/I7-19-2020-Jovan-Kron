@@ -99,7 +99,7 @@ public class PointTests {
 	public void testDrawWhenSelected() {
 		point.setSelected(true);
 		point.draw(graphics);
-		verify(graphics).setColor(point.getColor());
+		verify(graphics).setColor(point.getEdgeColor());
 		verify(graphics).drawLine(point.getX() - 2, point.getY(), point.getX() + 2, point.getY());
 		verify(graphics).drawLine(point.getX(), point.getY() - 2, point.getX(), point.getY() + 2);
 		verify(graphics).setColor(Color.BLUE);
@@ -110,7 +110,7 @@ public class PointTests {
 	public void testDrawWhenNotSelected() {
 		point.setSelected(false);
 		point.draw(graphics);
-		verify(graphics).setColor(point.getColor());
+		verify(graphics).setColor(point.getEdgeColor());
 		verify(graphics).drawLine(point.getX() - 2, point.getY(), point.getX() + 2, point.getY());
 		verify(graphics).drawLine(point.getX(), point.getY() - 2, point.getX(), point.getY() + 2);
 	}

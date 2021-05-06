@@ -37,6 +37,10 @@ public abstract class Shape implements Movable, Comparable, Serializable {
 	public void setPositionInArray(int positionInArray) {
 		this.positionInArray = positionInArray;
 	}
+	
+	public Color getEdgeColor() {
+		return edgeColor;
+	}
 
 	public void setEdgeColor(Color edgeColor) {
 		this.edgeColor = edgeColor;

@@ -49,7 +49,7 @@ public class DrawingController {
             dialog.setVisible(true);
 
             if(dialog.isOk()) {
-            	point.setColor(model.getEdgeColor());
+            	point.setEdgeColor(model.getEdgeColor());
 
                 cmd = new CmdShapeAdd(point, model);
             	model.getRedoStack().clear();
@@ -266,8 +266,8 @@ public class DrawingController {
 	                mp.setVisible(true);
 
 	                if(mp.isOk()) {
-	                	Point newState = new Point(Integer.parseInt(mp.getTxtX()), Integer.parseInt(mp.getTxtY()));
-		                newState.setColor(model.getEdgeColor());
+	                	Point newState = new Point(Integer.parseInt(mp.getTxtX()), Integer.parseInt(mp.getTxtY()), model.getEdgeColor());
+		                //newState.setEdgeColor(model.getEdgeColor());
 
 		                cmd = new CmdUpdate(oldState, newState);
 	                	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);

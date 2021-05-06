@@ -6,11 +6,11 @@ import geometry.Shape;
 public class CmdUpdate implements Command {
     private Shape oldState;
     private Shape newState;
-    private Shape original;
+    private Shape originalState;
     private DrawingModel model;
 
-    public CmdUpdate(Shape oldState, Shape newState) {
-        this.oldState = oldState;
+    public CmdUpdate(Shape originalState, Shape newState) {
+        this.originalState = originalState;
         this.newState = newState;
     }
 
@@ -21,15 +21,15 @@ public class CmdUpdate implements Command {
 
     @Override
     public void execute() {
-        this.original = oldState.clone(this.original);
-        this.oldState = newState.clone(this.oldState);
+        this.oldState = originalState.clone(this.oldState);
+        this.originalState = newState.clone(this.originalState);
         model.pushInUndoStack(this);
-        model.getAllCommands().append("Update " + original.toString() + " to " + oldState.toString() + "\n");
-        model.getListModel().addElement("Update " + original.toString() + " to " + oldState.toString() + "\n");
+        model.getAllCommands().append("Update " + oldState.toString() + " to " + newState.toString() + "\n");
+        model.getListModel().addElement("Update " + oldState.toString() + " to " + newState.toString() + "\n");
     }
 
     @Override
     public void unexecute() {
-        this.oldState = original.clone(this.oldState);
+        this.originalState = oldState.clone(this.originalState);
     }
 }
