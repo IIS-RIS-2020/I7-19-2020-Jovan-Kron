@@ -19,10 +19,10 @@ public class Rectangle extends SurfaceShape {
 		setWidth(width);
 	}
 
-	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
+	/*public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
 		this(upperLeftPoint, height, width);
 		setSelected(selected);
-	}
+	}*/
 	
 	public Rectangle(Point upperLeft, int width, int height, Color edgeColor, Color fillColor) {
 		this(upperLeft, width, height);
@@ -32,22 +32,16 @@ public class Rectangle extends SurfaceShape {
 
 	@Override
 	public void draw(Graphics g) {
-		if (fillColor != null) {
-			g.setColor(fillColor);
-			g.fillRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.width, this.getHeight());
-		}
-		g.setColor(Color.BLACK);
-		if (edgeColor != null)
-			g.setColor(edgeColor);
+		g.setColor(fillColor);
+		g.fillRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.width, this.getHeight());
+		g.setColor(edgeColor);
 		g.drawRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.width, this.getHeight());
-		g.setColor(new Color(0, 0, 0));
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(this.getUpperLeftPoint().getX() - 3, this.getUpperLeftPoint().getY() - 3, 6, 6);
 			g.drawRect(this.getUpperLeftPoint().getX() - 3 + getWidth(), this.getUpperLeftPoint().getY() - 3, 6, 6);
 			g.drawRect(this.getUpperLeftPoint().getX() - 3, this.getUpperLeftPoint().getY() - 3 + getHeight(), 6, 6);
 			g.drawRect(this.getUpperLeftPoint().getX() + getWidth() - 3, this.getUpperLeftPoint().getY() + getHeight() - 3, 6, 6);
-			g.setColor(Color.BLACK);
 		}
 	}
 

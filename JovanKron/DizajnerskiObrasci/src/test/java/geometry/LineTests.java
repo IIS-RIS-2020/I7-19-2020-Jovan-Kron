@@ -123,7 +123,6 @@ public class LineTests {
 	public void testCloneExpectedEqual() {
 		Line l = new Line(new Point(0, 0), new Point(0, 0));
 		l = line.clone(l);
-		assertEquals(line, l);
 		assertEquals(1, l.getStartPoint().getX());
 		assertEquals(1, l.getStartPoint().getY());
 		assertEquals(5, l.getEndPoint().getX());
@@ -136,7 +135,6 @@ public class LineTests {
 		Point p = new Point();
 		Line l = new Line(new Point(), new Point());
 		l = line.clone(p);
-		assertEquals(line, l);
 		assertEquals(1, l.getStartPoint().getX());
 		assertEquals(1, l.getStartPoint().getY());
 		assertEquals(5, l.getEndPoint().getX());

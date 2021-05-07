@@ -2,6 +2,7 @@ package geometry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -119,41 +120,67 @@ public class RectangleTests {
 	public void testDrawWhenSelected() {
 		rectangle.setSelected(true);
 		rectangle.draw(graphics);
+		verify(graphics).setColor(Color.YELLOW);
 		verify(graphics).fillRect(rectangle.getUpperLeftPoint().getX(), rectangle.getUpperLeftPoint().getY(), rectangle.getWidth(), rectangle.getHeight());
+		verify(graphics).setColor(Color.RED);
 		verify(graphics).drawRect(rectangle.getUpperLeftPoint().getX(), rectangle.getUpperLeftPoint().getY(), rectangle.getWidth(), rectangle.getHeight());
 		verify(graphics).setColor(Color.BLUE);
 		verify(graphics).drawRect(rectangle.getUpperLeftPoint().getX() - 3, rectangle.getUpperLeftPoint().getY() - 3, 6, 6);
 		verify(graphics).drawRect(rectangle.getUpperLeftPoint().getX() - 3 + rectangle.getWidth(), rectangle.getUpperLeftPoint().getY() - 3, 6, 6);
 		verify(graphics).drawRect(rectangle.getUpperLeftPoint().getX() - 3, rectangle.getUpperLeftPoint().getY() - 3 + rectangle.getHeight(), 6, 6);
 		verify(graphics).drawRect(rectangle.getUpperLeftPoint().getX() + rectangle.getWidth() - 3, rectangle.getUpperLeftPoint().getY() + rectangle.getHeight() - 3, 6, 6);
-		verify(graphics, times(3)).setColor(Color.BLACK);
 	}
 	
 	@Test
 	public void testDrawWhenNotSelected() {
 		rectangle.setSelected(false);
 		rectangle.draw(graphics);
-		rectangle.setFillColor(Color.BLACK);
-		rectangle.setEdgeColor(Color.BLACK);
-		verify(graphics, times(2)).setColor(Color.BLACK);
-		
+		verify(graphics).setColor(Color.YELLOW);
+		verify(graphics).fillRect(rectangle.getUpperLeftPoint().getX(), rectangle.getUpperLeftPoint().getY(), rectangle.getWidth(), rectangle.getHeight());
+		verify(graphics).setColor(Color.RED);
+		verify(graphics).drawRect(rectangle.getUpperLeftPoint().getX(), rectangle.getUpperLeftPoint().getY(), rectangle.getWidth(), rectangle.getHeight());	
 	}
 	
 	@Test
-	public void testDrawHasEdgeButNoFillWhenNotSelected() {
-		rectangle.setSelected(false);
-		rectangle.draw(graphics);
-		rectangle.setFillColor(Color.BLACK);
-		verify(graphics, times(2)).setColor(Color.BLACK);
-		
+	public void testCloneExpectedEqual() {
+		Rectangle r = new Rectangle(new Point(0, 0), 0, 0);
+		r = rectangle.clone(r);
+		assertEquals(5, r.getUpperLeftPoint().getX());
+		assertEquals(5, r.getUpperLeftPoint().getY());
+		assertEquals(10, r.getHeight());
+		assertEquals(20, r.getWidth());
+		assertEquals(Color.RED, r.getEdgeColor());
+		assertEquals(Color.YELLOW, r.getFillColor());
 	}
 	
 	@Test
-	public void testDrawNoEdgeButHasFillWhenNotSelected() {
-		rectangle.setSelected(false);
-		rectangle.draw(graphics);
-		rectangle.setEdgeColor(Color.BLACK);
-		verify(graphics, times(2)).setColor(Color.BLACK);
-		
+	public void testCloneWithWrongShapeSubclassExpectedEqual() {
+		Point p = new Point();
+		Rectangle r = new Rectangle(new Point(0, 0), 0, 0);
+		r = rectangle.clone(p);
+		assertEquals(5, r.getUpperLeftPoint().getX());
+		assertEquals(5, r.getUpperLeftPoint().getY());
+		assertEquals(10, r.getHeight());
+		assertEquals(20, r.getWidth());
+		assertEquals(Color.RED, r.getEdgeColor());
+		assertEquals(Color.YELLOW, r.getFillColor());
+	}
+	
+	@Test
+	public void testCloneReferencesExpectedEqual() {
+		Rectangle r1 = new Rectangle(new Point(), 0, 0);
+		Rectangle r2 = new Rectangle(new Point(), 0, 0);
+		assertEquals(r1.hashCode(), r2.clone(r1).hashCode());
+	}
+	
+	@Test
+	public void testCloneReferencesWithWrongShapeSubclassExpectedNotEqual() {
+		Rectangle r1 = new Rectangle();
+		r1.setUpperLeftPoint(new Point());
+		r1.setHeight(0);
+		r1.setWidth(0);
+		Rectangle r2 = new Rectangle(new Point(), 0, 0);
+		Point p = new Point();
+		assertNotEquals(r1.hashCode(), r2.clone(p).hashCode());
 	}
 }

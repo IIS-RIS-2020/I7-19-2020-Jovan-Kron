@@ -16,11 +16,11 @@ public class Donut extends Circle {
 		super(center, radius);
 		this.innerRadius = innerRadius;
 	}
-	
+	/*
 	public Donut(Point center, int radius, int innerRadius, boolean selected) {
 		this(center, radius, innerRadius);
 		setSelected(selected);
-	}
+	}*/
 	
 	public Donut(Point center, int radius, int innerRadius, Color edgeColor, Color fillColor) {
 		this(center, radius, innerRadius);
@@ -44,17 +44,10 @@ public class Donut extends Circle {
 		Area area = new Area(outer);
 		area.subtract(new Area(inner));
 
-		if (getFillColor() != null) {
-			g.setColor(getFillColor());
-			g.fill(area);
-		}
-		g.setColor(Color.BLACK);
-		if (getEdgeColor() != null) {
-			g.setColor(getEdgeColor());
-		}
+		g.setColor(getFillColor());
+		g.fill(area);
+		g.setColor(getEdgeColor());
 		g.draw(area);
-
-		g.setColor(new Color(0, 0, 0));
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() - 3, 6, 6);
@@ -66,7 +59,6 @@ public class Donut extends Circle {
 			g.drawRect(this.getCenter().getX() - getRadius() - 3, this.getCenter().getY() - 3, 6, 6);
 			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() + getRadius() - 3, 6, 6);
 			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() - getRadius() - 3, 6, 6);
-			g.setColor(Color.BLACK);
 		}
 	}
 

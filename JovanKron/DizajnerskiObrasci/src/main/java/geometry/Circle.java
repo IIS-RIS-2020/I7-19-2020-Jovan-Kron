@@ -17,11 +17,11 @@ public class Circle extends SurfaceShape {
 		this.center = center;
 		this.radius = radius;
 	}
-
+	/*
 	public Circle(Point center, int radius, boolean selected) {
 		this(center, radius);
 		setSelected(selected);
-	}
+	}*/
 	
 	public Circle(Point center, int radius, Color edgeColor, Color fillColor) {
 		this(center, radius);
@@ -36,18 +36,12 @@ public class Circle extends SurfaceShape {
 		g.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		if (fillColor != null) {
-			g.setColor(fillColor);
-			g.fillOval(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(),
+		g.setColor(fillColor);
+		g.fillOval(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(),
 					this.getRadius() * 2, this.getRadius() * 2);
-		}
-		g.setColor(Color.BLACK);
-		if (edgeColor != null)
-			g.setColor(edgeColor);
+		g.setColor(edgeColor);
 		g.drawOval(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(),
 				this.getRadius() * 2, this.getRadius() * 2);
-		g.setColor(new Color(0, 0, 0));
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);

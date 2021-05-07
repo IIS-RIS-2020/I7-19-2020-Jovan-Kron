@@ -2,9 +2,13 @@ package geometry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +18,14 @@ import hexagon.Hexagon;
 public class HexagonAdapterTests {
 	
 	private HexagonAdapter hexagonAdapter;
+	private Graphics graphics;
+	private Hexagon hexagon;
 
 	@Before
 	public void setUp() {
+		hexagon = mock(Hexagon.class);
 		hexagonAdapter = new HexagonAdapter(new Hexagon(5, 5, 25), Color.RED, Color.YELLOW);
+		graphics = mock(Graphics.class);
 	}
 	
 	@Test
@@ -94,6 +102,61 @@ public class HexagonAdapterTests {
 	@Test
 	public void testCompareToWithDifferentTypeExpectedEqual() {
 		assertEquals(0, hexagonAdapter.compareTo(new Point()));
+	}
+	
+	@Test
+	public void testDrawWhenSelected() {
+		HexagonAdapter h = new HexagonAdapter(hexagon, Color.RED, Color.YELLOW);
+		h.setSelected(true);
+		h.draw(graphics);
+		verify(hexagon).paint(graphics);
+	}
+	
+	@Test
+	public void testDrawWhenNotSelected() {
+		HexagonAdapter h = new HexagonAdapter(hexagon, Color.RED, Color.YELLOW);
+		h.setSelected(false);
+		h.draw(graphics);
+		verify(hexagon).paint(graphics);
+	}
+	
+	@Test
+	public void testCloneExpectedEqual() {
+		HexagonAdapter h = new HexagonAdapter(new Hexagon(0, 0, 0), Color.BLACK, Color.BLACK);
+		h = (HexagonAdapter) hexagonAdapter.clone(h);
+		assertEquals(5, h.getX());
+		assertEquals(5, h.getY());
+		assertEquals(25, h.getR());
+		assertEquals(Color.RED, h.getEdgeColor());
+		assertEquals(Color.YELLOW, h.getFillColor());
+	}
+	
+	@Test
+	public void testCloneWithWrongShapeSubclassExpectedEqual() {
+		Point p = new Point();
+		HexagonAdapter h = new HexagonAdapter(new Hexagon(0, 0, 0), Color.BLACK, Color.BLACK);
+		h = (HexagonAdapter) hexagonAdapter.clone(p);
+		assertEquals(5, h.getX());
+		assertEquals(5, h.getY());
+		assertEquals(25, h.getR());
+		assertEquals(Color.RED, h.getEdgeColor());
+		assertEquals(Color.YELLOW, h.getFillColor());
+	}
+	
+	@Test
+	public void testCloneReferencesExpectedEqual() {
+		HexagonAdapter h1 = new HexagonAdapter(new Hexagon(0, 0, 0), Color.BLACK, Color.BLACK);
+		HexagonAdapter h2 = new HexagonAdapter(new Hexagon(0, 0, 0), Color.BLACK, Color.BLACK);
+		assertEquals(h1.hashCode(), h2.clone(h1).hashCode());
+	}
+	
+	@Test
+	public void testCloneReferencesWithWrongShapeSubclassExpectedNotEqual() {
+		HexagonAdapter h1 = new HexagonAdapter();
+		h1.setHexagon(new Hexagon(0, 0, 0));
+		HexagonAdapter h2 = new HexagonAdapter(new Hexagon(0, 0, 0), Color.BLACK, Color.BLACK);
+		Point p = new Point();
+		assertNotEquals(h1.hashCode(), h2.clone(p).hashCode());
 	}
 	
 }

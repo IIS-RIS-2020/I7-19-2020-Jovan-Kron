@@ -93,6 +93,14 @@ public class HexagonAdapter extends SurfaceShape {
     public int getR() {
         return  hexagon.getR();
     }
+    
+    public Hexagon getHexagon() {
+		return hexagon;
+	}
+
+	public void setHexagon(Hexagon hexagon) {
+		this.hexagon = hexagon;
+	}
 
     @Override
     public boolean isSelected() {
