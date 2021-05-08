@@ -112,7 +112,9 @@ public class DonutTests {
 		donut.setSelected(true);
 		donut.draw(graphics2D);
 		verify(graphics2D).setColor(Color.YELLOW);
+		//argument.capture() is used to capture the argument so that their values can be asserted rather than their references
 		verify(graphics2D).fill(argument.capture());
+		//getBounds() returns a bounding Rectangle that completely encloses the Area, which is then compared
 		assertEquals(area.getBounds(), (argument.getValue().getBounds()));
 		verify(graphics2D).setColor(Color.RED);
 		verify(graphics2D).draw(argument.capture());

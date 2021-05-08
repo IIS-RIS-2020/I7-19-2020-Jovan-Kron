@@ -6,11 +6,11 @@ import geometry.SurfaceShape;
 
 import java.io.Serializable;
 
-public class CmdShapeAdd implements Command {
+public class CmdAdd implements Command {
     private Shape shape;
     private DrawingModel model;
 
-    public CmdShapeAdd(Shape shape, DrawingModel model) {
+    public CmdAdd(Shape shape, DrawingModel model) {
         this.shape = shape;
         this.model = model;
     }

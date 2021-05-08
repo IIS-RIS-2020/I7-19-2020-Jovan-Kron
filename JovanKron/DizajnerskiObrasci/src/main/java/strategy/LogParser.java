@@ -162,7 +162,7 @@ public class LogParser {
         data = data.replaceAll(mode + " ", "");
         s = s.parse(data);
         if (mode.equals("Add")) {
-            cmd = new CmdShapeAdd(s, model);
+            cmd = new CmdAdd(s, model);
         } else if (mode.equals("Unselect")) {
             model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
             model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
@@ -193,7 +193,7 @@ public class LogParser {
                 if (sh.equals(s)) {
                     shapesForRemove.add(sh);
                     if (shapesForRemove.size() == sizeForRemove) {
-                        cmd = new CmdShapeRemove(shapesForRemove, model);
+                        cmd = new CmdRemove(shapesForRemove, model);
                         cmd.execute();
                         shapesForRemove.clear();
                     }

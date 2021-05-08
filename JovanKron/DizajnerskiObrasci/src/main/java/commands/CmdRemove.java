@@ -6,11 +6,11 @@ import geometry.Shape;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CmdShapeRemove implements Command {
+public class CmdRemove implements Command {
     private ArrayList<Shape> shapes;
     private DrawingModel model;
 
-    public CmdShapeRemove(ArrayList<Shape> shapes, DrawingModel model) {
+    public CmdRemove(ArrayList<Shape> shapes, DrawingModel model) {
         this.shapes = (ArrayList<Shape>) shapes.clone();
         this.model = model;
     }

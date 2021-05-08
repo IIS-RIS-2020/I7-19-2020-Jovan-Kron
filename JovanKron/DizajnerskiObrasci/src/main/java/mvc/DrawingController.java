@@ -51,7 +51,7 @@ public class DrawingController {
             if(dialog.isOk()) {
             	point.setEdgeColor(model.getEdgeColor());
 
-                cmd = new CmdShapeAdd(point, model);
+                cmd = new CmdAdd(point, model);
             	model.getRedoStack().clear();
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
@@ -81,7 +81,7 @@ public class DrawingController {
                 	Line line = new Line(startPoint, new Point(e.getX(), e.getY()));
                     line.setEdgeColor(model.getEdgeColor());
 
-                    cmd = new CmdShapeAdd(line, model);
+                    cmd = new CmdAdd(line, model);
                 	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                     model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                     cmd.execute();
@@ -107,7 +107,7 @@ public class DrawingController {
                  rectangle.setEdgeColor(model.getEdgeColor());
                  rectangle.setFillColor(model.getFillColor());
 
-                 cmd = new CmdShapeAdd(rectangle, model);
+                 cmd = new CmdAdd(rectangle, model);
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                 cmd.execute();
@@ -132,7 +132,7 @@ public class DrawingController {
                     circle.setEdgeColor(model.getEdgeColor());
                     circle.setFillColor(model.getFillColor());
 
-                    cmd = new CmdShapeAdd(circle, model);
+                    cmd = new CmdAdd(circle, model);
                 	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                     model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                     cmd.execute();
@@ -160,7 +160,7 @@ public class DrawingController {
                 donut.setEdgeColor(model.getEdgeColor());
                 donut.setFillColor(model.getFillColor());
 
-                cmd = new CmdShapeAdd(donut, model);
+                cmd = new CmdAdd(donut, model);
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                 cmd.execute();
@@ -182,7 +182,7 @@ public class DrawingController {
                 hexagon.setEdgeColor(model.getEdgeColor());
                 hexagon.setFillColor(model.getFillColor());
                 
-                cmd = new CmdShapeAdd(hexagon, model);
+                cmd = new CmdAdd(hexagon, model);
 
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
@@ -245,7 +245,7 @@ public class DrawingController {
             if(JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this shape?", "Confirmation",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
-                cmd = new CmdShapeRemove(model.getSelectedShapes(), model);
+                cmd = new CmdRemove(model.getSelectedShapes(), model);
                 cmd.execute();
                 model.getSelectedShapes().clear();
                 model.getRedoStack().clear();
