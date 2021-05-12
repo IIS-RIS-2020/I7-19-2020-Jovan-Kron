@@ -24,7 +24,7 @@ import javax.swing.BoxLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class ModLine extends JDialog {
+public class DlgLine extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtStartX;
@@ -97,7 +97,7 @@ public class ModLine extends JDialog {
 
 	public static void main(String[] args) {
 		try {
-			ModLine dialog = new ModLine();
+			DlgLine dialog = new DlgLine();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public class ModLine extends JDialog {
 		}
 	}
 
-	public ModLine() {
+	public DlgLine() {
 		setTitle("Line");
 		
 		setBounds(100, 100, 356, 477);

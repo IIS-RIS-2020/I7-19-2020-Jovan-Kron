@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class ModPoint extends JDialog {
+public class DlgPoint extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtX;
@@ -62,7 +62,7 @@ public class ModPoint extends JDialog {
 
 	public static void main(String[] args) {
 		try {
-			ModPoint dialog = new ModPoint();
+			DlgPoint dialog = new DlgPoint();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class ModPoint extends JDialog {
 		}
 	}
 
-	public ModPoint() {
+	public DlgPoint() {
 		
 		setTitle("Point");
 		setBounds(100, 100, 297, 321);

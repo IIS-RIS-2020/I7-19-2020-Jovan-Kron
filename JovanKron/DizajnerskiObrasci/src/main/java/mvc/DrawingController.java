@@ -41,7 +41,7 @@ public class DrawingController {
 		if(frame.getTglbtnPoint()) {
             Point point = new Point(e.getX(), e.getY());
 
-            ModPoint dialog = new ModPoint();
+            DlgPoint dialog = new DlgPoint();
             dialog.setTxtX(Integer.toString(point.getX()));
             dialog.setTxtY(Integer.toString(point.getY()));
             dialog.setTxtXEdit(false);
@@ -59,7 +59,7 @@ public class DrawingController {
             }
 
         } else if(frame.getTglbtnLine()) {
-            ModLine dialog = new ModLine();
+        	DlgLine dialog = new DlgLine();
 
             Point p = new Point(e.getX(), e.getY());
 
@@ -260,7 +260,7 @@ public class DrawingController {
 	            if(shape instanceof Point) {
 	                Point oldState = (Point) shape;
 
-	                ModPoint mp = new ModPoint();
+	                DlgPoint mp = new DlgPoint();
 	                mp.setTxtX(Integer.toString(oldState.getX()));
 	                mp.setTxtY(Integer.toString(oldState.getY()));
 	                mp.setVisible(true);
@@ -280,7 +280,7 @@ public class DrawingController {
 	            } else if(shape instanceof Line) {
 	                Line oldState = (Line) shape;
 
-	                ModLine ml = new ModLine();
+	                DlgLine ml = new DlgLine();
 	                ml.setTxtStartXEdit(true);
 	                ml.setTxtStartYEdit(true);
 	                ml.setTxtEndXEdit(true);
