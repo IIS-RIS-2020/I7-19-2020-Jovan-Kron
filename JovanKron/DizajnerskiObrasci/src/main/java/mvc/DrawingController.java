@@ -378,7 +378,7 @@ public class DrawingController {
 	                dc.setTxtYEdit(true);
 	                dc.setTxtX(Integer.toString(oldState.getCenter().getX()));
 	                dc.setTxtY(Integer.toString(oldState.getCenter().getY()));
-	                dc.setRadius(Integer.toString(oldState.getRadius()));
+	                dc.setTxtRadius(Integer.toString(oldState.getRadius()));
 	                dc.setEdgeColor(oldState.getEdgeColor());
 	                dc.setFillColor(oldState.getFillColor());
 	                dc.setVisible(true);
@@ -404,7 +404,7 @@ public class DrawingController {
 	                dh.setTxtYEdit(true);
 	                dh.setTxtX(Integer.toString(oldState.getX()));
 	                dh.setTxtY(Integer.toString(oldState.getY()));
-	                dh.setRadius(Integer.toString(oldState.getR()));
+	                dh.setTxtRadius(Integer.toString(oldState.getR()));
 	                dh.setEdgeColor(oldState.getEdgeColor());
 	                dh.setFillColor(oldState.getFillColor());
 	                dh.setVisible(true);

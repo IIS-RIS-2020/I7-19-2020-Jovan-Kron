@@ -115,6 +115,14 @@ public class DlgRectangle extends JDialog {
 	public void setTxtWidth(String number) {
 		this.txtWidth.setText(number);
 	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
 
 	public static void main(String[] args) {
 		try {

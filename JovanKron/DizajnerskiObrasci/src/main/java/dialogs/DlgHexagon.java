@@ -70,9 +70,17 @@ public class DlgHexagon extends JDialog {
         return txtRadius.getText();
     }
 
-    public void setRadius(String textField) {
+    public void setTxtRadius(String textField) {
         this.txtRadius.setText(textField);
     }
+    
+    public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
 
     public static void main(String[] args) {
         try {

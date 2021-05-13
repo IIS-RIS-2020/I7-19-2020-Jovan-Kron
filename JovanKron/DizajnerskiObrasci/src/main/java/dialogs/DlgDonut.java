@@ -103,6 +103,14 @@ public class DlgDonut extends JDialog {
 	public void setOk(boolean ok) {
 		this.isOk = ok;
 	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
 
 	/**
 	 * Launch the application.
