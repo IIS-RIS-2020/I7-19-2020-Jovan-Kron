@@ -19,6 +19,8 @@ public class DlgPoint extends JDialog {
 	private JTextField txtY;
 	private boolean isOk;
 	private Color c = Color.BLACK;
+	JButton saveButton;
+	JButton cancelButton;
 	
 	public void setTxtXEdit(boolean b){
 		txtX.setEditable(b);
@@ -58,6 +60,14 @@ public class DlgPoint extends JDialog {
 	
 	public void setColor(Color color) {
 		c = color;
+	}
+	
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public JButton getCancelButton() {
+		return cancelButton;
 	}
 
 	public static void main(String[] args) {
@@ -150,7 +160,7 @@ public class DlgPoint extends JDialog {
 			buttonPane.setBackground(Color.WHITE);
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton saveButton = new JButton("Save");
+				saveButton = new JButton("Save");
 				saveButton.setBackground(Color.LIGHT_GRAY);
 				saveButton.setForeground(new Color(105, 105, 105));
 				saveButton.setFont(new Font("Arial", Font.BOLD, 17));
@@ -174,7 +184,7 @@ public class DlgPoint extends JDialog {
 				getRootPane().setDefaultButton(saveButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
 				cancelButton.setBackground(Color.LIGHT_GRAY);
 				cancelButton.setFont(new Font("Arial", Font.BOLD, 17));
 				cancelButton.setForeground(new Color(105, 105, 105));
