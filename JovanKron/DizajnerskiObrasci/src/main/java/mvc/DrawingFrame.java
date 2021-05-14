@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -56,31 +58,31 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
     private ListModel<String> listModel;
     private JScrollPane scrollPane;
     
-    public boolean getTglbtnPoint() {
+    public boolean isTglbtnPointSelected() {
         return tglbtnPoint.isSelected();
     }
 
-    public boolean getTglbtnLine() {
+    public boolean isTglbtnLineSelected() {
         return tglbtnLine.isSelected();
     }
 
-    public boolean getTglbtnRectangle() {
+    public boolean isTglbtnRectangleSelected() {
         return tglbtnRectangle.isSelected();
     }
 
-    public boolean getTglbtnCircle() {
+    public boolean isTglbtnCircleSelected() {
         return tglbtnCircle.isSelected();
     }
 
-    public boolean getTglbtnDonut() {
+    public boolean isTglbtnDonutSelected() {
         return tglbtnDonut.isSelected();
     }
 
-    public boolean getTglbtnSelect() {
+    public boolean isTglbtnSelectSelected() {
         return tglbtnSelect.isSelected();
     }
 
-    public boolean getTglbtnHexagon() {
+    public boolean isTglbtnHexagonSelected() {
         return tglbtnHexagon.isSelected();
     }
 	
@@ -329,9 +331,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
 //            }
 //        });
         
-        tglbtnDelete.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onDelete();
                 } catch (Exception ex) {
@@ -340,9 +341,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnEdgeColor.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnEdgeColor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.setEdgeColor();
                 } catch (Exception ex) {
@@ -351,9 +351,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
 
-        tglbtnFillColor.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnFillColor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.setFillColor();
                 } catch (Exception ex) {
@@ -362,9 +361,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnModify.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnModify.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onModify();
                 } catch (Exception ex) {
@@ -373,9 +371,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnToFront.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnToFront.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onToFront();
                 } catch (Exception ex) {
@@ -384,9 +381,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
 
-        tglbtnToBack.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnToBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onToBack();
                 } catch (Exception ex) {
@@ -395,9 +391,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
 
-        tglbtnBringToFront.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnBringToFront.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onBringToFront();
                 } catch (Exception ex) {
@@ -406,9 +401,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
 
-        tglbtnBringToBack.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnBringToBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onBringToBack();
                 } catch (Exception ex) {
@@ -417,9 +411,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnUndo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnUndo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onUndo();
                 } catch (Exception ex) {
@@ -428,9 +421,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
 
-        tglbtnRedo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnRedo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onRedo();
                 } catch (Exception ex) {
@@ -439,9 +431,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnSaveShapes.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnSaveShapes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     if (view.getModel().getUndoStack().size() > 0) {
                         controller.onSaveShapes();
@@ -452,9 +443,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnOpenShapes.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnOpenShapes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onOpenShapes();
                 } catch (IOException ex) {
@@ -465,9 +455,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnSaveCommands.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnSaveCommands.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     if (view.getModel().getUndoStack().size() > 0) {
                         controller.onSaveCommands();
@@ -478,9 +467,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnOpenCommands.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnOpenCommands.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.onOpenCommands();
                 } catch (IOException ex) {
@@ -491,9 +479,8 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
             }
         });
         
-        tglbtnNext.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        tglbtnNext.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
                 try {
                     controller.next();
                 } catch (Exception ex) {
@@ -549,6 +536,105 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         }
 		
 	}
-	
+
+	public DrawingController getController() {
+		return controller;
+	}
+
+	public JToggleButton getTglbtnModify() {
+		return tglbtnModify;
+	}
+
+	public JToggleButton getTglbtnDelete() {
+		return tglbtnDelete;
+	}
+
+	public JToggleButton getTglbtnToFront() {
+		return tglbtnToFront;
+	}
+
+	public JToggleButton getTglbtnToBack() {
+		return tglbtnToBack;
+	}
+
+	public JToggleButton getTglbtnBringToFront() {
+		return tglbtnBringToFront;
+	}
+
+	public JToggleButton getTglbtnBringToBack() {
+		return tglbtnBringToBack;
+	}
+
+	public JToggleButton getTglbtnUndo() {
+		return tglbtnUndo;
+	}
+
+	public JToggleButton getTglbtnRedo() {
+		return tglbtnRedo;
+	}
+
+	public JToggleButton getTglbtnEdgeColor() {
+		return tglbtnEdgeColor;
+	}
+
+	public JToggleButton getTglbtnFillColor() {
+		return tglbtnFillColor;
+	}
+
+	public JToggleButton getTglbtnNext() {
+		return tglbtnNext;
+	}
+
+	public JToggleButton getTglbtnSaveCommands() {
+		return tglbtnSaveCommands;
+	}
+
+	public JToggleButton getTglbtnSaveShapes() {
+		return tglbtnSaveShapes;
+	}
+
+	public JToggleButton getTglbtnOpenCommands() {
+		return tglbtnOpenCommands;
+	}
+
+	public JToggleButton getTglbtnOpenShapes() {
+		return tglbtnOpenShapes;
+	}
+
+	public ListModel<String> getListModel() {
+		return listModel;
+	}
+
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public JToggleButton getTglbtnPoint() {
+		return tglbtnPoint;
+	}
+
+	public JToggleButton getTglbtnLine() {
+		return tglbtnLine;
+	}
+
+	public JToggleButton getTglbtnRectangle() {
+		return tglbtnRectangle;
+	}
+
+	public JToggleButton getTglbtnCircle() {
+		return tglbtnCircle;
+	}
+
+	public JToggleButton getTglbtnDonut() {
+		return tglbtnDonut;
+	}
+
+	public JToggleButton getTglbtnHexagon() {
+		return tglbtnHexagon;
+	}
+
+	public JToggleButton getTglbtnSelect() {
+		return tglbtnSelect;
+	}
 	
 }

@@ -38,7 +38,7 @@ public class DrawingController {
 	}
 
 	public void mouseClicked(MouseEvent e) throws Exception {
-		if(frame.getTglbtnPoint()) {
+		if(frame.isTglbtnPointSelected()) {
             Point point = new Point(e.getX(), e.getY());
 
             DlgPoint dialog = new DlgPoint();
@@ -58,7 +58,7 @@ public class DrawingController {
                 cmd.execute();
             }
 
-        } else if(frame.getTglbtnLine()) {
+        } else if(frame.isTglbtnLineSelected()) {
         	DlgLine dialog = new DlgLine();
 
             Point p = new Point(e.getX(), e.getY());
@@ -88,7 +88,7 @@ public class DrawingController {
                 }
                 startPoint = null;
             }
-        } else if (frame.getTglbtnRectangle()) {
+        } else if (frame.isTglbtnRectangleSelected()) {
             Point p = new Point(e.getX(),e.getY());
 
             DlgRectangle dialog = new DlgRectangle();
@@ -112,7 +112,7 @@ public class DrawingController {
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                 cmd.execute();
             }
-        } else if(frame.getTglbtnCircle()) {
+        } else if(frame.isTglbtnCircleSelected()) {
             Point p = new Point(e.getX(),e.getY());
 
             DlgCircle dialog = new DlgCircle();
@@ -141,7 +141,7 @@ public class DrawingController {
 					e1.printStackTrace();
 				}
             }
-        } else if(frame.getTglbtnDonut()) {
+        } else if(frame.isTglbtnDonutSelected()) {
             Point p = new Point(e.getX(),e.getY());
 
             DlgDonut dialog = new DlgDonut();
@@ -165,7 +165,7 @@ public class DrawingController {
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                 cmd.execute();
             }
-        } else if(frame.getTglbtnHexagon()) {
+        } else if(frame.isTglbtnHexagonSelected()) {
             Point p = new Point(e.getX(),e.getY());
 
             DlgHexagon dialog = new DlgHexagon();
@@ -188,7 +188,7 @@ public class DrawingController {
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                 cmd.execute();
             }
-        } else if (frame.getTglbtnSelect()) {
+        } else if (frame.isTglbtnSelectSelected()) {
             if (tempShape != null) {
                 tempShape = null;
             }
