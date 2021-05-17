@@ -225,7 +225,7 @@ public class DlgCircle extends JDialog {
 								txtY.getText().isEmpty() ||
 								txtRadius.getText().isEmpty()) {
 							isOk = false;
-							setVisible(true);
+							//setVisible(true);
 							JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
 						} else {
 						isOk=true;

@@ -272,7 +272,7 @@ public class DlgLine extends JDialog {
 								txtEndX.getText().isEmpty() ||
 								txtEndY.getText().isEmpty()) {
 							isOk = false;
-							setVisible(true);
+							//setVisible(true);
 							JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
 						} else {
 						isOk=true;

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.AWTException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +15,7 @@ public class DlgPointTests {
 	private DlgPoint dialog;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws AWTException {
 		dialog = new DlgPoint();
 	}
 	
@@ -27,7 +29,7 @@ public class DlgPointTests {
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isOk());
 	}
-	
+
 	@Test
 	public void testSaveWithOnlySetXExpectedFalse() {
 		dialog.setTxtX("545");

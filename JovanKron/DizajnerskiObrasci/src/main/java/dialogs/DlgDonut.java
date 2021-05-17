@@ -285,7 +285,7 @@ public class DlgDonut extends JDialog {
 								txtInner.getText().isEmpty() ||
 								txtOuter.getText().isEmpty()) {
 							isOk = false;
-							setVisible(true);
+							//setVisible(true);
 							JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
 						} else {
 						isOk=true;
