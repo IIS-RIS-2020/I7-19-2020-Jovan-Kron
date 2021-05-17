@@ -48,13 +48,8 @@ public class DrawingControllerTests {
 
 	@Test
 	public void testDrawPoint() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
+		click(400, 400);
+		pressEnter(1);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Point);
 		assertEquals(400, ((Point) model.getShapes().get(0)).getX());
@@ -65,16 +60,9 @@ public class DrawingControllerTests {
 	@Test
 	public void testDrawLine() {
 		frame.getTglbtnLine().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
+		click(400, 400);
+		click(500, 500);
+		pressEnter(1);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Line);
 		assertEquals(400, ((Line) model.getShapes().get(0)).getStartPoint().getX());
@@ -86,67 +74,20 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testDrawRectangle() {
-		frame.getTglbtnRectangle().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_1);  
-		robot.keyRelease(KeyEvent.VK_1);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
+		drawRectangle();
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
 		assertEquals(400, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getX());
 		assertEquals(299, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getY());
-		assertEquals(10, ((Rectangle) model.getShapes().get(0)).getHeight());
-		assertEquals(30, ((Rectangle) model.getShapes().get(0)).getWidth());
+		assertEquals(30, ((Rectangle) model.getShapes().get(0)).getHeight());
+		assertEquals(60, ((Rectangle) model.getShapes().get(0)).getWidth());
 		assertEquals(Color.BLACK, model.getShapes().get(0).getEdgeColor());
 		assertEquals(Color.YELLOW, ((Rectangle) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
 	public void testDrawCircle() {
-		frame.getTglbtnCircle().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
+		drawCircle();
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Circle);
 		assertEquals(400, ((Circle) model.getShapes().get(0)).getCenter().getX());
@@ -155,38 +96,10 @@ public class DrawingControllerTests {
 		assertEquals(Color.BLACK, model.getShapes().get(0).getEdgeColor());
 		assertEquals(Color.YELLOW, ((Circle) model.getShapes().get(0)).getFillColor());
 	}
-	
+
 	@Test
 	public void testDrawDonut() {
-		frame.getTglbtnDonut().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_2);  
-		robot.keyRelease(KeyEvent.VK_2);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
+		drawDonut();
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Donut);
 		assertEquals(400, ((Donut) model.getShapes().get(0)).getCenter().getX());
@@ -196,52 +109,25 @@ public class DrawingControllerTests {
 		assertEquals(Color.BLACK, model.getShapes().get(0).getEdgeColor());
 		assertEquals(Color.YELLOW, ((Donut) model.getShapes().get(0)).getFillColor());
 	}
-	
+
 	@Test
 	public void testDrawHexagon() {
-		frame.getTglbtnHexagon().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
+		drawHexagon();
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
 		assertEquals(400, ((HexagonAdapter) model.getShapes().get(0)).getX());
 		assertEquals(299, ((HexagonAdapter) model.getShapes().get(0)).getY());
-		assertEquals(30, ((HexagonAdapter) model.getShapes().get(0)).getR());
+		assertEquals(40, ((HexagonAdapter) model.getShapes().get(0)).getR());
 		assertEquals(Color.BLACK, model.getShapes().get(0).getEdgeColor());
 		assertEquals(Color.YELLOW, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
 	public void testSelect() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);
+		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
+		click(400, 400);		
 		assertEquals(1, model.getSelectedShapes().size());
 		assertTrue(model.getSelectedShapes().get(0) instanceof Point);
 		assertEquals(400, ((Point) model.getSelectedShapes().get(0)).getX());
@@ -251,193 +137,80 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testDeselect() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);
+		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
+		click(400, 400);
+		click(400, 400);
 		assertEquals(0, model.getSelectedShapes().size());
 	}
 	
 	@Test
 	public void testSelectMoreShapes() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);
+		pressEnter(1);
+		click(500, 500);
+		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
+		click(400, 400);
+		click(500, 500);		
 		assertEquals(2, model.getSelectedShapes().size());
 	}
 	
 	@Test
 	public void testDeselectAllShapes() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);
+		pressEnter(1);
+		click(500, 500);		
+		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(600,600);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
+		click(400, 400);		
+		click(500, 500);		
+		click(600, 600);				
 		assertEquals(0, model.getSelectedShapes().size());
 	}
 	
 	@Test
 	public void testDeleteOneShape() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);		
+		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 8; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-		robot.delay(500);
+		click(400, 400);						
+		pressTab(8);
+		pressSpace(2);		
 		assertEquals(0, model.getShapes().size());
 		assertEquals(0, model.getSelectedShapes().size());
 	}
 	
 	@Test
 	public void testDeleteTwoShapes() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);
+		pressEnter(1);		
+		click(500, 500);
+		pressEnter(1);		
 		frame.getTglbtnSelect().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 7; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-		robot.delay(500);
+		click(400, 400);
+		click(500, 500);				
+		pressTab(7);
+		pressSpace(2);				
 		assertEquals(0, model.getShapes().size());
 		assertEquals(0, model.getSelectedShapes().size());
 	}
 	
 	@Test
 	public void testModifyPoint() {
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
+		click(400, 400);		
+		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
 		robot.delay(200);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(200);
-		for (int i = 0; i < 7; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
+		click(400, 400);						
+		pressTab(7);
 		model.setEdgeColor(Color.RED);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(200);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(200);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(200);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(200);
-	    robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-	    robot.delay(500);
+		pressSpace(1);
+	    pressBackspace(1);
+	    pressTab(1);
+	    pressBackspace(1);
+	    pressEnter(1);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Point);
 		assertEquals(40, ((Point) model.getShapes().get(0)).getX());
@@ -448,45 +221,18 @@ public class DrawingControllerTests {
 	@Test
 	public void testModifyLine() {
 		frame.getTglbtnLine().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.mouseMove(500,500);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(100);
-		frame.getTglbtnSelect().setSelected(true);
-		robot.delay(200);
-		robot.mouseMove(450,450);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 7; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
+		click(400, 400);		
+		click(500, 500);
+		pressEnter(1);
+		frame.getTglbtnSelect().setSelected(true);		
+		click(450, 450);						
+		pressTab(7);
 		model.setEdgeColor(Color.RED);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-	    robot.delay(500);
+		pressSpace(1);
+	    pressBackspace(1);
+	    pressTab(1);
+	    pressBackspace(1);
+	    pressEnter(1);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Line);
 		assertEquals(40, ((Line) model.getShapes().get(0)).getStartPoint().getX());
@@ -498,151 +244,46 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testModifyRectangle() {
-		frame.getTglbtnRectangle().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_1);  
-		robot.keyRelease(KeyEvent.VK_1);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
-		frame.getTglbtnSelect().setSelected(true);
-		robot.delay(200);
-		robot.mouseMove(405,405);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 7; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
+		drawRectangle();
+		frame.getTglbtnSelect().setSelected(true);		
+		click(405, 405);						
+		pressTab(7);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
+		pressSpace(1);
+	    pressBackspace(1);
+	    pressTab(1);
+	    pressBackspace(1);
+	    pressTab(1);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-	    robot.delay(500);
+	    pressEnter(1);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
 		assertEquals(40, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getX());
 		assertEquals(29, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getY());
-		assertEquals(100, ((Rectangle) model.getShapes().get(0)).getHeight());
-		assertEquals(30, ((Rectangle) model.getShapes().get(0)).getWidth());
+		assertEquals(300, ((Rectangle) model.getShapes().get(0)).getHeight());
+		assertEquals(60, ((Rectangle) model.getShapes().get(0)).getWidth());
 		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
 		assertEquals(Color.GREEN, ((Rectangle) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
 	public void testModifyDonut() {
-		frame.getTglbtnDonut().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_2);  
-		robot.keyRelease(KeyEvent.VK_2);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
-
-		frame.getTglbtnSelect().setSelected(true);
-		robot.delay(200);
-		robot.mouseMove(425,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 7; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
+		drawDonut();
+		frame.getTglbtnSelect().setSelected(true);		
+		click(425, 400);						
+		pressTab(7);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
+		pressSpace(1);
+	    pressBackspace(1);
+	    pressTab(1);
+		pressBackspace(1);
+	    pressTab(2);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-	    robot.delay(500);
-		
+	    pressEnter(1);		
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Donut);
 		assertEquals(40, ((Donut) model.getShapes().get(0)).getCenter().getX());
@@ -655,64 +296,20 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testModifyCircle() {
-		frame.getTglbtnCircle().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_3);  
-		robot.keyRelease(KeyEvent.VK_3);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);  
-		robot.keyRelease(KeyEvent.VK_0);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-		robot.delay(500);
-		
-		frame.getTglbtnSelect().setSelected(true);
-		robot.delay(200);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 7; i++) {
-			robot.keyPress(KeyEvent.VK_TAB);
-		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
-		}
-		robot.delay(100);
+		drawCircle();		
+		frame.getTglbtnSelect().setSelected(true);		
+		click(400, 400);				
+		pressTab(7);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
+		pressSpace(1);
+	    pressBackspace(1);
+	    pressTab(1);
+		pressBackspace(1);
+	    pressTab(1);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-	    robot.delay(500);
-		
-		
+	    pressEnter(1);				
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Circle);
 		assertEquals(40, ((Circle) model.getShapes().get(0)).getCenter().getX());
@@ -724,70 +321,196 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testModifyHexagon() {
-		frame.getTglbtnHexagon().setSelected(true);
-		robot.mouseMove(400,400);
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		robot.delay(100);
+		drawHexagon();
+		frame.getTglbtnSelect().setSelected(true);		
+		click(400, 400);				
+		pressTab(7);
+		model.setEdgeColor(Color.RED);
+		model.setFillColor(Color.GREEN);
+		pressSpace(1);
+	    pressBackspace(1);
+	    pressTab(1);
+		pressBackspace(1);
+	    pressTab(1);
+		robot.keyPress(KeyEvent.VK_0);
+	    robot.keyRelease(KeyEvent.VK_0);
+	    pressEnter(1);		
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
+		assertEquals(40, ((HexagonAdapter) model.getShapes().get(0)).getX());
+		assertEquals(29, ((HexagonAdapter) model.getShapes().get(0)).getY());
+		assertEquals(400, ((HexagonAdapter) model.getShapes().get(0)).getR());
+		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
+		assertEquals(Color.GREEN, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
+	}
+	
+	@Test
+	public void testToFront() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();		
+		frame.getTglbtnSelect().setSelected(true);		
+		click(459, 429);				
+		pressTab(9);		
+		pressSpace(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(1) instanceof Rectangle);
+		assertTrue(model.getShapes().get(0) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testToBack() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();			
+		frame.getTglbtnSelect().setSelected(true);		
+		click(400, 400);		
+		pressTab(10);
+		pressSpace(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(2) instanceof Circle);
+		assertTrue(model.getShapes().get(1) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testBringToFront() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();			
+		frame.getTglbtnSelect().setSelected(true);		
+		click(459, 429);				
+		pressTab(11);		
+		pressSpace(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(2) instanceof Rectangle);
+		assertTrue(model.getShapes().get(0) instanceof Circle);
+		assertTrue(model.getShapes().get(1) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testBringToBack() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();	
+		frame.getTglbtnSelect().setSelected(true);		
+		click(400, 400);		
+		pressTab(12);
+		pressSpace(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(1) instanceof Rectangle);
+		assertTrue(model.getShapes().get(2) instanceof Circle);
+		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
+	}
+	
+	public void drawRectangle() {
+		frame.getTglbtnRectangle().setSelected(true);
+		click(400, 400);
+		pressTab(2);
 		robot.keyPress(KeyEvent.VK_3);  
 		robot.keyRelease(KeyEvent.VK_3);
 		robot.delay(100);
 		robot.keyPress(KeyEvent.VK_0);  
 		robot.keyRelease(KeyEvent.VK_0);
 		robot.delay(100);
-		robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
+		pressTab(1);
+		robot.keyPress(KeyEvent.VK_6);  
+		robot.keyRelease(KeyEvent.VK_6);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_0);  
+		robot.keyRelease(KeyEvent.VK_0);
+		robot.delay(100);
+		pressEnter(1);
+		robot.delay(500);
+	}
+	
+	public void drawDonut() {
+		frame.getTglbtnDonut().setSelected(true);
+		click(400, 400);
+		pressTab(2);
+		robot.keyPress(KeyEvent.VK_2);  
+		robot.keyRelease(KeyEvent.VK_2);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_0);  
+		robot.keyRelease(KeyEvent.VK_0);
+		robot.delay(100);
+		pressTab(1);
+		robot.keyPress(KeyEvent.VK_3);  
+		robot.keyRelease(KeyEvent.VK_3);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_0);  
+		robot.keyRelease(KeyEvent.VK_0);
+		robot.delay(100);
+		pressEnter(1);
 		robot.delay(500);
 		
-		
-		frame.getTglbtnSelect().setSelected(true);
-		robot.delay(200);
-		robot.mouseMove(400,400);
+	}
+	
+	public void drawCircle() {
+		frame.getTglbtnCircle().setSelected(true);
+		click(400, 400);
+		pressTab(2);
+		robot.keyPress(KeyEvent.VK_3);  
+		robot.keyRelease(KeyEvent.VK_3);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_0);  
+		robot.keyRelease(KeyEvent.VK_0);
+		robot.delay(100);
+		pressEnter(1);
+		robot.delay(500);
+	}
+	
+	public void drawHexagon() {
+		frame.getTglbtnHexagon().setSelected(true);
+		click(400, 400);
+		pressTab(2);
+		robot.keyPress(KeyEvent.VK_4);  
+		robot.keyRelease(KeyEvent.VK_4);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_0);  
+		robot.keyRelease(KeyEvent.VK_0);
+		robot.delay(100);
+		pressEnter(1);
+		robot.delay(500);
+	}
+	
+	public void click(int x, int y) {
+		robot.mouseMove(x, y);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(500);
-		for (int i = 0; i < 7; i++) {
+		robot.delay(100);
+	}
+	
+	public void pressTab(int numberOfPresses) {
+		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_TAB);
 		    robot.keyRelease(KeyEvent.VK_TAB);
 		    robot.delay(100);
 		}
-		robot.delay(100);
-		model.setEdgeColor(Color.RED);
-		model.setFillColor(Color.GREEN);
-		robot.keyPress(KeyEvent.VK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_SPACE);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-	    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_TAB);
-	    robot.keyRelease(KeyEvent.VK_TAB);
-	    robot.delay(100);
-		robot.keyPress(KeyEvent.VK_0);
-	    robot.keyRelease(KeyEvent.VK_0);
-	    robot.delay(100);
-	    robot.keyPress(KeyEvent.VK_ENTER);
-	    robot.keyRelease(KeyEvent.VK_ENTER);
-	    robot.delay(500);
-		
-		assertEquals(1, model.getShapes().size());
-		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
-		assertEquals(40, ((HexagonAdapter) model.getShapes().get(0)).getX());
-		assertEquals(29, ((HexagonAdapter) model.getShapes().get(0)).getY());
-		assertEquals(300, ((HexagonAdapter) model.getShapes().get(0)).getR());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
-		assertEquals(Color.GREEN, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
+	}
+	
+	public void pressSpace(int numberOfPresses) {
+		for (int i = 0; i < numberOfPresses; i++) {
+			robot.keyPress(KeyEvent.VK_SPACE);
+		    robot.keyRelease(KeyEvent.VK_SPACE);
+		    robot.delay(100);
+		}
+	}
+	
+	public void pressBackspace(int numberOfPresses) {
+		for (int i = 0; i < numberOfPresses; i++) {
+			robot.keyPress(KeyEvent.VK_BACK_SPACE);
+		    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+		    robot.delay(100);
+		}
+	}
+	
+	public void pressEnter(int numberOfPresses) {
+		for (int i = 0; i < numberOfPresses; i++) {
+			robot.keyPress(KeyEvent.VK_ENTER);
+		    robot.keyRelease(KeyEvent.VK_ENTER);
+		    robot.delay(100);
+		}
 	}
 }
