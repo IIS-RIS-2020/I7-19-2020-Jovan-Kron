@@ -175,6 +175,7 @@ public class DrawingControllerTests {
 		click(400, 400);		
 		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);
+		robot.delay(200);
 		click(400, 400);						
 		pressTab(8);
 		pressSpace(2);		
@@ -402,6 +403,55 @@ public class DrawingControllerTests {
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
 		assertTrue(model.getShapes().get(2) instanceof Circle);
 		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testUndoOnceForAdd() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();	
+		pressTab(12);
+		pressSpace(1);
+	    assertEquals(2, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+	}
+	
+	@Test
+	public void testRedoOnceForAdd() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();	
+		pressTab(12);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testChangeEdgeColor() {
+		pressTab(12);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+		pressTab(2);
+		pressSpace(1);
+	    assertEquals(Color.WHITE, model.getEdgeColor());
+	}
+	
+	@Test
+	public void testChangeFillColor() {
+		pressTab(13);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+		pressTab(2);
+		pressSpace(1);
+	    assertEquals(Color.WHITE, model.getFillColor());
 	}
 	
 	public void drawRectangle() {
