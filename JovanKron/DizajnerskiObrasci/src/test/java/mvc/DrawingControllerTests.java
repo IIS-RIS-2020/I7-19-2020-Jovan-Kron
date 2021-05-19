@@ -45,7 +45,7 @@ public class DrawingControllerTests {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 	}
-
+	
 	@Test
 	public void testDrawPoint() {
 		click(400, 400);
@@ -177,7 +177,7 @@ public class DrawingControllerTests {
 		frame.getTglbtnSelect().setSelected(true);
 		robot.delay(200);
 		click(400, 400);						
-		pressTab(8);
+		pressTab(9);
 		pressSpace(2);		
 		assertEquals(0, model.getShapes().size());
 		assertEquals(0, model.getSelectedShapes().size());
@@ -192,7 +192,7 @@ public class DrawingControllerTests {
 		frame.getTglbtnSelect().setSelected(true);
 		click(400, 400);
 		click(500, 500);				
-		pressTab(7);
+		pressTab(8);
 		pressSpace(2);				
 		assertEquals(0, model.getShapes().size());
 		assertEquals(0, model.getSelectedShapes().size());
@@ -205,7 +205,7 @@ public class DrawingControllerTests {
 		frame.getTglbtnSelect().setSelected(true);
 		robot.delay(200);
 		click(400, 400);						
-		pressTab(7);
+		pressTab(8);
 		model.setEdgeColor(Color.RED);
 		pressSpace(1);
 	    pressBackspace(1);
@@ -227,7 +227,7 @@ public class DrawingControllerTests {
 		pressEnter(1);
 		frame.getTglbtnSelect().setSelected(true);		
 		click(450, 450);						
-		pressTab(7);
+		pressTab(8);
 		model.setEdgeColor(Color.RED);
 		pressSpace(1);
 	    pressBackspace(1);
@@ -248,7 +248,7 @@ public class DrawingControllerTests {
 		drawRectangle();
 		frame.getTglbtnSelect().setSelected(true);		
 		click(405, 405);						
-		pressTab(7);
+		pressTab(8);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
 		pressSpace(1);
@@ -274,7 +274,7 @@ public class DrawingControllerTests {
 		drawDonut();
 		frame.getTglbtnSelect().setSelected(true);		
 		click(425, 400);						
-		pressTab(7);
+		pressTab(8);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
 		pressSpace(1);
@@ -300,7 +300,7 @@ public class DrawingControllerTests {
 		drawCircle();		
 		frame.getTglbtnSelect().setSelected(true);		
 		click(400, 400);				
-		pressTab(7);
+		pressTab(8);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
 		pressSpace(1);
@@ -325,7 +325,7 @@ public class DrawingControllerTests {
 		drawHexagon();
 		frame.getTglbtnSelect().setSelected(true);		
 		click(400, 400);				
-		pressTab(7);
+		pressTab(8);
 		model.setEdgeColor(Color.RED);
 		model.setFillColor(Color.GREEN);
 		pressSpace(1);
@@ -352,7 +352,7 @@ public class DrawingControllerTests {
 		drawHexagon();		
 		frame.getTglbtnSelect().setSelected(true);		
 		click(459, 429);				
-		pressTab(9);		
+		pressTab(10);		
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
@@ -367,7 +367,7 @@ public class DrawingControllerTests {
 		drawHexagon();			
 		frame.getTglbtnSelect().setSelected(true);		
 		click(400, 400);		
-		pressTab(10);
+		pressTab(11);
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
@@ -382,7 +382,7 @@ public class DrawingControllerTests {
 		drawHexagon();			
 		frame.getTglbtnSelect().setSelected(true);		
 		click(459, 429);				
-		pressTab(11);		
+		pressTab(12);		
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(2) instanceof Rectangle);
@@ -397,7 +397,7 @@ public class DrawingControllerTests {
 		drawHexagon();	
 		frame.getTglbtnSelect().setSelected(true);		
 		click(400, 400);		
-		pressTab(12);
+		pressTab(13);
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
@@ -410,7 +410,7 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();	
-		pressTab(12);
+		pressTab(8);
 		pressSpace(1);
 	    assertEquals(2, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
@@ -422,7 +422,7 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();	
-		pressTab(12);
+		pressTab(8);
 		pressSpace(1);
 		pressTab(1);
 		pressSpace(1);
@@ -434,7 +434,7 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testChangeEdgeColor() {
-		pressTab(12);
+		pressTab(8);
 		pressSpace(1);
 		pressTab(1);
 		pressSpace(1);
@@ -445,7 +445,7 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testChangeFillColor() {
-		pressTab(13);
+		pressTab(9);
 		pressSpace(1);
 		pressTab(1);
 		pressSpace(1);

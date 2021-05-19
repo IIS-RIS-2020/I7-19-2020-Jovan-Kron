@@ -23,7 +23,7 @@ public class CmdDeselect implements Command {
     public void execute() {
         model.getAllCommands().append("Deselect next " + shapesForDeselect.size() + " shapes\n");
         model.getListModel().addElement("Deselect next " + shapesForDeselect.size() + " shapes\n");
-        model.getPropertyChangeSupport().firePropertyChange("sizeUpdate", model.getSelectedShapes().size(), model.getSelectedShapes().size() - shapesForDeselect.size());
+        //model.getPropertyChangeSupport().firePropertyChange("sizeUpdate", model.getSelectedShapes().size(), model.getSelectedShapes().size() - shapesForDeselect.size());
         for (Shape shape : shapesForDeselect) {
             shape.setSelected(false);
             model.removeSelected(shape);
@@ -35,7 +35,7 @@ public class CmdDeselect implements Command {
 
     @Override
     public void unexecute() {
-        model.getPropertyChangeSupport().firePropertyChange("sizeUpdate", model.getSelectedShapes().size(), model.getSelectedShapes().size() + shapesForDeselect.size());
+        //model.getPropertyChangeSupport().firePropertyChange("sizeUpdate", model.getSelectedShapes().size(), model.getSelectedShapes().size() + shapesForDeselect.size());
         for (Shape shape : shapesForDeselect) {
             shape.setSelected(true);
             model.addSelected(shape);

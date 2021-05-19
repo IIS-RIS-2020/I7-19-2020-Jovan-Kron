@@ -50,24 +50,28 @@ public class DrawingFrameTests {
 	
 	@Test
 	public void testToFront() throws Exception {
+		frame.getTglbtnToFront().setEnabled(true);
 		frame.getTglbtnToFront().doClick();
 		verify(controller).onToFront();
 	}
 	
 	@Test
 	public void testToBack() throws Exception {
+		frame.getTglbtnToBack().setEnabled(true);
 		frame.getTglbtnToBack().doClick();
 		verify(controller).onToBack();
 	}
 	
 	@Test
 	public void testBringToFront() throws Exception {
+		frame.getTglbtnBringToFront().setEnabled(true);
 		frame.getTglbtnBringToFront().doClick();
 		verify(controller).onBringToFront();
 	}
 	
 	@Test
 	public void testBringToBack() throws Exception {
+		frame.getTglbtnBringToBack().setEnabled(true);
 		frame.getTglbtnBringToBack().doClick();
 		verify(controller).onBringToBack();
 	}

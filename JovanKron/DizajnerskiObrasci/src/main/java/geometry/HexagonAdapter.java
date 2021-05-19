@@ -107,8 +107,10 @@ public class HexagonAdapter extends SurfaceShape {
         return hexagon.isSelected();
     }
 
+    @Override
     public void setSelected(boolean selected) {
         this.hexagon.setSelected(selected);
+        super.setSelected(selected);
     }
 
     @Override

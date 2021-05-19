@@ -2,8 +2,9 @@ package geometry;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.Observable;
 
-public abstract class Shape implements Movable, Comparable, Serializable {
+public abstract class Shape extends Observable implements Movable, Comparable, Serializable {
 	private boolean selected;
 	private int positionInArray;
 	private Color edgeColor;
@@ -28,6 +29,8 @@ public abstract class Shape implements Movable, Comparable, Serializable {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+		setChanged();
+		notifyObservers();
 	}
 
 	public int getPositionInArray() {

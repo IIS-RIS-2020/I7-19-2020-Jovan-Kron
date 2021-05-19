@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import commands.*;
 import dialogs.*;
 import geometry.*;
+import observer.ObserverForButtons;
 import strategy.*;
 
 public class DrawingController {
@@ -50,6 +51,7 @@ public class DrawingController {
 
             if(dialog.isOk()) {
             	point.setEdgeColor(model.getEdgeColor());
+            	point.addObserver(new ObserverForButtons(model, frame));
 
                 cmd = new CmdAdd(point, model);
             	model.getRedoStack().clear();
@@ -80,7 +82,7 @@ public class DrawingController {
                 if (dialog.isOk()) {
                 	Line line = new Line(startPoint, new Point(e.getX(), e.getY()));
                     line.setEdgeColor(model.getEdgeColor());
-
+                    line.addObserver(new ObserverForButtons(model, frame));
                     cmd = new CmdAdd(line, model);
                 	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                     model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
@@ -102,12 +104,12 @@ public class DrawingController {
             int width = Integer.parseInt(dialog.getTxtWidth().getText());
 
             if (dialog.isOk()) {
-            	 Rectangle rectangle = new Rectangle(p,width,height);
+            	Rectangle rectangle = new Rectangle(p,width,height);
                  
-                 rectangle.setEdgeColor(model.getEdgeColor());
-                 rectangle.setFillColor(model.getFillColor());
-
-                 cmd = new CmdAdd(rectangle, model);
+                rectangle.setEdgeColor(model.getEdgeColor());
+                rectangle.setFillColor(model.getFillColor());
+                rectangle.addObserver(new ObserverForButtons(model, frame));
+                cmd = new CmdAdd(rectangle, model);
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
                 cmd.execute();
@@ -131,7 +133,7 @@ public class DrawingController {
                     
                     circle.setEdgeColor(model.getEdgeColor());
                     circle.setFillColor(model.getFillColor());
-
+                    circle.addObserver(new ObserverForButtons(model, frame));
                     cmd = new CmdAdd(circle, model);
                 	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                     model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
@@ -159,7 +161,7 @@ public class DrawingController {
                 
                 donut.setEdgeColor(model.getEdgeColor());
                 donut.setFillColor(model.getFillColor());
-
+                donut.addObserver(new ObserverForButtons(model, frame));
                 cmd = new CmdAdd(donut, model);
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);
                 model.getPropertyChangeSupport().firePropertyChange("sizeRedo", model.getRedoStack().size(), 0);
@@ -181,7 +183,7 @@ public class DrawingController {
                 
                 hexagon.setEdgeColor(model.getEdgeColor());
                 hexagon.setFillColor(model.getFillColor());
-                
+                hexagon.addObserver(new ObserverForButtons(model, frame));
                 cmd = new CmdAdd(hexagon, model);
 
             	model.getPropertyChangeSupport().firePropertyChange("sizeUndo", model.getUndoStack().size(), model.getUndoStack().size() + 1);

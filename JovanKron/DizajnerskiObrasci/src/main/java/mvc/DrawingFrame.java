@@ -160,7 +160,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnHexagon = new JToggleButton("Hexagon");
         GridBagConstraints gbc_tglbtnHexagon = new GridBagConstraints();
         gbc_tglbtnHexagon.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnHexagon.gridx = 12;
+        gbc_tglbtnHexagon.gridx = 5;
         gbc_tglbtnHexagon.gridy = 0;
         pnlNorth.add(tglbtnHexagon, gbc_tglbtnHexagon);
         tglbtnHexagon.setPreferredSize(dimensionForButton);
@@ -170,7 +170,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnSelect.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnSelect = new GridBagConstraints();
         gbc_tglbtnSelect.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnSelect.gridx = 5;
+        gbc_tglbtnSelect.gridx = 6;
         gbc_tglbtnSelect.gridy = 0;
         pnlNorth.add(tglbtnSelect, gbc_tglbtnSelect);
         group.add(tglbtnSelect);
@@ -180,7 +180,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnModify.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnModify = new GridBagConstraints();
         gbc_tglbtnModify.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnModify.gridx = 6;
+        gbc_tglbtnModify.gridx = 7;
         gbc_tglbtnModify.gridy = 0;
         pnlNorth.add(tglbtnModify, gbc_tglbtnModify);
         group.add(tglbtnModify);
@@ -190,43 +190,47 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnDelete.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnDelete = new GridBagConstraints();
         gbc_tglbtnDelete.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnDelete.gridx = 7;
+        gbc_tglbtnDelete.gridx = 8;
         gbc_tglbtnDelete.gridy = 0;
         pnlNorth.add(tglbtnDelete, gbc_tglbtnDelete);
         group.add(tglbtnDelete);
 
         tglbtnToFront = new JToggleButton("To Front");
+        tglbtnToFront.setEnabled(false);
         tglbtnToFront.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnToFront = new GridBagConstraints();
         gbc_tglbtnToFront.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnToFront.gridx = 8;
+        gbc_tglbtnToFront.gridx = 9;
         gbc_tglbtnToFront.gridy = 0;
         pnlNorth.add(tglbtnToFront, gbc_tglbtnToFront);
         group.add(tglbtnToFront);
 
         tglbtnToBack = new JToggleButton("To Back");
+        tglbtnToBack.setEnabled(false);
         tglbtnToBack.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnToBack = new GridBagConstraints();
         gbc_tglbtnToBack.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnToBack.gridx = 9;
+        gbc_tglbtnToBack.gridx = 10;
         gbc_tglbtnToBack.gridy = 0;
         pnlNorth.add(tglbtnToBack, gbc_tglbtnToBack);
         group.add(tglbtnToBack);
 
         tglbtnBringToFront = new JToggleButton("Bring To Front");
+        tglbtnBringToFront.setEnabled(false);
         tglbtnBringToFront.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnBringToFront = new GridBagConstraints();
         gbc_tglbtnBringToFront.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnBringToFront.gridx = 10;
+        gbc_tglbtnBringToFront.gridx = 11;
         gbc_tglbtnBringToFront.gridy = 0;
         pnlNorth.add(tglbtnBringToFront, gbc_tglbtnBringToFront);
         group.add(tglbtnBringToFront);
 
         tglbtnBringToBack = new JToggleButton("Bring To Back");
+        tglbtnBringToBack.setEnabled(false);
         tglbtnBringToBack.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnBringToBack = new GridBagConstraints();
         gbc_tglbtnBringToBack.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnBringToBack.gridx = 11;
+        gbc_tglbtnBringToBack.gridx = 12;
         gbc_tglbtnBringToBack.gridy = 0;
         pnlNorth.add(tglbtnBringToBack, gbc_tglbtnBringToBack);
         group.add(tglbtnBringToBack);
@@ -236,7 +240,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnUndo.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnUndo = new GridBagConstraints();
         gbc_tglbtnUndo.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnUndo.gridx = 13;
+        gbc_tglbtnUndo.gridx = 14;
         gbc_tglbtnUndo.gridy = 0;
         pnlNorth.add(tglbtnUndo, gbc_tglbtnUndo);
         group.add(tglbtnUndo);
@@ -246,7 +250,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnRedo.setPreferredSize(dimensionForButton);
         GridBagConstraints gbc_tglbtnRedo = new GridBagConstraints();
         gbc_tglbtnRedo.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnRedo.gridx = 14;
+        gbc_tglbtnRedo.gridx = 15;
         gbc_tglbtnRedo.gridy = 0;
         pnlNorth.add(tglbtnRedo, gbc_tglbtnRedo);
         group.add(tglbtnRedo);
@@ -256,7 +260,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnEdgeColor.setBackground(Color.BLACK);
         GridBagConstraints gbc_tglbtnEdgeColor = new GridBagConstraints();
         gbc_tglbtnEdgeColor.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnEdgeColor.gridx = 15;
+        gbc_tglbtnEdgeColor.gridx = 16;
         gbc_tglbtnEdgeColor.gridy = 0;
         pnlNorth.add(tglbtnEdgeColor, gbc_tglbtnEdgeColor);
         group.add(tglbtnEdgeColor);
@@ -266,7 +270,7 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
         tglbtnFillColor.setBackground(Color.YELLOW);
         GridBagConstraints gbc_tglbtnFillColor = new GridBagConstraints();
         gbc_tglbtnFillColor.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnFillColor.gridx = 16;
+        gbc_tglbtnFillColor.gridx = 17;
         gbc_tglbtnFillColor.gridy = 0;
         pnlNorth.add(tglbtnFillColor, gbc_tglbtnFillColor);
         group.add(tglbtnFillColor);
