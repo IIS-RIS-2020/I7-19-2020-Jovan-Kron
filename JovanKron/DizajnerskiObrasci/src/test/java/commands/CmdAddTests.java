@@ -41,7 +41,7 @@ public class CmdAddTests {
 	
 	@Test
 	public void testExecuteSurfaceShapeExpectedTrue() {
-		cmdAdd.setShape(circle);
+		cmdAdd = new CmdAdd(circle, model);
 		cmdAdd.execute();
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().contains(circle));
@@ -49,7 +49,7 @@ public class CmdAddTests {
 
 	@Test
 	public void testUnexecuteSurfaceShapeExpectedTrue() {
-		cmdAdd.setShape(circle);
+		cmdAdd = new CmdAdd(circle, model);
 		cmdAdd.execute();
 		cmdAdd.unexecute();
 		assertEquals(0, model.getShapes().size());

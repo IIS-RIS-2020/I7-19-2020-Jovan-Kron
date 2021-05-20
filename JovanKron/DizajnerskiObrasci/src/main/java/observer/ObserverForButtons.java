@@ -27,31 +27,31 @@ public class ObserverForButtons implements Observer  {
 		}
 		
 		if(numberOfSelectedShapes == 0) {
-			frame.getTglbtnDelete().setEnabled(false);
-			frame.getTglbtnModify().setEnabled(false);
+			frame.getTglBtnDelete().setEnabled(false);
+			frame.getTglBtnModify().setEnabled(false);
 			
-			frame.getTglbtnBringToBack().setEnabled(false);
-			frame.getTglbtnBringToFront().setEnabled(false);
-			frame.getTglbtnToFront().setEnabled(false);
-			frame.getTglbtnToBack().setEnabled(false);
+			frame.getTglBtnBringToBack().setEnabled(false);
+			frame.getTglBtnBringToFront().setEnabled(false);
+			frame.getTglBtnToFront().setEnabled(false);
+			frame.getTglBtnToBack().setEnabled(false);
 			
 		}else if(numberOfSelectedShapes == 1) {
-			frame.getTglbtnDelete().setEnabled(true);
-			frame.getTglbtnModify().setEnabled(true);
+			frame.getTglBtnDelete().setEnabled(true);
+			frame.getTglBtnModify().setEnabled(true);
 			
-			frame.getTglbtnBringToBack().setEnabled(true);
-			frame.getTglbtnBringToFront().setEnabled(true);
-			frame.getTglbtnToFront().setEnabled(true);
-			frame.getTglbtnToBack().setEnabled(true);
+			frame.getTglBtnBringToBack().setEnabled(true);
+			frame.getTglBtnBringToFront().setEnabled(true);
+			frame.getTglBtnToFront().setEnabled(true);
+			frame.getTglBtnToBack().setEnabled(true);
 			
 		}else if(numberOfSelectedShapes > 1) {
-			frame.getTglbtnDelete().setEnabled(true);
-			frame.getTglbtnModify().setEnabled(false);
+			frame.getTglBtnDelete().setEnabled(true);
+			frame.getTglBtnModify().setEnabled(false);
 			
-			frame.getTglbtnBringToBack().setEnabled(false);
-			frame.getTglbtnBringToFront().setEnabled(false);
-			frame.getTglbtnToFront().setEnabled(false);
-			frame.getTglbtnToBack().setEnabled(false);
+			frame.getTglBtnBringToBack().setEnabled(false);
+			frame.getTglBtnBringToFront().setEnabled(false);
+			frame.getTglBtnToFront().setEnabled(false);
+			frame.getTglBtnToBack().setEnabled(false);
 			
 		}
 		

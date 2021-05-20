@@ -3,495 +3,345 @@ package mvc;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.ListModel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
+import javax.swing.JSplitPane;
+import javax.swing.JOptionPane;
 
-public class DrawingFrame extends JFrame implements PropertyChangeListener {
+public class DrawingFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private DrawingView view = new DrawingView();
 	private DrawingController controller;
-
-    private JToggleButton tglbtnPoint;
-    private JToggleButton tglbtnLine;
-    private JToggleButton tglbtnRectangle;
-    private JToggleButton tglbtnCircle;
-    private JToggleButton tglbtnDonut;
-    private JToggleButton tglbtnHexagon;
-    private JToggleButton tglbtnSelect;
-    private JToggleButton tglbtnModify;
-    private JToggleButton tglbtnDelete;
-    private JToggleButton tglbtnToFront;
-    private JToggleButton tglbtnToBack;
-    private JToggleButton tglbtnBringToFront;
-    private JToggleButton tglbtnBringToBack;
-    private JToggleButton tglbtnUndo;
-    private JToggleButton tglbtnRedo;
-    private JToggleButton tglbtnEdgeColor;
-    private JToggleButton tglbtnFillColor;
-    private JToggleButton tglbtnNext;
-    private JToggleButton tglbtnSaveCommands;
-    private JToggleButton tglbtnSaveShapes;
-    private JToggleButton tglbtnOpenCommands;
-    private JToggleButton tglbtnOpenShapes;
-    private JList list;
-    private ListModel<String> listModel;
-    private JScrollPane scrollPane;
-    
-    public boolean isTglbtnPointSelected() {
-        return tglbtnPoint.isSelected();
-    }
-
-    public boolean isTglbtnLineSelected() {
-        return tglbtnLine.isSelected();
-    }
-
-    public boolean isTglbtnRectangleSelected() {
-        return tglbtnRectangle.isSelected();
-    }
-
-    public boolean isTglbtnCircleSelected() {
-        return tglbtnCircle.isSelected();
-    }
-
-    public boolean isTglbtnDonutSelected() {
-        return tglbtnDonut.isSelected();
-    }
-
-    public boolean isTglbtnSelectSelected() {
-        return tglbtnSelect.isSelected();
-    }
-
-    public boolean isTglbtnHexagonSelected() {
-        return tglbtnHexagon.isSelected();
-    }
+	public JToggleButton clickedButton;
+	JToggleButton tglBtnDelete;
+	JToggleButton tglBtnModify;
+	JToggleButton tglBtnUndo;
+	JToggleButton tglBtnRedo;
+	private JToggleButton tglBtnBringToBack;
+	private JToggleButton tglBtnToBack;
+	private JToggleButton tglBtnToFront;
+	private JToggleButton tglBtnBringToFront;
+	private JTextPane textPane;
 	
 	public DrawingFrame() {
-		view.addMouseListener(new MouseAdapter() {
+		
+		ButtonGroup group = new ButtonGroup();
+		
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		getContentPane().add(panel_1, BorderLayout.NORTH);
+		
+		JToggleButton tglBtnSelect = new JToggleButton("Select");
+		tglBtnSelect.setToolTipText("Select");
+		tglBtnSelect.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
-				try {
-					controller.mouseClicked(arg0);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				controller.unselectAll();
+				clickedButton = tglBtnSelect;
+			}
+		});
+		group.add(tglBtnSelect);
+		
+		tglBtnUndo = new JToggleButton("Undo");
+		tglBtnUndo.setToolTipText("Undo");
+		tglBtnUndo.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnUndo.setEnabled(false);
+		tglBtnUndo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO
+			}
+		});
+		
+		group.add(tglBtnUndo);
+		
+		JButton btnLoad = new JButton("Load");
+		btnLoad.setToolTipText("Load");
+		btnLoad.setMargin(new Insets(0, 0, 0, 0));
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO
+			}
+		});
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.setToolTipText("Save");
+		btnSave.setMargin(new Insets(0, 0, 0, 0));
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		
+		JButton btnNew = new JButton("New");
+		btnNew.setToolTipText("New");
+		btnNew.setMargin(new Insets(0, 0, 0, 0));
+		btnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		panel_1.add(btnNew);
+		panel_1.add(btnSave);
+		panel_1.add(btnLoad);
+		panel_1.add(tglBtnUndo);
+		
+		tglBtnRedo = new JToggleButton("Redo");
+		tglBtnRedo.setToolTipText("Redo");
+		tglBtnRedo.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnRedo.setEnabled(false);
+		tglBtnRedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO
+			}
+		});
+		panel_1.add(tglBtnRedo);
+		panel_1.add(tglBtnSelect);
+		
+		tglBtnDelete = new JToggleButton("Delete");
+		tglBtnDelete.setToolTipText("Delete");
+		tglBtnDelete.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnDelete.setEnabled(false);
+		tglBtnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int answer = JOptionPane.showConfirmDialog (null, "Do you want to delete selected shapes?","Warning",JOptionPane.YES_NO_OPTION);
+				if(answer == JOptionPane.YES_OPTION) {
+					controller.deleteShapes();
 				}
+			}
+		});
+		
+		tglBtnModify = new JToggleButton("Modify");
+		tglBtnModify.setToolTipText("Modify");
+		tglBtnModify.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.modifyShape();
+			}
+		});
+		tglBtnModify.setEnabled(false);
+		panel_1.add(tglBtnModify);
+		
+		panel_1.add(tglBtnDelete);
+		
+		tglBtnBringToBack = new JToggleButton("Bring to back");
+		tglBtnBringToBack.setToolTipText("Bring to back");
+		tglBtnBringToBack.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnBringToBack.setEnabled(false);
+		tglBtnBringToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.positionCommand("BTB");
+			}
+		});
+		panel_1.add(tglBtnBringToBack);
+		
+		tglBtnToBack = new JToggleButton("To back");
+		tglBtnToBack.setToolTipText("To back");
+		tglBtnToBack.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnToBack.setEnabled(false);
+		tglBtnToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.positionCommand("TB");
+			}
+		});
+		panel_1.add(tglBtnToBack);
+		
+		tglBtnToFront = new JToggleButton("To front");
+		tglBtnToFront.setToolTipText("To front");
+		tglBtnToFront.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnToFront.setEnabled(false);
+		tglBtnToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.positionCommand("TF");
+			}
+		});
+		panel_1.add(tglBtnToFront);
+		
+		tglBtnBringToFront = new JToggleButton("Bring to front");
+		tglBtnBringToFront.setToolTipText("Bring to front");
+		tglBtnBringToFront.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnBringToFront.setEnabled(false);
+		tglBtnBringToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.positionCommand("BTF");
+			}
+		});
+		panel_1.add(tglBtnBringToFront);
+		getContentPane().add(view, BorderLayout.CENTER);
+		view.setLayout(new BorderLayout(0, 0));
+				
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
+		
+		JToggleButton btnPoint = new JToggleButton("Point");
+		btnPoint.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.unselectAll();
+				clickedButton = btnPoint;
+			}
+		});
+		panel.add(btnPoint);
+		group.add(btnPoint);
+		
+		JToggleButton btnLine = new JToggleButton("Line");
+		btnLine.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				controller.unselectAll();
+				clickedButton = btnLine;
+			}
+		});
+		panel.add(btnLine);
+		group.add(btnLine);
+		
+		JToggleButton btnDonut = new JToggleButton("Donut");
+		btnDonut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.unselectAll();
+				clickedButton = btnDonut;
+			}
+		});
+		panel.add(btnDonut);
+		group.add(btnDonut);
+		
+		JToggleButton btnCirle = new JToggleButton("Circle");
+		btnCirle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				controller.unselectAll();
+				clickedButton = btnCirle;
+			}
+		});
+		panel.add(btnCirle);
+		group.add(btnCirle);
+		
+		JToggleButton btnRectangle = new JToggleButton("Rectangle");
+		btnRectangle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.unselectAll();
+				clickedButton = btnRectangle;
 				
 			}
 		});
-		getContentPane().add(view, BorderLayout.CENTER);
+		panel.add(btnRectangle);
+		group.add(btnRectangle);
+		
+		JToggleButton btnHexagon = new JToggleButton("Hexagon");
+		btnHexagon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				controller.unselectAll();
+				clickedButton = btnHexagon;
+			}
+		});
+		panel.add(btnHexagon);
+		group.add(btnHexagon);
+		
+		JLabel lblEdge = new JLabel("Edge");
+		panel.add(lblEdge);
+		
+		JToggleButton btnEdgeColor = new JToggleButton("             ");
+		btnEdgeColor.setToolTipText("Edge color");
+		btnEdgeColor.setBackground(Color.BLACK);
+		btnEdgeColor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.chooseEdgeColor();
+				btnEdgeColor.setBackground(controller.getCurrentEdgeColor());
+				clickedButton = btnEdgeColor;
+			}
+		});
+		panel.add(btnEdgeColor);
+		group.add(btnEdgeColor);
+		
+		JLabel lblSurface = new JLabel("Surface");
+		panel.add(lblSurface);
+		
+		JToggleButton btnFillColor = new JToggleButton("              ");
+		btnFillColor.setToolTipText("Surface color");
+		btnFillColor.setBackground(Color.YELLOW);
+		btnFillColor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.chooseFillColor();
+				btnFillColor.setBackground(controller.getCurrentFillColor());
+				clickedButton = btnFillColor;
+			}
+		});
+		panel.add(btnFillColor);
+		group.add(btnFillColor);
+		
+		JSplitPane southPanel = new JSplitPane();
+		southPanel.setEnabled(false);
+		southPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
 
-        JPanel pnlNorth = new JPanel();
-        getContentPane().add(pnlNorth, BorderLayout.NORTH);
-
-        GridBagLayout gbl_pnlNorth = new GridBagLayout();
-        pnlNorth.setLayout(gbl_pnlNorth);
-
-        ButtonGroup group = new ButtonGroup();
-        Dimension dimensionForButton = new Dimension(99,29);
-
-        tglbtnPoint = new JToggleButton("Point");
-        GridBagConstraints gbc_tglbtnPoint = new GridBagConstraints();
-        gbc_tglbtnPoint.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnPoint.gridx = 0;
-        gbc_tglbtnPoint.gridy = 0;
-        tglbtnPoint.setSelected(true);
-        pnlNorth.add(tglbtnPoint, gbc_tglbtnPoint);
-        tglbtnPoint.setPreferredSize(dimensionForButton);
-        group.add(tglbtnPoint);
-
-        tglbtnLine = new JToggleButton("Line");
-        GridBagConstraints gbc_tglbtnLine = new GridBagConstraints();
-        gbc_tglbtnLine.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnLine.gridx = 1;
-        gbc_tglbtnLine.gridy = 0;
-        pnlNorth.add(tglbtnLine, gbc_tglbtnLine);
-        tglbtnLine.setPreferredSize(dimensionForButton);
-        group.add(tglbtnLine);
-
-        tglbtnRectangle = new JToggleButton("Rectangle");
-        GridBagConstraints gbc_tglbtnRectangle = new GridBagConstraints();
-        gbc_tglbtnRectangle.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnRectangle.gridx = 2;
-        gbc_tglbtnRectangle.gridy = 0;
-        pnlNorth.add(tglbtnRectangle, gbc_tglbtnRectangle);
-        tglbtnRectangle.setPreferredSize(dimensionForButton);
-        group.add(tglbtnRectangle);
-
-        tglbtnCircle = new JToggleButton("Circle");
-        GridBagConstraints gbc_tglbtnCircle = new GridBagConstraints();
-        gbc_tglbtnCircle.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnCircle.gridx = 3;
-        gbc_tglbtnCircle.gridy = 0;
-        pnlNorth.add(tglbtnCircle, gbc_tglbtnCircle);
-        tglbtnCircle.setPreferredSize(dimensionForButton);
-        group.add(tglbtnCircle);
-
-        tglbtnDonut = new JToggleButton("Donut");
-        GridBagConstraints gbc_tglbtnDonut = new GridBagConstraints();
-        gbc_tglbtnDonut.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnDonut.gridx = 4;
-        gbc_tglbtnDonut.gridy = 0;
-        pnlNorth.add(tglbtnDonut, gbc_tglbtnDonut);
-        tglbtnDonut.setPreferredSize(dimensionForButton);
-        group.add(tglbtnDonut);
-
-        tglbtnHexagon = new JToggleButton("Hexagon");
-        GridBagConstraints gbc_tglbtnHexagon = new GridBagConstraints();
-        gbc_tglbtnHexagon.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnHexagon.gridx = 5;
-        gbc_tglbtnHexagon.gridy = 0;
-        pnlNorth.add(tglbtnHexagon, gbc_tglbtnHexagon);
-        tglbtnHexagon.setPreferredSize(dimensionForButton);
-        group.add(tglbtnHexagon);
-
-        tglbtnSelect = new JToggleButton("Select");
-        tglbtnSelect.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnSelect = new GridBagConstraints();
-        gbc_tglbtnSelect.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnSelect.gridx = 6;
-        gbc_tglbtnSelect.gridy = 0;
-        pnlNorth.add(tglbtnSelect, gbc_tglbtnSelect);
-        group.add(tglbtnSelect);
-
-        tglbtnModify = new JToggleButton("Modify");
-        tglbtnModify.setEnabled(false);
-        tglbtnModify.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnModify = new GridBagConstraints();
-        gbc_tglbtnModify.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnModify.gridx = 7;
-        gbc_tglbtnModify.gridy = 0;
-        pnlNorth.add(tglbtnModify, gbc_tglbtnModify);
-        group.add(tglbtnModify);
-
-        tglbtnDelete = new JToggleButton("Delete");
-        tglbtnDelete.setEnabled(false);
-        tglbtnDelete.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnDelete = new GridBagConstraints();
-        gbc_tglbtnDelete.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnDelete.gridx = 8;
-        gbc_tglbtnDelete.gridy = 0;
-        pnlNorth.add(tglbtnDelete, gbc_tglbtnDelete);
-        group.add(tglbtnDelete);
-
-        tglbtnToFront = new JToggleButton("To Front");
-        tglbtnToFront.setEnabled(false);
-        tglbtnToFront.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnToFront = new GridBagConstraints();
-        gbc_tglbtnToFront.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnToFront.gridx = 9;
-        gbc_tglbtnToFront.gridy = 0;
-        pnlNorth.add(tglbtnToFront, gbc_tglbtnToFront);
-        group.add(tglbtnToFront);
-
-        tglbtnToBack = new JToggleButton("To Back");
-        tglbtnToBack.setEnabled(false);
-        tglbtnToBack.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnToBack = new GridBagConstraints();
-        gbc_tglbtnToBack.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnToBack.gridx = 10;
-        gbc_tglbtnToBack.gridy = 0;
-        pnlNorth.add(tglbtnToBack, gbc_tglbtnToBack);
-        group.add(tglbtnToBack);
-
-        tglbtnBringToFront = new JToggleButton("Bring To Front");
-        tglbtnBringToFront.setEnabled(false);
-        tglbtnBringToFront.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnBringToFront = new GridBagConstraints();
-        gbc_tglbtnBringToFront.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnBringToFront.gridx = 11;
-        gbc_tglbtnBringToFront.gridy = 0;
-        pnlNorth.add(tglbtnBringToFront, gbc_tglbtnBringToFront);
-        group.add(tglbtnBringToFront);
-
-        tglbtnBringToBack = new JToggleButton("Bring To Back");
-        tglbtnBringToBack.setEnabled(false);
-        tglbtnBringToBack.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnBringToBack = new GridBagConstraints();
-        gbc_tglbtnBringToBack.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnBringToBack.gridx = 12;
-        gbc_tglbtnBringToBack.gridy = 0;
-        pnlNorth.add(tglbtnBringToBack, gbc_tglbtnBringToBack);
-        group.add(tglbtnBringToBack);
-
-        tglbtnUndo = new JToggleButton("Undo");
-        tglbtnUndo.setEnabled(false);
-        tglbtnUndo.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnUndo = new GridBagConstraints();
-        gbc_tglbtnUndo.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnUndo.gridx = 14;
-        gbc_tglbtnUndo.gridy = 0;
-        pnlNorth.add(tglbtnUndo, gbc_tglbtnUndo);
-        group.add(tglbtnUndo);
-
-        tglbtnRedo = new JToggleButton("Redo");
-        tglbtnRedo.setEnabled(false);
-        tglbtnRedo.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnRedo = new GridBagConstraints();
-        gbc_tglbtnRedo.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnRedo.gridx = 15;
-        gbc_tglbtnRedo.gridy = 0;
-        pnlNorth.add(tglbtnRedo, gbc_tglbtnRedo);
-        group.add(tglbtnRedo);
-
-        tglbtnEdgeColor = new JToggleButton("Edge Color");
-        tglbtnEdgeColor.setPreferredSize(dimensionForButton);
-        tglbtnEdgeColor.setBackground(Color.BLACK);
-        GridBagConstraints gbc_tglbtnEdgeColor = new GridBagConstraints();
-        gbc_tglbtnEdgeColor.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnEdgeColor.gridx = 16;
-        gbc_tglbtnEdgeColor.gridy = 0;
-        pnlNorth.add(tglbtnEdgeColor, gbc_tglbtnEdgeColor);
-        group.add(tglbtnEdgeColor);
-
-        tglbtnFillColor = new JToggleButton("Fill Color");
-        tglbtnFillColor.setPreferredSize(dimensionForButton);
-        tglbtnFillColor.setBackground(Color.YELLOW);
-        GridBagConstraints gbc_tglbtnFillColor = new GridBagConstraints();
-        gbc_tglbtnFillColor.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnFillColor.gridx = 17;
-        gbc_tglbtnFillColor.gridy = 0;
-        pnlNorth.add(tglbtnFillColor, gbc_tglbtnFillColor);
-        group.add(tglbtnFillColor);
-
-        tglbtnNext = new JToggleButton("Next");
-        tglbtnNext.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnNext = new GridBagConstraints();
-        gbc_tglbtnNext.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnNext.gridx = 0;
-        gbc_tglbtnNext.gridy = 1;
-        pnlNorth.add(tglbtnNext, gbc_tglbtnNext);
-        group.add(tglbtnNext);
-
-        tglbtnOpenCommands = new JToggleButton("Open Commans");
-        tglbtnOpenCommands.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnOpenCommands = new GridBagConstraints();
-        gbc_tglbtnOpenCommands.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnOpenCommands.gridx = 10;
-        gbc_tglbtnOpenCommands.gridy = 1;
-        pnlNorth.add(tglbtnOpenCommands, gbc_tglbtnOpenCommands);
-        group.add(tglbtnOpenCommands);
-
-        tglbtnOpenShapes = new JToggleButton("Open Shapes");
-        tglbtnOpenShapes.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnOpenShapes = new GridBagConstraints();
-        gbc_tglbtnOpenShapes.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnOpenShapes.gridx = 11;
-        gbc_tglbtnOpenShapes.gridy = 1;
-        pnlNorth.add(tglbtnOpenShapes, gbc_tglbtnOpenShapes);
-        group.add(tglbtnOpenShapes);
-
-        tglbtnSaveCommands = new JToggleButton("Save Commans");
-        tglbtnSaveCommands.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnSaveCommands = new GridBagConstraints();
-        gbc_tglbtnSaveCommands.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnSaveCommands.gridx = 15;
-        gbc_tglbtnSaveCommands.gridy = 1;
-        pnlNorth.add(tglbtnSaveCommands, gbc_tglbtnSaveCommands);
-        group.add(tglbtnSaveCommands);
-
-        tglbtnSaveShapes = new JToggleButton("Save Shapes");
-        tglbtnSaveShapes.setPreferredSize(dimensionForButton);
-        GridBagConstraints gbc_tglbtnSaveShapes = new GridBagConstraints();
-        gbc_tglbtnSaveShapes.insets = new Insets(5, 0, 5, 5);
-        gbc_tglbtnSaveShapes.gridx = 16;
-        gbc_tglbtnSaveShapes.gridy = 1;
-        pnlNorth.add(tglbtnSaveShapes, gbc_tglbtnSaveShapes);
-        group.add(tglbtnSaveShapes);
-        
-        list = new JList();
-        getContentPane().add(list, BorderLayout.SOUTH);
-       // listModel = view.getModel().getListModel();
-        list.setModel(view.getModel().getListModel());
-        
-        scrollPane = new JScrollPane(list);
-        
-        getContentPane().add(scrollPane, BorderLayout.SOUTH);
-//        view.addMouseMotionListener(new MouseMotionAdapter() {
-//            @Override
-//            public void mouseMoved(MouseEvent arg0) {
-//                lblXY.setText("x: " + arg0.getX() + "  " + "y: " + arg0.getY());
-//            }
-//        });
-        
-        tglbtnDelete.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onDelete();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnEdgeColor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.setEdgeColor();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        tglbtnFillColor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.setFillColor();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnModify.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onModify();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnToFront.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onToFront();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        tglbtnToBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onToBack();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        tglbtnBringToFront.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onBringToFront();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        tglbtnBringToBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onBringToBack();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnUndo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onUndo();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        tglbtnRedo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onRedo();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnSaveShapes.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    if (view.getModel().getUndoStack().size() > 0) {
-                        controller.onSaveShapes();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnOpenShapes.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onOpenShapes();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnSaveCommands.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    if (view.getModel().getUndoStack().size() > 0) {
-                        controller.onSaveCommands();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnOpenCommands.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.onOpenCommands();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        
-        tglbtnNext.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    controller.next();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+		JScrollPane logPanel = new JScrollPane();
+		logPanel.setPreferredSize(new Dimension(southPanel.getWidth(),120));
+		
+		southPanel.setTopComponent(panel);
+		southPanel.setBottomComponent(logPanel);
+		
+		textPane = new JTextPane();
+		textPane.setEditable(false);
+		logPanel.setViewportView(textPane);
+		
+		getContentPane().add(southPanel, BorderLayout.SOUTH);
+		
+		setBounds(100, 100, 1100, 650);
+		setBackground(new Color(192, 192, 192));
+		
+		
+		view.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent click) {
+				if(clickedButton==btnPoint) {
+					controller.addPointOnClick(click);
+				}
+				else if(clickedButton==btnLine)
+					controller.addLineOnClick(click);
+				else if(clickedButton==btnCirle)
+					controller.addCircleOnClick(click);
+				else if(clickedButton==btnRectangle)
+					controller.addRectangleOnClick(click);
+				else if(clickedButton==btnDonut)
+					controller.addDonutOnClick(click);
+				else if(clickedButton==btnHexagon)
+					controller.addHexagonOnClick(click);
+				else if(clickedButton==tglBtnSelect)
+					controller.selectShape(click);
+			}
+		});
+	}
+	
+	public void appendToLogPanel(String command) {
+		StyledDocument document = (StyledDocument) textPane.getDocument();
+		try {
+			document.insertString(document.getLength(), command, null);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public DrawingView getView() {
@@ -500,145 +350,46 @@ public class DrawingFrame extends JFrame implements PropertyChangeListener {
 
 	public void setController(DrawingController controller) {
 		this.controller = controller;
+
 	}
 	
-	public JList getList() {
-		return list;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("EdgeColor")) {
-            tglbtnEdgeColor.setBackground((Color) evt.getNewValue());
-            tglbtnSelect.setSelected(true);
-        } else if (evt.getPropertyName().equals("FillColor")) {
-            tglbtnFillColor.setBackground((Color) evt.getNewValue());
-            tglbtnSelect.setSelected(true);
-        } else if (evt.getPropertyName().equals("sizeUpdate")) {
-            if ((int)evt.getNewValue() == 0) {
-                tglbtnModify.setEnabled(false);
-                tglbtnDelete.setEnabled(false);
-            } else if ((int)evt.getNewValue() == 1) {
-                tglbtnModify.setEnabled(true);
-                tglbtnDelete.setEnabled(true);
-            } else {
-                tglbtnModify.setEnabled(false);
-                tglbtnDelete.setEnabled(true);
-            }
-        } else if (evt.getPropertyName().equals("sizeUndo")) {
-            if ((int)evt.getNewValue() == 0) {
-                tglbtnUndo.setEnabled(false);
-            } else {
-                tglbtnUndo.setEnabled(true);
-            }
-        } else if (evt.getPropertyName().equals("sizeRedo")) {
-            if ((int)evt.getNewValue() == 0) {
-                tglbtnRedo.setEnabled(false);
-            } else {
-                tglbtnRedo.setEnabled(true);
-            }
-        }
-		
-	}
-
 	public DrawingController getController() {
 		return controller;
 	}
 
-	public JToggleButton getTglbtnModify() {
-		return tglbtnModify;
+	public JToggleButton getTglBtnDelete() {
+		return tglBtnDelete;
 	}
 
-	public JToggleButton getTglbtnDelete() {
-		return tglbtnDelete;
+	public JToggleButton getTglBtnModify() {
+		return tglBtnModify;
 	}
 
-	public JToggleButton getTglbtnToFront() {
-		return tglbtnToFront;
+	public JToggleButton getTglBtnUndo() {
+		return tglBtnUndo;
 	}
 
-	public JToggleButton getTglbtnToBack() {
-		return tglbtnToBack;
+	public JToggleButton getTglBtnRedo() {
+		return tglBtnRedo;
 	}
 
-	public JToggleButton getTglbtnBringToFront() {
-		return tglbtnBringToFront;
+	public JToggleButton getTglBtnBringToBack() {
+		return tglBtnBringToBack;
 	}
 
-	public JToggleButton getTglbtnBringToBack() {
-		return tglbtnBringToBack;
+	public JToggleButton getTglBtnToBack() {
+		return tglBtnToBack;
 	}
 
-	public JToggleButton getTglbtnUndo() {
-		return tglbtnUndo;
+	public JToggleButton getTglBtnToFront() {
+		return tglBtnToFront;
 	}
 
-	public JToggleButton getTglbtnRedo() {
-		return tglbtnRedo;
+	public JToggleButton getTglBtnBringToFront() {
+		return tglBtnBringToFront;
 	}
 
-	public JToggleButton getTglbtnEdgeColor() {
-		return tglbtnEdgeColor;
+	public JTextPane getLogPanel() {
+		return textPane;
 	}
-
-	public JToggleButton getTglbtnFillColor() {
-		return tglbtnFillColor;
-	}
-
-	public JToggleButton getTglbtnNext() {
-		return tglbtnNext;
-	}
-
-	public JToggleButton getTglbtnSaveCommands() {
-		return tglbtnSaveCommands;
-	}
-
-	public JToggleButton getTglbtnSaveShapes() {
-		return tglbtnSaveShapes;
-	}
-
-	public JToggleButton getTglbtnOpenCommands() {
-		return tglbtnOpenCommands;
-	}
-
-	public JToggleButton getTglbtnOpenShapes() {
-		return tglbtnOpenShapes;
-	}
-
-	public ListModel<String> getListModel() {
-		return listModel;
-	}
-
-	public JScrollPane getScrollPane() {
-		return scrollPane;
-	}
-
-	public JToggleButton getTglbtnPoint() {
-		return tglbtnPoint;
-	}
-
-	public JToggleButton getTglbtnLine() {
-		return tglbtnLine;
-	}
-
-	public JToggleButton getTglbtnRectangle() {
-		return tglbtnRectangle;
-	}
-
-	public JToggleButton getTglbtnCircle() {
-		return tglbtnCircle;
-	}
-
-	public JToggleButton getTglbtnDonut() {
-		return tglbtnDonut;
-	}
-
-	public JToggleButton getTglbtnHexagon() {
-		return tglbtnHexagon;
-	}
-
-	public JToggleButton getTglbtnSelect() {
-		return tglbtnSelect;
-	}
-	
 }

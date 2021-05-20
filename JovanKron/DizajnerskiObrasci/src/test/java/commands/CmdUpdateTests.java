@@ -24,7 +24,6 @@ public class CmdUpdateTests {
 		model.add(originalCircle);
 		Circle updatedCircle = new Circle(new Point(5, 5), 50, Color.BLACK, Color.GREEN);
 		cmdUpdate = new CmdUpdate(originalCircle, updatedCircle);
-		cmdUpdate.setModel(model);
 	}
 	
 	@Test

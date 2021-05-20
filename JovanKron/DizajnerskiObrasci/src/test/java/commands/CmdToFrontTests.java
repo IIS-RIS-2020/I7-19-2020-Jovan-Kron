@@ -23,8 +23,7 @@ public class CmdToFrontTests {
 		circle = new Circle(new Point(1, 1), 10);
 		model.add(point);
 		model.add(circle);
-		cmdToFront = new CmdToFront(point, 0);
-		cmdToFront.setModel(model);
+		cmdToFront = new CmdToFront(point, model);
 	}
 	
 	@Test

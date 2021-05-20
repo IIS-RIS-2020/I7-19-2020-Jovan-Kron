@@ -34,25 +34,4 @@ public class DrawingModelTests {
 		model.remove(p);
 		assertEquals(0, model.getShapes().size());
 	}
-	
-	@Test
-	public void testPushToUndoStackExpectedEqual() {
-		model.pushInUndoStack(cmdAdd);
-		assertEquals(1, model.getUndoStack().size());
-		assertEquals(cmdAdd, model.getUndoStack().peek());
-	}
-	
-	@Test
-	public void testAddSelectedShapeExpectedEqual() {
-		model.addSelected(p);
-		assertEquals(1, model.getSelectedShapes().size());
-		assertEquals(p, model.getSelectedShapes().get(0));
-	}
-	
-	@Test
-	public void testRemoveSelectedShapeExpectedEqual() {
-		model.addSelected(p);
-		model.removeSelected(p);
-		assertEquals(0, model.getSelectedShapes().size());
-	}
 }

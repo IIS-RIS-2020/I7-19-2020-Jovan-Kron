@@ -1,36 +1,27 @@
 package commands;
 
-import mvc.DrawingModel;
 import geometry.Shape;
 
 public class CmdSelect implements Command {
-    private DrawingModel model;
-    private Shape shape;
+	
+	private Shape shape;
+	private boolean selected;
+	
+	public CmdSelect(Shape shape, boolean selected) {
+		this.shape = shape;
+		this.selected = selected;
+	}
+	
+	@Override
+	public void execute() {
+		shape.setSelected(selected);
+	}
 
-    public CmdSelect(Shape shape, DrawingModel model) {
-        this.shape = shape;
-        this.model = model;
-    }
-
-    @Override
-    public void setModel(DrawingModel model) {
-        this.model = model;
-    }
-
-    @Override
-    public void execute() {
-        shape.setSelected(true);
-        model.pushInUndoStack(this);
-        //model.getPropertyChangeSupport().firePropertyChange("sizeUpdate", model.getSelectedShapes().size(), model.getSelectedShapes().size() + 1);
-        model.addSelected(shape);
-        model.getAllCommands().append("Select " + shape.toString() + "\n");
-        model.getListModel().addElement("Select " + shape.toString() + "\n");
-    }
-
-    @Override
-    public void unexecute() {
-        shape.setSelected(false);
-        //model.getPropertyChangeSupport().firePropertyChange("sizeUpdate", model.getSelectedShapes().size(), model.getSelectedShapes().size() - 1);
-        model.removeSelected(shape);
-    }
+	@Override
+	public void unexecute() {	
+		if (shape.isSelected())
+			shape.setSelected(false);
+		else 
+			shape.setSelected(true);
+	}
 }
