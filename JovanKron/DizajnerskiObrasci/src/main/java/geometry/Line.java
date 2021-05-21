@@ -100,7 +100,7 @@ public class Line extends Shape {
 	}
 	
 	public String toString() {
-		return "Line " + startPoint + " --> " + endPoint;
+		return String.format("Line:(%d,%d)-->(%d,%d),Edge-color=[%d-%d-%d],selected=%b", startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY(), getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
 	}
 	
 	@Override

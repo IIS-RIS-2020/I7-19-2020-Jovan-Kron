@@ -65,7 +65,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnUndo.setEnabled(false);
 		tglBtnUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO
+				controller.undo();
 			}
 		});
 		
@@ -108,7 +108,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnRedo.setEnabled(false);
 		tglBtnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO
+				controller.redo();
 			}
 		});
 		panel_1.add(tglBtnRedo);

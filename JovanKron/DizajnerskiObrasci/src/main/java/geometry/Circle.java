@@ -120,7 +120,8 @@ public class Circle extends SurfaceShape {
 	}
 	
 	public String toString() {
-		return "Circle Center = " + center + " , radius = " + radius;
+		return String.format("Circle:Center(%d,%d),radius=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
+				center.getX(),center.getY(),radius,getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
 	}
 	
 	@Override

@@ -112,7 +112,8 @@ public class Donut extends Circle {
 	}
 	
 	public String toString() {
-		return "Donut " + super.toString() + " , inner radius = " + innerRadius;
+		return String.format("Donut:Center(%d,%d),innerradius=%d,radius=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
+				getCenter().getX(),getCenter().getY(),innerRadius,getRadius(),getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
 	}
 	
 	 @Override

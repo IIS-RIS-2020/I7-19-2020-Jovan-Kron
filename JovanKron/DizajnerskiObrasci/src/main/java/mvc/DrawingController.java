@@ -369,133 +369,201 @@ public class DrawingController {
 		if(command != null) 
 			logCommand(command, shapeToMove, null);
 	}
-	    /*
-	    public void onUndo() throws Exception {
-	        if (model.getUndoStack().size() > 0) {
-	            cmd = new CmdUndo(model);
-	            cmd.execute();
-	            frame.repaint();
-	        }
-	    }
-
-	    public void onRedo() throws Exception {
-	        if (model.getRedoStack().size() > 0) {
-	            cmd = new CmdRedo(model);
-	            cmd.execute();
-	            frame.repaint();
-	        }
-	    }*/
-	    
-		public void chooseEdgeColor() {
-	    	Color chosenEdgeColor = JColorChooser.showDialog(null, "Choose the edge color", currentEdgeColor);
-	    	if (chosenEdgeColor != null)
-	    		currentEdgeColor = chosenEdgeColor;
-	    }
-
-	    public void chooseFillColor() {
-	    	Color chosenFillColor = JColorChooser.showDialog(null, "Choose the fill color", currentFillColor);
-	    	if (chosenFillColor != null)
-	    		currentFillColor = chosenFillColor;
-	    }
-	    /*
-	    public void onSaveShapes() throws IOException {
-	        saveManager = new SaveManager(shapesSave);
-	        saveManager.save(model.getShapes());
-	    }
-	    
-	    public void onOpenShapes() throws IOException, ClassNotFoundException {
-	        openManager = new OpenManager(shapesOpen);
-	        it = ((ArrayList) openManager.open()).listIterator();
-	        while (it.hasNext()) {
-	            Shape s = it.next();
-	            model.add(s);
-	        }
-	        frame.repaint();
-	    }
-	    
-	    public void next() throws Exception {
-	        lp.read();
-	        frame.repaint();
-	    }
-
-	    public void onSaveCommands() throws IOException {
-	        saveManager = new SaveManager(commandsSave);
-	        saveManager.save(model.getAllCommands());
-	    }
-	    
-	    public void onOpenCommands() throws IOException, ClassNotFoundException {
-	        openManager = new OpenManager(commandsOpen);
-	        Scanner myReader = (Scanner)openManager.open();
-	        lp = new LogParser(myReader);
-	        lp.setModel(model);
-	    }*/
-	    
-	    public void logCommand(Command command, Shape shape, Shape updatedShape) {
-			if(updatedShape == null) {
-				frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
-				textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
-			} else {
-				frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
-				textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
-			}
-			command.execute();
-			undoCommandsStack.push(command);
-			frame.getTglBtnUndo().setEnabled(true);
-			redoCommandsStack.clear();
-			textRedoCommandsStack.clear();
-			frame.getTglBtnRedo().setEnabled(false);
-			frame.repaint();
-		}
-	    
-	    public void addShape(Shape shape) {
-			CmdAdd cmdAdd = new CmdAdd(shape, model);
-			logCommand(cmdAdd, shape, null);
-		}
-	    
-		public void updateShape(Shape originalState, Shape newState) {
-			CmdUpdate cmdUpdate = new CmdUpdate(originalState, newState);
-			logCommand(cmdUpdate, originalState, newState);
-		}
-		
-		public Shape findMostTopSelectedShape() {
-			for(int i = model.getShapes().size()-1; i>=0; i--)
-				if(model.get(i).isSelected())
-					return model.get(i);
-			return null;
-		}
-	    
-	    public void disableButtons() {
-			frame.getTglBtnDelete().setEnabled(false);
-			frame.getTglBtnModify().setEnabled(false);
-			frame.getTglBtnBringToBack().setEnabled(false);
-			frame.getTglBtnToBack().setEnabled(false);
-			frame.getTglBtnToFront().setEnabled(false);
-			frame.getTglBtnBringToFront().setEnabled(false);
-		}
-	    
-	    public void unselectAll() {
-			CmdSelect command;
-			for(int i = model.getShapes().size()-1; i>=0; i--) {
-				if(model.get(i).isSelected()) {
-					command = new CmdSelect(model.get(i), false);
-					logCommand(command, model.get(i), null);
+	
+	public void undo() {
+		if(undoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
+			int deletedShapesToUndoCount = 0;
+			for(int i = undoCommandsStack.size()-1; i>=0; i--) {
+				if(undoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
+					redoCommandsStack.push(undoCommandsStack.peek());
+					undoCommandsStack.pop().unexecute();
+					textRedoCommandsStack.push(textUndoCommandsStack.peek());
+					String[] textToLog = textUndoCommandsStack.pop().split(" ");
+					textToLog[0] = "Unexecuted";
+					String toLog = textToLog[0] + " " + textToLog[1];
+					frame.appendToLogPanel(toLog);
+					
+					deletedShapesToUndoCount++;
+				} else {
+					if(deletedShapesToUndoCount == 1) {
+						frame.getTglBtnModify().setEnabled(true);
+						frame.getTglBtnDelete().setEnabled(true);
+						frame.getTglBtnBringToBack().setEnabled(true);
+						frame.getTglBtnBringToFront().setEnabled(true);
+						frame.getTglBtnToBack().setEnabled(true);
+						frame.getTglBtnToFront().setEnabled(true);
+					} else {
+						frame.getTglBtnModify().setEnabled(false);
+						frame.getTglBtnDelete().setEnabled(true);
+					}
+					break;
 				}
 			}
+		} else {
+			redoCommandsStack.push(undoCommandsStack.peek());
+			undoCommandsStack.pop().unexecute();
+			textRedoCommandsStack.push(textUndoCommandsStack.peek());
+			String[] textToLog = textUndoCommandsStack.pop().split(" ");
+			textToLog[0] = "Unexecuted";
+			String toLog = textToLog[0] + " " + textToLog[1];
+			frame.appendToLogPanel(toLog);
+			
 		}
+		if(undoCommandsStack.isEmpty())
+			frame.getTglBtnUndo().setEnabled(false);
+		if(!redoCommandsStack.isEmpty())
+			frame.getTglBtnRedo().setEnabled(true);
+		frame.repaint();
+	}
+	
+	public void redo() {
+		if(redoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
+			disableButtons();
+			for(int i = redoCommandsStack.size()-1; i>=0; i--) {
+				if(redoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
+					undoCommandsStack.push(redoCommandsStack.peek());
+					redoCommandsStack.pop().execute();
+					textUndoCommandsStack.push(textRedoCommandsStack.peek());
+					String[] textToLog = textRedoCommandsStack.pop().split(" ");
+					textToLog[0] = "Re-executed";
+					String toLog = textToLog[0] + " " + textToLog[1];
+					frame.appendToLogPanel(toLog);
+					
+				} else {
+					break;
+				}
+			}
+		}  else {
+			undoCommandsStack.push(redoCommandsStack.peek());
+			redoCommandsStack.pop().execute();
+			textUndoCommandsStack.push(textRedoCommandsStack.peek());
+			String[] textToLog = textRedoCommandsStack.pop().split(" ");
+			textToLog[0] = "Re-executed";
+			String toLog = textToLog[0] + " " + textToLog[1];
+			frame.appendToLogPanel(toLog);
+		}
+		if(redoCommandsStack.isEmpty())
+			frame.getTglBtnRedo().setEnabled(false);
+		if(!undoCommandsStack.isEmpty())
+			frame.getTglBtnUndo().setEnabled(true);
+		frame.repaint();
+	}
+	    
+	public void chooseEdgeColor() {
+    	Color chosenEdgeColor = JColorChooser.showDialog(null, "Choose the edge color", currentEdgeColor);
+    	if (chosenEdgeColor != null)
+    		currentEdgeColor = chosenEdgeColor;
+    }
 
-		public Color getCurrentEdgeColor() {
-			return currentEdgeColor;
-		}
+    public void chooseFillColor() {
+    	Color chosenFillColor = JColorChooser.showDialog(null, "Choose the fill color", currentFillColor);
+    	if (chosenFillColor != null)
+    		currentFillColor = chosenFillColor;
+    }
+    /*
+    public void onSaveShapes() throws IOException {
+        saveManager = new SaveManager(shapesSave);
+        saveManager.save(model.getShapes());
+    }
+    
+    public void onOpenShapes() throws IOException, ClassNotFoundException {
+        openManager = new OpenManager(shapesOpen);
+        it = ((ArrayList) openManager.open()).listIterator();
+        while (it.hasNext()) {
+            Shape s = it.next();
+            model.add(s);
+        }
+        frame.repaint();
+    }
+    
+    public void next() throws Exception {
+        lp.read();
+        frame.repaint();
+    }
 
-		public Color getCurrentFillColor() {
-			return currentFillColor;
+    public void onSaveCommands() throws IOException {
+        saveManager = new SaveManager(commandsSave);
+        saveManager.save(model.getAllCommands());
+    }
+    
+    public void onOpenCommands() throws IOException, ClassNotFoundException {
+        openManager = new OpenManager(commandsOpen);
+        Scanner myReader = (Scanner)openManager.open();
+        lp = new LogParser(myReader);
+        lp.setModel(model);
+    }*/
+    
+    public void logCommand(Command command, Shape shape, Shape updatedShape) {
+		if(updatedShape == null) {
+			//execute command before logging so that the new shape state will be logged e.g. CmdSelect changes state from false to true  
+			command.execute();
+			frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
+			textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
+		} else {
+			frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
+			textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
+			//execute command after logging, otherwise shape and updatedShape will be the same
+			command.execute();
 		}
+		undoCommandsStack.push(command);
+		frame.getTglBtnUndo().setEnabled(true);
+		redoCommandsStack.clear();
+		textRedoCommandsStack.clear();
+		frame.getTglBtnRedo().setEnabled(false);
+		frame.repaint();
+	}
+    
+    public void addShape(Shape shape) {
+		CmdAdd cmdAdd = new CmdAdd(shape, model);
+		logCommand(cmdAdd, shape, null);
+	}
+    
+	public void updateShape(Shape originalState, Shape newState) {
+		//shape is still selected after update
+		newState.setSelected(true);
+		CmdUpdate cmdUpdate = new CmdUpdate(originalState, newState);
+		logCommand(cmdUpdate, originalState, newState);
+	}
+	
+	public Shape findMostTopSelectedShape() {
+		for(int i = model.getShapes().size()-1; i>=0; i--)
+			if(model.get(i).isSelected())
+				return model.get(i);
+		return null;
+	}
+    
+    public void disableButtons() {
+		frame.getTglBtnDelete().setEnabled(false);
+		frame.getTglBtnModify().setEnabled(false);
+		frame.getTglBtnBringToBack().setEnabled(false);
+		frame.getTglBtnToBack().setEnabled(false);
+		frame.getTglBtnToFront().setEnabled(false);
+		frame.getTglBtnBringToFront().setEnabled(false);
+	}
+    
+    public void unselectAll() {
+		CmdSelect command;
+		for(int i = model.getShapes().size()-1; i>=0; i--) {
+			if(model.get(i).isSelected()) {
+				command = new CmdSelect(model.get(i), false);
+				logCommand(command, model.get(i), null);
+			}
+		}
+	}
 
-		public void setCurrentEdgeColor(Color currentEdgeColor) {
-			this.currentEdgeColor = currentEdgeColor;
-		}
+	public Color getCurrentEdgeColor() {
+		return currentEdgeColor;
+	}
 
-		public void setCurrentFillColor(Color currentFillColor) {
-			this.currentFillColor = currentFillColor;
-		}
+	public Color getCurrentFillColor() {
+		return currentFillColor;
+	}
+
+	public void setCurrentEdgeColor(Color currentEdgeColor) {
+		this.currentEdgeColor = currentEdgeColor;
+	}
+
+	public void setCurrentFillColor(Color currentFillColor) {
+		this.currentFillColor = currentFillColor;
+	}
 }

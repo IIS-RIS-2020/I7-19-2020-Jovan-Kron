@@ -135,7 +135,8 @@ public class Rectangle extends SurfaceShape {
 	}
 	
 	public String toString() {
-		return "Rectangle Upper Left " + upperLeftPoint + " , Height = " + height + " , Width = " + width;
+		return String.format("Rectangle:Upper-left(%d,%d),Width=%d,Height=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",upperLeftPoint.getX(),upperLeftPoint.getY(),width,height,
+				getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
 	}
 	
 	@Override

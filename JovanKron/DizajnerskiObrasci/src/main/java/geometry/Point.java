@@ -89,7 +89,8 @@ public class Point extends Shape {
 	}
 	
 	public String toString() {
-		return "Point ( " + x + " , " + y + " )";
+		return String.format("Point:("+x+","+y+")" + ",Edge-color=[%d-%d-%d],selected=%b", getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
+		//return "Point ( " + x + " , " + y + " )";
 	}
 	
 	@Override

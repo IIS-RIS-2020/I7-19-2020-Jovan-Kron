@@ -142,7 +142,9 @@ public class HexagonAdapter extends SurfaceShape {
     
     @Override
     public String toString() {
-        return "Hexagon x = " + getX() + " , y = " + getY() + " , radius = " + getR();
+    	return String.format("Hexagon:(X=%d,Y=%d),r=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b", hexagon.getX(), hexagon.getY(), hexagon.getR(),
+				hexagon.getBorderColor().getRed(),hexagon.getBorderColor().getGreen(),hexagon.getBorderColor().getBlue(), hexagon.getAreaColor().getRed(), hexagon.getAreaColor().getGreen(),
+				hexagon.getAreaColor().getBlue(), isSelected());
     }
     
     @Override
