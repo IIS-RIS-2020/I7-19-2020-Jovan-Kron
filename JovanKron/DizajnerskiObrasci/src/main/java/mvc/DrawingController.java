@@ -371,44 +371,27 @@ public class DrawingController {
 	}
 	
 	public void undo() {
-		if(undoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
+		if (!(undoCommandsStack.peek() instanceof CmdRemove))
+			executeUndo();
+		else {
 			int deletedShapesToUndoCount = 0;
-			for(int i = undoCommandsStack.size()-1; i>=0; i--) {
-				if(undoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
-					redoCommandsStack.push(undoCommandsStack.peek());
-					undoCommandsStack.pop().unexecute();
-					textRedoCommandsStack.push(textUndoCommandsStack.peek());
-					String[] textToLog = textUndoCommandsStack.pop().split(" ");
-					textToLog[0] = "Unexecuted";
-					String toLog = textToLog[0] + " " + textToLog[1];
-					frame.appendToLogPanel(toLog);
-					
-					deletedShapesToUndoCount++;
-				} else {
-					if(deletedShapesToUndoCount == 1) {
-						frame.getTglBtnModify().setEnabled(true);
-						frame.getTglBtnDelete().setEnabled(true);
-						frame.getTglBtnBringToBack().setEnabled(true);
-						frame.getTglBtnBringToFront().setEnabled(true);
-						frame.getTglBtnToBack().setEnabled(true);
-						frame.getTglBtnToFront().setEnabled(true);
-					} else {
-						frame.getTglBtnModify().setEnabled(false);
-						frame.getTglBtnDelete().setEnabled(true);
-					}
-					break;
-				}
+			while (undoCommandsStack.peek() instanceof CmdRemove) {
+				executeUndo();
+				deletedShapesToUndoCount++;
 			}
-		} else {
-			redoCommandsStack.push(undoCommandsStack.peek());
-			undoCommandsStack.pop().unexecute();
-			textRedoCommandsStack.push(textUndoCommandsStack.peek());
-			String[] textToLog = textUndoCommandsStack.pop().split(" ");
-			textToLog[0] = "Unexecuted";
-			String toLog = textToLog[0] + " " + textToLog[1];
-			frame.appendToLogPanel(toLog);
-			
+			if(deletedShapesToUndoCount == 1) {
+				frame.getTglBtnModify().setEnabled(true);
+				frame.getTglBtnDelete().setEnabled(true);
+				frame.getTglBtnBringToBack().setEnabled(true);
+				frame.getTglBtnBringToFront().setEnabled(true);
+				frame.getTglBtnToBack().setEnabled(true);
+				frame.getTglBtnToFront().setEnabled(true);
+			} else {
+				frame.getTglBtnModify().setEnabled(false);
+				frame.getTglBtnDelete().setEnabled(true);
+			}
 		}
+		
 		if(undoCommandsStack.isEmpty())
 			frame.getTglBtnUndo().setEnabled(false);
 		if(!redoCommandsStack.isEmpty())
@@ -416,37 +399,39 @@ public class DrawingController {
 		frame.repaint();
 	}
 	
+	private void executeUndo() {
+		redoCommandsStack.push(undoCommandsStack.peek());
+		undoCommandsStack.pop().unexecute();
+		textRedoCommandsStack.push(textUndoCommandsStack.peek());
+		String[] textToLog = textUndoCommandsStack.pop().split(" ");
+		frame.appendToLogPanel("Unexecuted " + textToLog[1]);
+	}
+	
 	public void redo() {
-		if(redoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
+		if (!(redoCommandsStack.peek() instanceof CmdRemove))
+			executeRedo();
+		else {
 			disableButtons();
-			for(int i = redoCommandsStack.size()-1; i>=0; i--) {
-				if(redoCommandsStack.peek().getClass().getSimpleName().contains("Remove")) {
-					undoCommandsStack.push(redoCommandsStack.peek());
-					redoCommandsStack.pop().execute();
-					textUndoCommandsStack.push(textRedoCommandsStack.peek());
-					String[] textToLog = textRedoCommandsStack.pop().split(" ");
-					textToLog[0] = "Re-executed";
-					String toLog = textToLog[0] + " " + textToLog[1];
-					frame.appendToLogPanel(toLog);
-					
-				} else {
+			while (redoCommandsStack.peek() instanceof CmdRemove) {
+				executeRedo();
+				if(redoCommandsStack.isEmpty())
 					break;
-				}
 			}
-		}  else {
-			undoCommandsStack.push(redoCommandsStack.peek());
-			redoCommandsStack.pop().execute();
-			textUndoCommandsStack.push(textRedoCommandsStack.peek());
-			String[] textToLog = textRedoCommandsStack.pop().split(" ");
-			textToLog[0] = "Re-executed";
-			String toLog = textToLog[0] + " " + textToLog[1];
-			frame.appendToLogPanel(toLog);
 		}
+		
 		if(redoCommandsStack.isEmpty())
 			frame.getTglBtnRedo().setEnabled(false);
 		if(!undoCommandsStack.isEmpty())
 			frame.getTglBtnUndo().setEnabled(true);
 		frame.repaint();
+	}
+	
+	private void executeRedo() {
+		undoCommandsStack.push(redoCommandsStack.peek());
+		redoCommandsStack.pop().execute();
+		textUndoCommandsStack.push(textRedoCommandsStack.peek());
+		String[] textToLog = textRedoCommandsStack.pop().split(" ");
+		frame.appendToLogPanel("Re-executed " + textToLog[1]);
 	}
 	    
 	public void chooseEdgeColor() {
