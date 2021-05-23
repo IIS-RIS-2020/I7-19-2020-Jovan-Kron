@@ -47,46 +47,28 @@ public class DrawingController {
 	}
 	
 	public void addPointOnClick(MouseEvent click) {
-		Point point = new Point(click.getX(), click.getY());
-
         DlgPoint dialog = new DlgPoint();
-        dialog.setTxtX(Integer.toString(point.getX()));
-        dialog.setTxtY(Integer.toString(point.getY()));
-        dialog.setTxtXEdit(false);
-        dialog.setTxtYEdit(false);
+        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor);
         dialog.setVisible(true);
 
         if(dialog.isOk()) {
-        	point.setEdgeColor(currentEdgeColor);
+        	Point point = new Point(click.getX(), click.getY(), dialog.getEdgeColor());
         	point.addObserver(new ObserverForButtons(model, frame));
         	addShape(point);
         }
 	}
 	
 	public void addLineOnClick(MouseEvent click) {
-		DlgLine dialog = new DlgLine();
-
-        Point p = new Point(click.getX(), click.getY());
-
         if (startPoint == null) {
-            startPoint = new Point(p.getX(), p.getY());
+            startPoint = new Point(click.getX(), click.getY());
         } else {
-            dialog.setTxtStartX(Integer.toString(startPoint.getX()));
-            dialog.setTxtStartY(Integer.toString(startPoint.getY()));
-            dialog.setTxtStartXEdit(false);
-            dialog.setTxtStartYEdit(false);
-
-            dialog.setTxtEndX(Integer.toString(p.getX()));
-            dialog.setTxtEndY(Integer.toString(p.getY()));
-            dialog.setTxtEndXEdit(false);
-            dialog.setTxtEndYEdit(false);
+        	DlgLine dialog = new DlgLine();
+        	dialog.fillForAdd(startPoint.getX(), startPoint.getY(), click.getX(), click.getY(), currentEdgeColor);
             dialog.setVisible(true);
 
             if (dialog.isOk()) {
-            	Line line = new Line(startPoint, new Point(click.getX(), click.getY()));
-                line.setEdgeColor(currentEdgeColor);
+            	Line line = new Line(startPoint, new Point(click.getX(), click.getY()), dialog.getEdgeColor());
                 line.addObserver(new ObserverForButtons(model, frame));
-                
                 addShape(line);
             }
             startPoint = null;
@@ -227,33 +209,23 @@ public class DrawingController {
             Point oldState = (Point) originalShape;
 
             DlgPoint mp = new DlgPoint();
-            mp.setTxtX(Integer.toString(oldState.getX()));
-            mp.setTxtY(Integer.toString(oldState.getY()));
+            mp.fillForModify(oldState.getX(), oldState.getY(), oldState.getEdgeColor());
             mp.setVisible(true);
 
             if(mp.isOk())
-            	updatedShape = new Point(Integer.parseInt(mp.getTxtX()), Integer.parseInt(mp.getTxtY()), currentEdgeColor);
+            	updatedShape = new Point(mp.getX(), mp.getY(), mp.getEdgeColor());
             	
         } else if(originalShape instanceof Line) {
             Line oldState = (Line) originalShape;
 
             DlgLine ml = new DlgLine();
-            ml.setTxtStartXEdit(true);
-            ml.setTxtStartYEdit(true);
-            ml.setTxtEndXEdit(true);
-            ml.setTxtEndYEdit(true);
-            ml.setTxtStartX(Integer.toString(oldState.getStartPoint().getX()));
-            ml.setTxtStartY(Integer.toString(oldState.getStartPoint().getY()));
-            ml.setTxtEndX(Integer.toString(oldState.getEndPoint().getX()));
-            ml.setTxtEndY(Integer.toString(oldState.getEndPoint().getY()));
-            ml.setColor(oldState.getEdgeColor());
+            ml.fillForModify(oldState.getStartPoint().getX(), oldState.getStartPoint().getY(),
+            		oldState.getEndPoint().getX(), oldState.getEndPoint().getY(), oldState.getEdgeColor());
             ml.setVisible(true);
 
-            if(ml.isOk()) {
-            	Point newStartPoint = new Point(Integer.parseInt(ml.getTxtStartX()), Integer.parseInt(ml.getTxtStartY()));
-                Point newEndPoint = new Point(Integer.parseInt(ml.getTxtEndX()), Integer.parseInt(ml.getTxtEndY()));
-                updatedShape = new Line(newStartPoint, newEndPoint, currentEdgeColor);
-            }
+            if(ml.isOk())
+            	updatedShape = new Line(new Point(ml.getStartX(), ml.getStartY()), new Point(ml.getEndX(), ml.getEndY()), ml.getEdgeColor());
+            
         } else if(originalShape instanceof Rectangle) {
             Rectangle oldState = (Rectangle) originalShape;
 

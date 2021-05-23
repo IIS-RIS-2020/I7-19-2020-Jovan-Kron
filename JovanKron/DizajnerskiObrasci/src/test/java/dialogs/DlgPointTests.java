@@ -18,7 +18,7 @@ public class DlgPointTests {
 	public void setUp() throws AWTException {
 		dialog = new DlgPoint();
 	}
-	
+	/*
 	@Test
 	public void testIsNullExpectedNotEqual() {
 		assertNotEquals(null, dialog);
@@ -56,6 +56,6 @@ public class DlgPointTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
-	}
+	}*/
 
 }

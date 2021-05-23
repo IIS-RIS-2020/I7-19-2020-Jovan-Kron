@@ -8,102 +8,35 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
 public class DlgLine extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtStartX;
 	private JTextField txtStartY;
 	private JTextField txtEndX;
 	private JTextField txtEndY;
 	private boolean isOk;
-	private Color c;
-	private JButton saveButton;
-	private JButton cancelButton;
-
-	public void setTxtStartXEdit(boolean b){
-		txtStartX.setEditable(b);
-	}
-	public void setTxtStartYEdit(boolean b){
-		txtStartY.setEditable(b);
-	}
-	public void setTxtEndXEdit(boolean b){
-		txtEndX.setEditable(b);
-	}
-	public void setTxtEndYEdit(boolean b){
-		txtEndY.setEditable(b);
-	}
-	
-	public Color getColor() {
-		return c;
-	}
-
-	public void setColor(Color color) {
-		this.c = color;
-	}
-
-	public String getTxtStartX() {
-		return txtStartX.getText();
-	}
-
-	public void setTxtStartX(String txtStartX) {
-		this.txtStartX.setText(txtStartX);
-	}
-
-	public String getTxtStartY() {
-		return txtStartY.getText();
-	}
-
-	public void setTxtStartY(String txtStartY) {
-		this.txtStartY.setText(txtStartY);
-	}
-
-	public String getTxtEndX() {
-		return txtEndX.getText();
-	}
-
-	public void setTxtEndX(String txtEndX) {
-		this.txtEndX.setText(txtEndX);
-	}
-
-	public String getTxtEndY() {
-		return txtEndY.getText();
-	}
-
-	public void setTxtEndY(String txtEndY) {
-		this.txtEndY.setText(txtEndY);
-	}
-
-	public boolean isOk() {
-		return isOk;
-	}
-
-	public void setOk(boolean ok) {
-		this.isOk = ok;
-	}
-	
-	public JButton getSaveButton() {
-		return saveButton;
-	}
-	
-	public JButton getCancelButton() {
-		return cancelButton;
-	}
+	private int startX, startY, endX, endY;
+	private Color edgeColor = Color.black;
+	private JButton btnEdgeColor, saveButton, cancelButton;
 
 	public static void main(String[] args) {
 		try {
@@ -116,37 +49,47 @@ public class DlgLine extends JDialog {
 	}
 
 	public DlgLine() {
-		setTitle("Line");
-		
-		setBounds(100, 100, 356, 477);
-		getContentPane().setLayout(new BorderLayout());
+		setResizable(false);
 		setModal(true);
-		Dimension d = new Dimension(80,30);
-
-		contentPanel.setBackground(Color.WHITE);
+		setBounds(100, 100, 198, 300);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		BorderLayout borderLayout = new BorderLayout();
+		getContentPane().setLayout(borderLayout);
+		setTitle("Line dialog");
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[] {85, 82, 0};
+		gbl_contentPanel.rowHeights = new int[] {80, 0, 0, 0, 0, 0, 19, 28, 58, 0};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentPanel.setLayout(gbl_contentPanel);
 		
-		JLabel lblStartPoint = new JLabel("Start Point:");
-		lblStartPoint.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel lblStartPoint = new JLabel("Start point");
+		GridBagConstraints gbc_lblStartPoint = new GridBagConstraints();
+		gbc_lblStartPoint.gridheight = 3;
+		gbc_lblStartPoint.gridwidth = 2;
+		gbc_lblStartPoint.insets = new Insets(0, 0, 5, 0);
+		gbc_lblStartPoint.gridx = 0;
+		gbc_lblStartPoint.gridy = 0;
+		contentPanel.add(lblStartPoint, gbc_lblStartPoint);
 		
-		JLabel lblStartX = new JLabel("X coordinate:");
-		lblStartX.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		JLabel lblStartY = new JLabel("Y coordinate:");
-		lblStartY.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		JLabel lblEndPoint = new JLabel("End Point:");
-		lblEndPoint.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		JLabel lblEndX = new JLabel("X coordinate:");
-		lblEndX.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		JLabel lblEndY = new JLabel("Y coordinate:");
-		lblEndY.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel lblCoordinateXStart = new JLabel("Coordinate X:");
+		GridBagConstraints gbc_lblCoordinateXStart = new GridBagConstraints();
+		gbc_lblCoordinateXStart.anchor = GridBagConstraints.EAST;
+		gbc_lblCoordinateXStart.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCoordinateXStart.gridx = 0;
+		gbc_lblCoordinateXStart.gridy = 1;
+		contentPanel.add(lblCoordinateXStart, gbc_lblCoordinateXStart);
 		
 		txtStartX = new JTextField();
-		txtStartX.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GridBagConstraints gbc_txtCoordinateXStart = new GridBagConstraints();
+		gbc_txtCoordinateXStart.insets = new Insets(0, 0, 5, 0);
+		gbc_txtCoordinateXStart.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCoordinateXStart.gridx = 1;
+		gbc_txtCoordinateXStart.gridy = 1;
+		contentPanel.add(txtStartX, gbc_txtCoordinateXStart);
 		txtStartX.setColumns(10);
 		txtStartX.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -158,10 +101,23 @@ public class DlgLine extends JDialog {
 		        e.consume();
 		      }
 		    }
-		  });
+		});
+		
+		JLabel lblCoordinateYStart = new JLabel("Coordinate Y:");
+		GridBagConstraints gbc_lblCoordinateYStart = new GridBagConstraints();
+		gbc_lblCoordinateYStart.anchor = GridBagConstraints.EAST;
+		gbc_lblCoordinateYStart.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCoordinateYStart.gridx = 0;
+		gbc_lblCoordinateYStart.gridy = 2;
+		contentPanel.add(lblCoordinateYStart, gbc_lblCoordinateYStart);
 		
 		txtStartY = new JTextField();
-		txtStartY.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GridBagConstraints gbc_txtCoordinateYStart = new GridBagConstraints();
+		gbc_txtCoordinateYStart.insets = new Insets(0, 0, 5, 0);
+		gbc_txtCoordinateYStart.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCoordinateYStart.gridx = 1;
+		gbc_txtCoordinateYStart.gridy = 2;
+		contentPanel.add(txtStartY, gbc_txtCoordinateYStart);
 		txtStartY.setColumns(10);
 		txtStartY.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -173,10 +129,31 @@ public class DlgLine extends JDialog {
 		        e.consume();
 		      }
 		    }
-		  });
+		});
+		
+		JLabel lblEndPoint = new JLabel("End point");
+		GridBagConstraints gbc_lblEndPoint = new GridBagConstraints();
+		gbc_lblEndPoint.gridwidth = 2;
+		gbc_lblEndPoint.insets = new Insets(0, 0, 5, 0);
+		gbc_lblEndPoint.gridx = 0;
+		gbc_lblEndPoint.gridy = 3;
+		contentPanel.add(lblEndPoint, gbc_lblEndPoint);
+		
+		JLabel lblCoordinateXEnd = new JLabel("Coordinate X:");
+		GridBagConstraints gbc_lblCoordinateXEnd = new GridBagConstraints();
+		gbc_lblCoordinateXEnd.anchor = GridBagConstraints.EAST;
+		gbc_lblCoordinateXEnd.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCoordinateXEnd.gridx = 0;
+		gbc_lblCoordinateXEnd.gridy = 4;
+		contentPanel.add(lblCoordinateXEnd, gbc_lblCoordinateXEnd);
 		
 		txtEndX = new JTextField();
-		txtEndX.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GridBagConstraints gbc_txtCoordinateXEnd = new GridBagConstraints();
+		gbc_txtCoordinateXEnd.insets = new Insets(0, 0, 5, 0);
+		gbc_txtCoordinateXEnd.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCoordinateXEnd.gridx = 1;
+		gbc_txtCoordinateXEnd.gridy = 4;
+		contentPanel.add(txtEndX, gbc_txtCoordinateXEnd);
 		txtEndX.setColumns(10);
 		txtEndX.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -188,10 +165,23 @@ public class DlgLine extends JDialog {
 		        e.consume();
 		      }
 		    }
-		  });
+		});
+		
+		JLabel lblCoordinateYEnd = new JLabel("Coordinate Y:");
+		GridBagConstraints gbc_lblCoordinateYEnd = new GridBagConstraints();
+		gbc_lblCoordinateYEnd.anchor = GridBagConstraints.EAST;
+		gbc_lblCoordinateYEnd.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCoordinateYEnd.gridx = 0;
+		gbc_lblCoordinateYEnd.gridy = 5;
+		contentPanel.add(lblCoordinateYEnd, gbc_lblCoordinateYEnd);
 		
 		txtEndY = new JTextField();
-		txtEndY.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GridBagConstraints gbc_txtCoordinateYEnd = new GridBagConstraints();
+		gbc_txtCoordinateYEnd.insets = new Insets(0, 0, 5, 0);
+		gbc_txtCoordinateYEnd.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCoordinateYEnd.gridx = 1;
+		gbc_txtCoordinateYEnd.gridy = 5;
+		contentPanel.add(txtEndY, gbc_txtCoordinateYEnd);
 		txtEndY.setColumns(10);
 		txtEndY.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -203,58 +193,43 @@ public class DlgLine extends JDialog {
 		        e.consume();
 		      }
 		    }
-		  });
+		});
 		
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(34)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblStartPoint)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblStartY, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblStartX, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblEndX, Alignment.LEADING)
-								.addComponent(lblEndPoint, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-								.addComponent(lblEndY, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(38)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtEndY, 0, 0, Short.MAX_VALUE)
-								.addComponent(txtEndX, 0, 0, Short.MAX_VALUE)
-								.addComponent(txtStartY, 0, 0, Short.MAX_VALUE)
-								.addComponent(txtStartX, GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))))
-					.addContainerGap(60, Short.MAX_VALUE))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(29)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblStartPoint)
-							.addGap(29)
-							.addComponent(lblStartX))
-						.addComponent(txtStartX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblStartY)
-						.addComponent(txtStartY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(31)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblEndPoint, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblEndX))
-						.addComponent(txtEndX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEndY)
-						.addComponent(txtEndY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(83, Short.MAX_VALUE))
-		);
-		contentPanel.setLayout(gl_contentPanel);
+		JLabel lblNewLabel = new JLabel("");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 2;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 6;
+		contentPanel.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JLabel lblEdgeColor = new JLabel("Edge color:");
+		GridBagConstraints gbc_lblEdgeColor = new GridBagConstraints();
+		gbc_lblEdgeColor.anchor = GridBagConstraints.EAST;
+		gbc_lblEdgeColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEdgeColor.gridx = 0;
+		gbc_lblEdgeColor.gridy = 7;
+		contentPanel.add(lblEdgeColor, gbc_lblEdgeColor);
+		
+	    btnEdgeColor = new JButton("");
+	    btnEdgeColor.setBackground(edgeColor);
+		btnEdgeColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color temp= JColorChooser.showDialog(null, "Choose edge color", edgeColor);
+	 			if(temp!=null){
+	 				edgeColor=temp;
+	 				btnEdgeColor.setBackground(edgeColor);
+	 			}
+			}
+		});
+		GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
+		gbc_btnEdgeColor.fill = GridBagConstraints.BOTH;
+		gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 0);
+		gbc_btnEdgeColor.gridx = 1;
+		gbc_btnEdgeColor.gridy = 7;
+		contentPanel.add(btnEdgeColor, gbc_btnEdgeColor);
+		
+		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(Color.WHITE);
@@ -263,8 +238,8 @@ public class DlgLine extends JDialog {
 				saveButton = new JButton("Save");
 				saveButton.setBackground(Color.LIGHT_GRAY);
 				saveButton.setForeground(new Color(105, 105, 105));
-				saveButton.setFont(new Font("Arial", Font.BOLD, 17));
-				saveButton.setPreferredSize(d);
+				saveButton.setFont(new Font("Arial", Font.BOLD, 12));
+				saveButton.setPreferredSize(new Dimension(80, 30));
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if (txtStartX.getText().isEmpty() ||
@@ -272,15 +247,27 @@ public class DlgLine extends JDialog {
 								txtEndX.getText().isEmpty() ||
 								txtEndY.getText().isEmpty()) {
 							isOk = false;
-							//setVisible(true);
 							JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
 						} else {
-						isOk=true;
-						dispose(); 
+							try {
+								startX = Integer.parseInt(txtStartX.getText());
+								startY = Integer.parseInt(txtStartY.getText());
+								endX = Integer.parseInt(txtEndX.getText());
+								endY = Integer.parseInt(txtEndY.getText());
+								if(startX<0||startY<0||endX<0||endY<0)
+									JOptionPane.showMessageDialog(null,"Entered values must be greater than 0");
+								else {
+									isOk=true;
+									dispose();
+								}
+							}
+							catch (NumberFormatException e1) {
+								JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
+							}
 						}
 					}
 				});
-				buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 5));
 				saveButton.setActionCommand("OK");
 				buttonPane.add(saveButton);
 				getRootPane().setDefaultButton(saveButton);
@@ -288,9 +275,9 @@ public class DlgLine extends JDialog {
 			{
 				cancelButton = new JButton("Cancel");
 				cancelButton.setBackground(Color.LIGHT_GRAY);
-				cancelButton.setFont(new Font("Arial", Font.BOLD, 17));
+				cancelButton.setFont(new Font("Arial", Font.BOLD, 13));
 				cancelButton.setForeground(new Color(105, 105, 105));
-				cancelButton.setPreferredSize(d);
+				cancelButton.setPreferredSize(new Dimension(80, 30));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
@@ -301,5 +288,91 @@ public class DlgLine extends JDialog {
 			}
 		}
 	}
+	
+	public void fillForAdd(int startX, int startY, int endX, int endY, Color edgeColor)
+	{
+		setStartX(startX);
+		setStartY(startY);
+		setEndX(endX);
+		setEndY(endY);
+		setEdgeColor(edgeColor);
+		txtStartX.setText(Integer.toString(startX));
+		txtStartY.setText(Integer.toString(startY));
+		txtEndX.setText(Integer.toString(endX));
+		txtEndY.setText(Integer.toString(endY));
+		txtStartX.setEditable(false);
+		txtStartY.setEditable(false);
+		txtEndX.setEditable(false);
+		txtEndY.setEditable(false);
+		btnEdgeColor.setBackground(edgeColor);
+	}
+	
+	public void fillForModify(int startX, int startY, int endX, int endY, Color edgeColor)
+	{
+		setStartX(startX);
+		setStartY(startY);
+		setEndX(endX);
+		setEndY(endY);
+		setEdgeColor(edgeColor);
+		txtStartX.setText(Integer.toString(startX));
+		txtStartY.setText(Integer.toString(startY));
+		txtEndX.setText(Integer.toString(endX));
+		txtEndY.setText(Integer.toString(endY));
+		btnEdgeColor.setBackground(edgeColor);
+	}
+	
+	public boolean isOk() {
+		return isOk;
+	}
+
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+	
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public int getStartX() {
+		return startX;
+	}
+
+	public void setStartX(int startX) {
+		this.startX = startX;
+	}
+
+	public int getStartY() {
+		return startY;
+	}
+
+	public void setStartY(int startY) {
+		this.startY = startY;
+	}
+
+	public int getEndX() {
+		return endX;
+	}
+
+	public void setEndX(int endX) {
+		this.endX = endX;
+	}
+
+	public int getEndY() {
+		return endY;
+	}
+
+	public void setEndY(int endY) {
+		this.endY = endY;
+	}
+
+	public Color getEdgeColor() {
+		return edgeColor;
+	}
+
+	public void setEdgeColor(Color edgeColor) {
+		this.edgeColor = edgeColor;
+	}
+	
+	
 
 }
