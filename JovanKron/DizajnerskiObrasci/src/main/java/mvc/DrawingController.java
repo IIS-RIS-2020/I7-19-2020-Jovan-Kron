@@ -51,7 +51,7 @@ public class DrawingController {
         dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor);
         dialog.setVisible(true);
 
-        if(dialog.isOk()) {
+        if(dialog.isConfirmed()) {
         	Point point = new Point(click.getX(), click.getY(), dialog.getEdgeColor());
         	point.addObserver(new ObserverForButtons(model, frame));
         	addShape(point);
@@ -66,7 +66,7 @@ public class DrawingController {
         	dialog.fillForAdd(startPoint.getX(), startPoint.getY(), click.getX(), click.getY(), currentEdgeColor);
             dialog.setVisible(true);
 
-            if (dialog.isOk()) {
+            if (dialog.isConfirmed()) {
             	Line line = new Line(startPoint, new Point(click.getX(), click.getY()), dialog.getEdgeColor());
                 line.addObserver(new ObserverForButtons(model, frame));
                 addShape(line);
@@ -212,8 +212,8 @@ public class DrawingController {
             mp.fillForModify(oldState.getX(), oldState.getY(), oldState.getEdgeColor());
             mp.setVisible(true);
 
-            if(mp.isOk())
-            	updatedShape = new Point(mp.getX(), mp.getY(), mp.getEdgeColor());
+            if(mp.isConfirmed())
+            	updatedShape = new Point(mp.getBaseCoordinateX(), mp.getBaseCoordinateY(), mp.getEdgeColor());
             	
         } else if(originalShape instanceof Line) {
             Line oldState = (Line) originalShape;
@@ -223,8 +223,8 @@ public class DrawingController {
             		oldState.getEndPoint().getX(), oldState.getEndPoint().getY(), oldState.getEdgeColor());
             ml.setVisible(true);
 
-            if(ml.isOk())
-            	updatedShape = new Line(new Point(ml.getStartX(), ml.getStartY()), new Point(ml.getEndX(), ml.getEndY()), ml.getEdgeColor());
+            if(ml.isConfirmed())
+            	updatedShape = new Line(new Point(ml.getBaseCoordinateX(), ml.getBaseCoordinateY()), new Point(ml.getEndX(), ml.getEndY()), ml.getEdgeColor());
             
         } else if(originalShape instanceof Rectangle) {
             Rectangle oldState = (Rectangle) originalShape;
