@@ -1,331 +1,198 @@
 package dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
+import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class DlgRectangle extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
-	private JTextField txtX;
-	private JTextField txtY;
-	private JTextField txtHeight;
+public class DlgRectangle extends DlgSurfaceShape {
+	
+	private static final long serialVersionUID = 1L;
+	private int width;
+	private int height;
 	private JTextField txtWidth;
-	private boolean isOk;
-	private JLabel lblX;
-	private JLabel lblY;
-	private JLabel lblHeight;
-	private JLabel lblWidth;
-	private JButton saveButton;
-	private JButton cancelButton;
-	private Color edgeColor;
-	private Color fillColor;
-
-	public Color getEdgeColor() {
-		return edgeColor;
-	}
-
-	public void setEdgeColor(Color edgeColor) {
-		this.edgeColor = edgeColor;
-	}
-
-	public Color getFillColor() {
-		return fillColor;
-	}
-
-	public void setFillColor(Color fillColor) {
-		this.fillColor = fillColor;
-	}
+	private JTextField txtHeight;
 	
-	public void setTxtXEdit(boolean b){
-		txtX.setEditable(b);
-	}
-	
-	public void setTxtYEdit(boolean b){
-		txtY.setEditable(b);
-	}
-	
-	public void setTxtHeightEdit(boolean b){
-		txtHeight.setEditable(b);
-	}
-	
-	public void setTxtWidthEdit(boolean b){
-		txtWidth.setEditable(b);
-	}
-
-	public JTextField getTxtX() {
-		return txtX;
-	}
-
-	public void setTxtX(String s) {
-		this.txtX.setText(s);
-	}
-	
-	public JTextField getTxtY() {
-		return txtY;
-	}
-
-	public void setTxtY(String s) {
-		this.txtY.setText(s);;
-	}
-
-	public boolean isOk() {
-		return isOk;
-	}
-
-	public void setOk(boolean ok) {
-		this.isOk = ok;
-	}
-
-	public JTextField getTxtHeight() {
-		return txtHeight;
-	}
-
-	public void setTxtHeight(String number) {
-		this.txtHeight.setText(number);
-	}
-
-	public JTextField getTxtWidth() {
-		return txtWidth;
-	}
-
-	public void setTxtWidth(String number) {
-		this.txtWidth.setText(number);
-	}
-	
-	public JButton getSaveButton() {
-		return saveButton;
-	}
-	
-	public JButton getCancelButton() {
-		return cancelButton;
-	}
-
 	public static void main(String[] args) {
 		try {
 			DlgRectangle dialog = new DlgRectangle();
-			dialog.setTitle("Rectangle");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public DlgRectangle() {
 		
-		setTitle("Rectangle");
-		setBounds(100, 100, 352, 428);
-		getContentPane().setLayout(new BorderLayout());
-		this.setModal(true);
-		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		Dimension d = new Dimension(80,30);
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setTitle("Rectangle dialog");
+		defineSaveOperation();
+		setBounds(100, 100, 198, 310);
+		getBtnEdgeColor().setMinimumSize(new Dimension(33, 25));
+		getBtnFillColor().setMinimumSize(new Dimension(33, 25));
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
-		{
-			lblX = new JLabel("X coordinate:");
-			lblX.setFont(new Font("Arial", Font.PLAIN, 20));
-			lblX.setHorizontalTextPosition(SwingConstants.LEFT);
-			lblX.setHorizontalAlignment(SwingConstants.LEFT);
-		}
+		JLabel lblNewLabel = new JLabel("Upper left corner coordinates");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 4;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 10, 0);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 0;
+		getContentPanel().add(lblNewLabel, gbc_lblNewLabel);
 		
-		{
-			txtX = new JTextField();
-			txtX.setFont(new Font("Arial", Font.PLAIN, 20));
-			txtX.setColumns(10);
-			txtX.addKeyListener(new KeyAdapter() {
-			    public void keyTyped(KeyEvent e) {
-			      char c = e.getKeyChar();
-			      if (!((c >= '0') && (c <= '9') ||
-			         (c == KeyEvent.VK_BACK_SPACE) ||
-			         (c == KeyEvent.VK_DELETE))) {
-			        getToolkit().beep();
-			        e.consume();
-			      }
-			    }
-			  });
-		}
+		JSeparator separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
+		gbc_separator.gridwidth = 4;
+		gbc_separator.insets = new Insets(10, 0, 15, 0);
+		gbc_separator.gridx = 0;
+		gbc_separator.gridy = 2;
+		getContentPanel().add(separator, gbc_separator);
 		
-		{
-			lblY = new JLabel("Y coordinate:");
-			lblY.setFont(new Font("Arial", Font.PLAIN, 20));
-		}
 		
-		{
-			txtY = new JTextField();
-			txtY.setFont(new Font("Arial", Font.PLAIN, 20));
-			txtY.setColumns(10);
-			txtY.addKeyListener(new KeyAdapter() {
-			    public void keyTyped(KeyEvent e) {
-			      char c = e.getKeyChar();
-			      if (!((c >= '0') && (c <= '9') ||
-			         (c == KeyEvent.VK_BACK_SPACE) ||
-			         (c == KeyEvent.VK_DELETE))) {
-			        getToolkit().beep();
-			        e.consume();
-			      }
-			    }
-			  });
-		}
+		JLabel lblHeight = new JLabel("Height:");
+		GridBagConstraints gbc_lblHeight = new GridBagConstraints();
+		gbc_lblHeight.anchor = GridBagConstraints.EAST;
+		gbc_lblHeight.insets = new Insets(0, 0, 0, 5);
+		gbc_lblHeight.gridx = 0;
+		gbc_lblHeight.gridy = 3;
+		getContentPanel().add(lblHeight, gbc_lblHeight);
 		
-		{
-			lblHeight = new JLabel("Height:");
-			lblHeight.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblHeight.setFont(new Font("Arial", Font.PLAIN, 20));
-		}
+		txtHeight = new JTextField();
+		GridBagConstraints gbc_txtHeight = new GridBagConstraints();
+		gbc_txtHeight.insets = new Insets(0, 0, 5, 0);
+		gbc_txtHeight.fill = GridBagConstraints.BOTH;
+		gbc_txtHeight.gridwidth = 3;
+		gbc_txtHeight.gridx = 1;
+		gbc_txtHeight.gridy = 3;
+		getContentPanel().add(txtHeight, gbc_txtHeight);
+		txtHeight.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		    	checkInputText(e);
+		    }
+		});
 		
-		{
-			txtHeight = new JTextField();
-			txtHeight.setFont(new Font("Arial", Font.PLAIN, 20));
-			txtHeight.setColumns(10);
-			txtHeight.addKeyListener(new KeyAdapter() {
-			    public void keyTyped(KeyEvent e) {
-			      char c = e.getKeyChar();
-			      if (!((c >= '0') && (c <= '9') ||
-			         (c == KeyEvent.VK_BACK_SPACE) ||
-			         (c == KeyEvent.VK_DELETE))) {
-			        getToolkit().beep();
-			        e.consume();
-			      }
-			    }
-			  });
-		}
+		JLabel lblWidth = new JLabel("Width:");
+		GridBagConstraints gbc_lblWidth = new GridBagConstraints();
+		gbc_lblWidth.anchor = GridBagConstraints.EAST;
+		gbc_lblWidth.insets = new Insets(0, 0, 0, 5);
+		gbc_lblWidth.gridx = 0;
+		gbc_lblWidth.gridy = 4;
+		getContentPanel().add(lblWidth, gbc_lblWidth);
 		
-		{
-			lblWidth = new JLabel("Width:");
-			lblWidth.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblWidth.setFont(new Font("Arial", Font.PLAIN, 20));
-			
-		}
+		txtWidth = new JTextField();
+		GridBagConstraints gbc_txtWidth = new GridBagConstraints();
+		gbc_txtWidth.insets = new Insets(0, 0, 5, 0);
+		gbc_txtWidth.fill = GridBagConstraints.BOTH;
+		gbc_txtWidth.gridwidth = 3;
+		gbc_txtWidth.gridx = 1;
+		gbc_txtWidth.gridy = 4;
+		getContentPanel().add(txtWidth, gbc_txtWidth);
+		txtWidth.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		    	checkInputText(e);
+		    }
+		});
 		
-		{
-			txtWidth = new JTextField();
-			txtWidth.setFont(new Font("Arial", Font.PLAIN, 20));
-			txtWidth.setColumns(10);
-			txtWidth.addKeyListener(new KeyAdapter() {
-			    public void keyTyped(KeyEvent e) {
-			      char c = e.getKeyChar();
-			      if (!((c >= '0') && (c <= '9') ||
-			         (c == KeyEvent.VK_BACK_SPACE) ||
-			         (c == KeyEvent.VK_DELETE))) {
-			        getToolkit().beep();
-			        e.consume();
-			      }
-			    }
-			  });
-		}
+		GridBagConstraints gbc_lblEdgeColor = new GridBagConstraints();
+		gbc_lblEdgeColor.anchor = GridBagConstraints.EAST;
+		gbc_lblEdgeColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEdgeColor.gridx = 0;
+		gbc_lblEdgeColor.gridy = 5;
+		getContentPanel().add(getLblEdgeColor(), gbc_lblEdgeColor);
 		
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(32)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblX)
-						.addComponent(lblY, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblHeight, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblWidth, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(37)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(txtHeight, 0, 0, Short.MAX_VALUE)
-						.addComponent(txtY, 0, 0, Short.MAX_VALUE)
-						.addComponent(txtX, GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-						.addComponent(txtWidth, 0, 0, Short.MAX_VALUE))
-					.addContainerGap(64, Short.MAX_VALUE))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(43)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblX)
-						.addComponent(txtX, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtY, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblY))
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtHeight, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblHeight))
-					.addGap(21)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtWidth, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblWidth))
-					.addGap(87))
-		);
-		contentPanel.setLayout(gl_contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(Color.WHITE);
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				saveButton = new JButton("Save");
-				saveButton.setBackground(Color.LIGHT_GRAY);
-				saveButton.setForeground(new Color(105, 105, 105));
-				saveButton.setFont(new Font("Arial", Font.BOLD, 17));
-				saveButton.setPreferredSize(d);
-				saveButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						if (txtX.getText().isEmpty() ||
-								txtY.getText().isEmpty() ||
-								txtWidth.getText().isEmpty() ||
-								txtHeight.getText().isEmpty()) {
-							isOk = false;
-							//setVisible(true);
-							JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-						} else {
-						isOk=true;
-						dispose(); 
+		GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
+		gbc_btnEdgeColor.gridwidth = 3;
+		gbc_btnEdgeColor.fill = GridBagConstraints.BOTH;
+		gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 0);
+		gbc_btnEdgeColor.gridx = 1;
+		gbc_btnEdgeColor.gridy = 5;
+		getContentPanel().add(getBtnEdgeColor(), gbc_btnEdgeColor);
+		
+		GridBagConstraints gbc_lblFillColor = new GridBagConstraints();
+		gbc_lblFillColor.anchor = GridBagConstraints.EAST;
+		gbc_lblFillColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFillColor.gridx = 0;
+		gbc_lblFillColor.gridy = 6;
+		getContentPanel().add(getLblFillColor(), gbc_lblFillColor);
+		
+		GridBagConstraints gbc_btnFillColor = new GridBagConstraints();
+		gbc_btnFillColor.gridwidth = 3;
+		gbc_btnFillColor.fill = GridBagConstraints.BOTH;
+		gbc_btnFillColor.insets = new Insets(0, 0, 5, 0);
+		gbc_btnFillColor.gridx = 1;
+		gbc_btnFillColor.gridy = 6;
+		getContentPanel().add(getBtnFillColor(), gbc_btnFillColor);
+		
+	}
+
+	@Override
+	public void defineSaveOperation() {
+		getSaveButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (getTxtX().getText().isEmpty() ||
+						getTxtY().getText().isEmpty() || 
+						txtWidth.getText().isEmpty() || 
+						txtHeight.getText().isEmpty()) {
+					setConfirmed(false);
+					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
+				} else {
+					try {
+						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
+						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+						width = Integer.parseInt(txtWidth.getText());
+						height = Integer.parseInt(txtHeight.getText());
+						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || width<1 || height<1)
+							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for width/height!");
+						else {
+							setConfirmed(true);
+							dispose();
 						}
 					}
-				});
-				saveButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(saveButton);
-			}
-			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.setBackground(Color.LIGHT_GRAY);
-				cancelButton.setFont(new Font("Arial", Font.BOLD, 17));
-				cancelButton.setForeground(new Color(105, 105, 105));
-				cancelButton.setPreferredSize(d);
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						isOk=false;
-						dispose();
+					catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
 					}
-				});
-				cancelButton.setActionCommand("Cancel");
+				}
 			}
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			buttonPane.add(saveButton);
-			buttonPane.add(cancelButton);
-			
-			
-		}
+		});
 	}
+	
+	public void fillForModify(int startX, int startY, int width, int height, Color edgeColor, Color fillColor) {
+		super.fillForModify(startX, startY, edgeColor, fillColor);
+		setWidth(width);
+		txtWidth.setText(Integer.toString(width));
+		setHeight(height);
+		txtHeight.setText(Integer.toString(height));
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	
+	public int getRectangleWidth() {
+		return width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	public int getRectangleHeight() {
+		return height;
+	}
+
 }

@@ -76,26 +76,14 @@ public class DrawingController {
 	}
 	
 	public void addRectangleOnClick(MouseEvent click) {
-		 Point p = new Point(click.getX(), click.getY());
-
          DlgRectangle dialog = new DlgRectangle();
-         dialog.setTxtX(Integer.toString(p.getX()));
-         dialog.setTxtY(Integer.toString(p.getY()));
-         dialog.setTxtXEdit(false);
-         dialog.setTxtYEdit(false);
+         dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
          dialog.setVisible(true);
 
-         int height = Integer.parseInt(dialog.getTxtHeight().getText());
-         int width = Integer.parseInt(dialog.getTxtWidth().getText());
-
-         if (dialog.isOk()) {
-         	Rectangle rectangle = new Rectangle(p,width,height);
-              
-             rectangle.setEdgeColor(currentEdgeColor);
-             rectangle.setFillColor(currentFillColor);
-             rectangle.addObserver(new ObserverForButtons(model, frame));
-             
-             addShape(rectangle);
+         if (dialog.isConfirmed()) {
+         	Rectangle rectangle = new Rectangle(new Point(click.getX(), click.getY()), dialog.getRectangleWidth(), dialog.getRectangleHeight(), dialog.getEdgeColor(), dialog.getFillColor());
+            rectangle.addObserver(new ObserverForButtons(model, frame));
+            addShape(rectangle);
          }
 	}
 	
@@ -206,18 +194,11 @@ public class DrawingController {
             Rectangle oldState = (Rectangle) originalShape;
 
             DlgRectangle dr = new DlgRectangle();
-            dr.setTxtXEdit(true);
-            dr.setTxtYEdit(true);
-            dr.setTxtX(Integer.toString(oldState.getUpperLeftPoint().getX()));
-            dr.setTxtY(Integer.toString(oldState.getUpperLeftPoint().getY()));
-            dr.setTxtWidth(Integer.toString(oldState.getWidth()));
-            dr.setTxtHeight(Integer.toString(oldState.getHeight()));
-            dr.setEdgeColor(oldState.getEdgeColor());
-            dr.setFillColor(oldState.getFillColor());
+            dr.fillForModify(oldState.getUpperLeftPoint().getX(), oldState.getUpperLeftPoint().getY(), oldState.getWidth(), oldState.getHeight(), oldState.getEdgeColor(), oldState.getFillColor());
             dr.setVisible(true);
 
-            if(dr.isOk())
-            	updatedShape = new Rectangle(new Point(Integer.parseInt(dr.getTxtX().getText()), Integer.parseInt(dr.getTxtY().getText())), Integer.parseInt(dr.getTxtWidth().getText()), Integer.parseInt(dr.getTxtHeight().getText()), currentEdgeColor, currentFillColor);
+            if(dr.isConfirmed())
+            	updatedShape = new Rectangle(new Point(dr.getBaseCoordinateX(), dr.getBaseCoordinateY()), dr.getRectangleWidth(), dr.getRectangleHeight(), dr.getEdgeColor(), dr.getFillColor());
         
         } else if(originalShape instanceof Donut) {
             Donut oldState = (Donut) originalShape;

@@ -16,7 +16,7 @@ public class DlgRectangleTests {
 		dialog = new DlgRectangle();
 	}
 	
-	@Test
+	/*@Test
 	public void testIsNullExpectedNotEqual() {
 		assertNotEquals(null, dialog);
 	}
@@ -121,5 +121,5 @@ public class DlgRectangleTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
-	}
+	}*/
 }
