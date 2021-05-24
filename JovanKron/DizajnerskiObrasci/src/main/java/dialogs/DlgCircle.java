@@ -102,12 +102,6 @@ public class DlgCircle extends DlgSurfaceShape {
 		
 	}
 	
-	public void fillForAdd(int startX, int startY, Color edgeColor, Color fillColor)
-	{
-		super.fillForAdd(startX, startY, edgeColor, fillColor);
-		setFillColor(fillColor);
-	}
-	
 	public void fillForModify(int startX, int startY, int radius, Color edgeColor, Color fillColor)
 	{
 		super.fillForModify(startX, startY, edgeColor, fillColor);

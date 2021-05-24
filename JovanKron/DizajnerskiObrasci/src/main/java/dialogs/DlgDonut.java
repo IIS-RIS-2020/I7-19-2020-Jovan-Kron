@@ -1,20 +1,16 @@
 package dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JSeparator;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -22,99 +18,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.SwingConstants;
 
-public class DlgDonut extends JDialog {
+public class DlgDonut extends DlgSurfaceShape {
 
-	private final JPanel contentPanel = new JPanel();
-	private JTextField txtX;
-	private JTextField txtY;
+	private static final long serialVersionUID = 1L;
+	private int innerRadius;
+	private int outerRadius;
 	private JTextField txtInner;
 	private JTextField txtOuter;
-	private boolean isOk;
-	private JButton saveButton;
-	private JButton cancelButton;
-	private Color edgeColor;
-	private Color fillColor;
 
-	public Color getEdgeColor() {
-		return edgeColor;
-	}
-
-	public void setEdgeColor(Color edgeColor) {
-		this.edgeColor = edgeColor;
-	}
-
-	public Color getFillColor() {
-		return fillColor;
-	}
-
-	public void setFillColor(Color fillColor) {
-		this.fillColor = fillColor;
-	}
-	
-
-	public String getTxtInner() {
-		return txtInner.getText();
-	}
-
-	public void setTxtInner(String txtInner) {
-		this.txtInner.setText(txtInner);
-	}
-
-	public String getTxtOuter() {
-		return txtOuter.getText();
-	}
-
-	public void setTxtOuter(String txtOuter) {
-		this.txtOuter.setText(txtOuter);
-	}
-
-	public String getTxtX() {
-		return txtX.getText();
-	}
-
-	public void setTxtX(String txtX) {
-		this.txtX.setText(txtX);
-	}
-
-	public String getTxtY() {
-		return txtY.getText();
-	}
-
-	public void setTxtY(String txtY) {
-		this.txtY.setText(txtY);
-	}
-	
-	public void setTxtXEdit(boolean b)
-	{
-		this.txtX.setEditable(b);
-	}
-	
-	public void setTxtYEdit(boolean b)
-	{
-		this.txtY.setEditable(b);
-	}
-	
-	public boolean isOk() {
-		return isOk;
-	}
-
-	public void setOk(boolean ok) {
-		this.isOk = ok;
-	}
-	
-	public JButton getSaveButton() {
-		return saveButton;
-	}
-	
-	public JButton getCancelButton() {
-		return cancelButton;
-	}
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			DlgDonut dialog = new DlgDonut();
@@ -125,193 +37,167 @@ public class DlgDonut extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public DlgDonut() {
 		
-		setBounds(100, 100, 360, 492);
-		setTitle("Donut");
-		getContentPane().setLayout(new BorderLayout());
-		setModal(true);
-		Dimension d = new Dimension(80,30);
+		setTitle("Donut dialog");
+		defineSaveOperation();
+		setBounds(100, 100, 198, 310);
+		getBtnEdgeColor().setMinimumSize(new Dimension(33, 25));
+		getBtnFillColor().setMinimumSize(new Dimension(33, 25));
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
-		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		JLabel lblNewLabel = new JLabel("Center coordinates");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 4;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 10, 0);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 0;
+		getContentPanel().add(lblNewLabel, gbc_lblNewLabel);
 		
-		JLabel lblCenter = new JLabel("Center");
-		lblCenter.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCenter.setFont(new Font("Arial", Font.PLAIN, 20));
+		JSeparator separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
+		gbc_separator.gridwidth = 4;
+		gbc_separator.insets = new Insets(10, 0, 15, 0);
+		gbc_separator.gridx = 0;
+		gbc_separator.gridy = 2;
+		getContentPanel().add(separator, gbc_separator);
 		
-		JLabel lblX = new JLabel("X coordinate:");
-		lblX.setFont(new Font("Arial", Font.PLAIN, 20));
 		
-		JLabel lblY = new JLabel("Y coordinate:");
-		lblY.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		txtX = new JTextField();
-		txtX.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtX.setColumns(10);
-		txtX.addKeyListener(new KeyAdapter() {
-		    public void keyTyped(KeyEvent e) {
-		      char c = e.getKeyChar();
-		      if (!((c >= '0') && (c <= '9') ||
-		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
-		        getToolkit().beep();
-		        e.consume();
-		      }
-		    }
-		  });
-		
-		txtY = new JTextField();
-		txtY.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtY.setColumns(10);
-		txtY.addKeyListener(new KeyAdapter() {
-		    public void keyTyped(KeyEvent e) {
-		      char c = e.getKeyChar();
-		      if (!((c >= '0') && (c <= '9') ||
-		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
-		        getToolkit().beep();
-		        e.consume();
-		      }
-		    }
-		  });
-		
-		JLabel lblRadius = new JLabel("Radius");
-		lblRadius.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRadius.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		JLabel lblInner = new JLabel("Inner:");
-		lblInner.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInner.setFont(new Font("Arial", Font.PLAIN, 20));
-		
-		JLabel lblOuter = new JLabel("Outer:");
-		lblOuter.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOuter.setFont(new Font("Arial", Font.PLAIN, 20));
+		JLabel lblInnerRaduis = new JLabel("Inner radius:");
+		GridBagConstraints gbc_lblInnerRadius = new GridBagConstraints();
+		gbc_lblInnerRadius.anchor = GridBagConstraints.EAST;
+		gbc_lblInnerRadius.insets = new Insets(0, 0, 0, 5);
+		gbc_lblInnerRadius.gridx = 0;
+		gbc_lblInnerRadius.gridy = 3;
+		getContentPanel().add(lblInnerRaduis, gbc_lblInnerRadius);
 		
 		txtInner = new JTextField();
-		txtInner.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtInner.setColumns(10);
+		GridBagConstraints gbc_txtInnerRaduis = new GridBagConstraints();
+		gbc_txtInnerRaduis.insets = new Insets(0, 0, 5, 0);
+		gbc_txtInnerRaduis.fill = GridBagConstraints.BOTH;
+		gbc_txtInnerRaduis.gridwidth = 3;
+		gbc_txtInnerRaduis.gridx = 1;
+		gbc_txtInnerRaduis.gridy = 3;
+		getContentPanel().add(txtInner, gbc_txtInnerRaduis);
 		txtInner.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
-		      char c = e.getKeyChar();
-		      if (!((c >= '0') && (c <= '9') ||
-		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
-		        getToolkit().beep();
-		        e.consume();
-		      }
+		    	checkInputText(e);
 		    }
-		  });
+		});
+		
+		JLabel lblOuterRaduis = new JLabel("Outer radius:");
+		GridBagConstraints gbc_lblOuter = new GridBagConstraints();
+		gbc_lblOuter.anchor = GridBagConstraints.EAST;
+		gbc_lblOuter.insets = new Insets(0, 0, 0, 5);
+		gbc_lblOuter.gridx = 0;
+		gbc_lblOuter.gridy = 4;
+		getContentPanel().add(lblOuterRaduis, gbc_lblOuter);
 		
 		txtOuter = new JTextField();
-		txtOuter.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtOuter.setColumns(10);
+		GridBagConstraints gbc_txtOuterRadius = new GridBagConstraints();
+		gbc_txtOuterRadius.insets = new Insets(0, 0, 5, 0);
+		gbc_txtOuterRadius.fill = GridBagConstraints.BOTH;
+		gbc_txtOuterRadius.gridwidth = 3;
+		gbc_txtOuterRadius.gridx = 1;
+		gbc_txtOuterRadius.gridy = 4;
+		getContentPanel().add(txtOuter, gbc_txtOuterRadius);
 		txtOuter.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
-		      char c = e.getKeyChar();
-		      if (!((c >= '0') && (c <= '9') ||
-		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
-		        getToolkit().beep();
-		        e.consume();
-		      }
+		    	checkInputText(e);
 		    }
-		  });
+		});
 		
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(33)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblCenter, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblRadius, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblX, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblY, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblOuter, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblInner, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(40)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(txtOuter, 0, 0, Short.MAX_VALUE)
-						.addComponent(txtInner, 0, 0, Short.MAX_VALUE)
-						.addComponent(txtY, 0, 0, Short.MAX_VALUE)
-						.addComponent(txtX, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(58, Short.MAX_VALUE))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(31)
-					.addComponent(lblCenter)
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblX)
-						.addComponent(txtX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblY)
-						.addComponent(txtY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(43)
-					.addComponent(lblRadius, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblInner, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtInner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtOuter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblOuter, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(80, Short.MAX_VALUE))
-		);
-		contentPanel.setLayout(gl_contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(Color.WHITE);
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				saveButton = new JButton("Save");
-				saveButton.setBackground(Color.LIGHT_GRAY);
-				saveButton.setForeground(new Color(105, 105, 105));
-				saveButton.setFont(new Font("Arial", Font.BOLD, 17));
-				saveButton.setPreferredSize(d);
-				saveButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						if (txtX.getText().isEmpty() ||
-								txtY.getText().isEmpty() ||
-								txtInner.getText().isEmpty() ||
-								txtOuter.getText().isEmpty()) {
-							isOk = false;
-							//setVisible(true);
-							JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-						} else {
-						isOk=true;
-						dispose(); 
+		GridBagConstraints gbc_lblEdgeColor = new GridBagConstraints();
+		gbc_lblEdgeColor.anchor = GridBagConstraints.EAST;
+		gbc_lblEdgeColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEdgeColor.gridx = 0;
+		gbc_lblEdgeColor.gridy = 5;
+		getContentPanel().add(getLblEdgeColor(), gbc_lblEdgeColor);
+		
+		GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
+		gbc_btnEdgeColor.gridwidth = 3;
+		gbc_btnEdgeColor.fill = GridBagConstraints.BOTH;
+		gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 0);
+		gbc_btnEdgeColor.gridx = 1;
+		gbc_btnEdgeColor.gridy = 5;
+		getContentPanel().add(getBtnEdgeColor(), gbc_btnEdgeColor);
+		
+		GridBagConstraints gbc_lblFillColor = new GridBagConstraints();
+		gbc_lblFillColor.anchor = GridBagConstraints.EAST;
+		gbc_lblFillColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFillColor.gridx = 0;
+		gbc_lblFillColor.gridy = 6;
+		getContentPanel().add(getLblFillColor(), gbc_lblFillColor);
+		
+		GridBagConstraints gbc_btnFillColor = new GridBagConstraints();
+		gbc_btnFillColor.gridwidth = 3;
+		gbc_btnFillColor.fill = GridBagConstraints.BOTH;
+		gbc_btnFillColor.insets = new Insets(0, 0, 5, 0);
+		gbc_btnFillColor.gridx = 1;
+		gbc_btnFillColor.gridy = 6;
+		getContentPanel().add(getBtnFillColor(), gbc_btnFillColor);
+		
+	}
+
+	@Override
+	public void defineSaveOperation() {
+		getSaveButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (getTxtX().getText().isEmpty() ||
+						getTxtY().getText().isEmpty() || 
+						txtInner.getText().isEmpty() || 
+						txtOuter.getText().isEmpty()) {
+					setConfirmed(false);
+					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
+				} else {
+					try {
+						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
+						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+						innerRadius = Integer.parseInt(txtInner.getText());
+						outerRadius = Integer.parseInt(txtOuter.getText());
+						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || innerRadius<1 || outerRadius<1)
+							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for inner/outer radius!");
+						else if(innerRadius>=outerRadius)
+							JOptionPane.showMessageDialog(null,"Inner radius must be smaller than outer by at least 1!");
+						else {
+							setConfirmed(true);
+							dispose();
 						}
 					}
-				});
-				saveButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(saveButton);
-			}
-			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.setBackground(Color.LIGHT_GRAY);
-				cancelButton.setFont(new Font("Arial", Font.BOLD, 17));
-				cancelButton.setForeground(new Color(105, 105, 105));
-				cancelButton.setPreferredSize(d);
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						dispose();
+					catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
 					}
-				});
-				cancelButton.setActionCommand("Cancel");
+				}
 			}
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			buttonPane.add(saveButton);
-			buttonPane.add(cancelButton);
-		}
+		});
 	}
+	
+	public void fillForModify(int startX, int startY, int innerRadius, int outerRadius, Color edgeColor, Color fillColor)
+	{
+		super.fillForModify(startX, startY, edgeColor, fillColor);
+		setInnerRadius(innerRadius);
+		txtInner.setText(Integer.toString(innerRadius));
+		setOuterRadius(outerRadius);
+		txtOuter.setText(Integer.toString(outerRadius));
+	}
+	
+	public int getInnerRadius() {
+		return innerRadius;
+	}
+
+	public void setInnerRadius(int innerRadius) {
+		this.innerRadius = innerRadius;
+	}
+
+	public int getOuterRadius() {
+		return outerRadius;
+	}
+
+	public void setOuterRadius(int outerRadius) {
+		this.outerRadius = outerRadius;
+	}
+	
 }

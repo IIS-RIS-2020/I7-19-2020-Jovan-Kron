@@ -112,25 +112,13 @@ public class DrawingController {
 	}
 	
 	public void addDonutOnClick(MouseEvent click) {
-		Point p = new Point(click.getX(), click.getY());
-
         DlgDonut dialog = new DlgDonut();
-        dialog.setTxtX(Integer.toString(p.getX()));
-        dialog.setTxtY(Integer.toString(p.getY()));
-        dialog.setTxtXEdit(false);
-        dialog.setTxtYEdit(false);
+        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
         dialog.setVisible(true);
 
-        int innerRadius = Integer.parseInt(dialog.getTxtInner());
-        int outerRadius = Integer.parseInt(dialog.getTxtOuter());
-
-        if(dialog.isOk()) {
-        	Donut donut = new Donut(p,outerRadius,innerRadius);
-            
-            donut.setEdgeColor(currentEdgeColor);
-            donut.setFillColor(currentFillColor);
+        if(dialog.isConfirmed()) {
+        	Donut donut = new Donut(new Point(click.getX(), click.getY()), dialog.getOuterRadius(), dialog.getInnerRadius(), dialog.getEdgeColor(), dialog.getFillColor());
             donut.addObserver(new ObserverForButtons(model, frame));
-            
             addShape(donut);
         }
 	}
@@ -235,24 +223,11 @@ public class DrawingController {
             Donut oldState = (Donut) originalShape;
 
             DlgDonut dd = new DlgDonut();
-            dd.setTxtXEdit(true);
-            dd.setTxtYEdit(true);
-            dd.setTxtX(Integer.toString(oldState.getCenter().getX()));
-            dd.setTxtY(Integer.toString(oldState.getCenter().getY()));
-            dd.setTxtInner(Integer.toString(oldState.getInnerRadius()));
-            dd.setTxtOuter(Integer.toString(oldState.getRadius()));
-            dd.setEdgeColor(oldState.getEdgeColor());
-            dd.setFillColor(oldState.getFillColor());
+            dd.fillForModify(oldState.getCenter().getX(), oldState.getCenter().getY(), oldState.getInnerRadius(), oldState.getRadius(), oldState.getEdgeColor(), oldState.getFillColor());
             dd.setVisible(true);
 
-            if(dd.isOk()) {
-            	updatedShape = new Donut(
-                        new Point(Integer.parseInt(dd.getTxtX()),Integer.parseInt(dd.getTxtY())),
-                        Integer.parseInt(dd.getTxtOuter()),
-                        Integer.parseInt(dd.getTxtInner()),
-                        currentEdgeColor,
-                        currentFillColor
-                );
+            if(dd.isConfirmed()) {
+            	updatedShape = new Donut(new Point(dd.getBaseCoordinateX(), dd.getBaseCoordinateY()), dd.getOuterRadius(), dd.getInnerRadius(), dd.getEdgeColor(), dd.getFillColor());
             }
             
         } else if(originalShape instanceof Circle) {
