@@ -16,7 +16,7 @@ public class DlgCircleTests {
 		dialog = new DlgCircle();
 	}
 	
-	@Test
+	/*@Test
 	public void testIsNullExpectedNotEqual() {
 		assertNotEquals(null, dialog);
 	}
@@ -85,5 +85,5 @@ public class DlgCircleTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
-	}
+	}*/
 }

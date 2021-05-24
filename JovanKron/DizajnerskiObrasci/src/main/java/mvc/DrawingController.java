@@ -100,25 +100,13 @@ public class DrawingController {
 	}
 	
 	public void addCircleOnClick(MouseEvent click) {
-		Point p = new Point(click.getX(), click.getY());
-
         DlgCircle dialog = new DlgCircle();
-        dialog.setTxtX(Integer.toString(p.getX()));
-        dialog.setTxtY(Integer.toString(p.getY()));
-        dialog.setTxtXEdit(false);
-        dialog.setTxtYEdit(false);
-        dialog.setVisible(true);
+        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
+        dialog.setVisible(true);        
 
-        int radius = Integer.parseInt(dialog.getTxtRadius());
-        
-
-        if(dialog.isOk()) {
-        	Circle circle = new Circle(p,radius);
-            
-            circle.setEdgeColor(currentEdgeColor);
-            circle.setFillColor(currentFillColor);
+        if(dialog.isConfirmed()) {
+        	Circle circle = new Circle(new Point(click.getX(), click.getY()), dialog.getRadius(), dialog.getEdgeColor(), dialog.getFillColor());
             circle.addObserver(new ObserverForButtons(model, frame));
-            
             addShape(circle);
         }
 	}
@@ -271,17 +259,11 @@ public class DrawingController {
             Circle oldState = (Circle) originalShape;
 
             DlgCircle dc = new DlgCircle();
-            dc.setTxtXEdit(true);
-            dc.setTxtYEdit(true);
-            dc.setTxtX(Integer.toString(oldState.getCenter().getX()));
-            dc.setTxtY(Integer.toString(oldState.getCenter().getY()));
-            dc.setTxtRadius(Integer.toString(oldState.getRadius()));
-            dc.setEdgeColor(oldState.getEdgeColor());
-            dc.setFillColor(oldState.getFillColor());
+            dc.fillForModify(oldState.getCenter().getX(), oldState.getCenter().getY(), oldState.getRadius(), oldState.getEdgeColor(), oldState.getFillColor());
             dc.setVisible(true);
 
-            if(dc.isOk())
-            	updatedShape = new Circle(new Point(Integer.parseInt(dc.getTxtX()),Integer.parseInt(dc.getTxtY())), Integer.parseInt(dc.getTxtRadius()), currentEdgeColor, currentFillColor);
+            if(dc.isConfirmed())
+            	updatedShape = new Circle(new Point(dc.getBaseCoordinateX(), dc.getBaseCoordinateY()), dc.getRadius(), dc.getEdgeColor(), dc.getFillColor());
 
         } else if(originalShape instanceof HexagonAdapter) {
             HexagonAdapter oldState = (HexagonAdapter) originalShape;

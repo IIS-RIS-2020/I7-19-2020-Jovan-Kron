@@ -17,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JSeparator;
 
 public class DlgLine extends DlgShape {
 
@@ -38,7 +39,8 @@ public class DlgLine extends DlgShape {
 	public DlgLine() {
 		setTitle("Line dialog");
 		defineSaveOperation();
-		setBounds(100, 100, 180, 280);
+		setBounds(100, 100, 198, 320);
+		getBtnEdgeColor().setMinimumSize(new Dimension(33, 25));
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
@@ -48,14 +50,14 @@ public class DlgLine extends DlgShape {
 		gridBagLayout.rowHeights = new int[]{17, 0, 0, 0, 0, 0};
 		JLabel lblStartPoint = new JLabel("Start point");
 		GridBagConstraints gbc_lblStartPoint = new GridBagConstraints();
-		gbc_lblStartPoint.gridwidth = 3;
+		gbc_lblStartPoint.gridwidth = 4;
 		gbc_lblStartPoint.insets = new Insets(0, 0, 5, 0);
 		gbc_lblStartPoint.gridx = 0;
 		gbc_lblStartPoint.gridy = 0;
 		getContentPanel().add(lblStartPoint, gbc_lblStartPoint);
 		
 		GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
-		gbc_btnEdgeColor.gridwidth = 2;
+		gbc_btnEdgeColor.gridwidth = 3;
 		gbc_btnEdgeColor.fill = GridBagConstraints.BOTH;
 		gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 0);
 		gbc_btnEdgeColor.gridx = 1;
@@ -69,11 +71,20 @@ public class DlgLine extends DlgShape {
 		gbc_lblEdgeColor.gridy = 7;
 		getContentPanel().add(getLblEdgeColor(), gbc_lblEdgeColor);
 		
+		JSeparator separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
+		gbc_separator.gridwidth = 4;
+		gbc_separator.insets = new Insets(10, 0, 10, 0);
+		gbc_separator.gridx = 0;
+		gbc_separator.gridy = 2;
+		getContentPanel().add(separator, gbc_separator);
+		
 		
 		
 		JLabel lblEndPoint = new JLabel("End point");
 		GridBagConstraints gbc_lblEndPoint = new GridBagConstraints();
-		gbc_lblEndPoint.gridwidth = 3;
+		gbc_lblEndPoint.gridwidth = 4;
 		gbc_lblEndPoint.insets = new Insets(0, 0, 5, 0);
 		gbc_lblEndPoint.gridx = 0;
 		gbc_lblEndPoint.gridy = 3;
@@ -89,7 +100,7 @@ public class DlgLine extends DlgShape {
 		
 		txtEndX = new JTextField();
 		GridBagConstraints gbc_txtCoordinateXEnd = new GridBagConstraints();
-		gbc_txtCoordinateXEnd.gridwidth = 2;
+		gbc_txtCoordinateXEnd.gridwidth = 3;
 		gbc_txtCoordinateXEnd.insets = new Insets(0, 0, 5, 0);
 		gbc_txtCoordinateXEnd.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCoordinateXEnd.gridx = 1;
@@ -97,14 +108,9 @@ public class DlgLine extends DlgShape {
 		getContentPanel().add(txtEndX, gbc_txtCoordinateXEnd);
 		txtEndX.setColumns(10);
 		txtEndX.addKeyListener(new KeyAdapter() {
+		    @Override
 		    public void keyTyped(KeyEvent e) {
-		      char c = e.getKeyChar();
-		      if (!((c >= '0') && (c <= '9') ||
-		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
-		        getToolkit().beep();
-		        e.consume();
-		      }
+		    	checkInputText(e);
 		    }
 		});
 		
@@ -118,22 +124,25 @@ public class DlgLine extends DlgShape {
 		
 		txtEndY = new JTextField();
 		GridBagConstraints gbc_txtCoordinateYEnd = new GridBagConstraints();
-		gbc_txtCoordinateYEnd.gridwidth = 2;
+		gbc_txtCoordinateYEnd.gridwidth = 3;
 		gbc_txtCoordinateYEnd.insets = new Insets(0, 0, 5, 0);
 		gbc_txtCoordinateYEnd.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCoordinateYEnd.gridx = 1;
 		gbc_txtCoordinateYEnd.gridy = 5;
 		getContentPanel().add(txtEndY, gbc_txtCoordinateYEnd);
 		txtEndY.setColumns(10);
+		
+		JSeparator separator_1 = new JSeparator();
+		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
+		gbc_separator_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_separator_1.gridwidth = 4;
+		gbc_separator_1.insets = new Insets(10, 0, 10, 0);
+		gbc_separator_1.gridx = 0;
+		gbc_separator_1.gridy = 6;
+		getContentPanel().add(separator_1, gbc_separator_1);
 		txtEndY.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
-		      char c = e.getKeyChar();
-		      if (!((c >= '0') && (c <= '9') ||
-		         (c == KeyEvent.VK_BACK_SPACE) ||
-		         (c == KeyEvent.VK_DELETE))) {
-		        getToolkit().beep();
-		        e.consume();
-		      }
+		    	checkInputText(e);
 		    }
 		});
 	}

@@ -35,6 +35,7 @@ public abstract class DlgShape extends JDialog {
 	private boolean confirmed;
 	private JButton btnEdgeColor, saveButton, cancelButton;
 	private JLabel lblEdgeColor;
+	private GridBagConstraints gbc_btnEdgeColor;
 	
 	public DlgShape() {
 			setResizable(false);
@@ -55,30 +56,24 @@ public abstract class DlgShape extends JDialog {
 				JLabel lblCoordinateX = new JLabel("Coordinate x:");
 				GridBagConstraints gbc_lblCoordinateX = new GridBagConstraints();
 				gbc_lblCoordinateX.anchor = GridBagConstraints.EAST;
-				gbc_lblCoordinateX.insets = new Insets(0, 0, 5, 5);
+				gbc_lblCoordinateX.insets = new Insets(50, 0, 5, 5);
 				gbc_lblCoordinateX.gridx = 0;
-				gbc_lblCoordinateX.gridy = 1;
+				gbc_lblCoordinateX.gridy = 0;
 				getContentPanel().add(lblCoordinateX, gbc_lblCoordinateX);
 			}
 			{
 				txtX = new JTextField();
 				GridBagConstraints gbc_txtCoordinateX = new GridBagConstraints();
-				gbc_txtCoordinateX.gridwidth = 2;
-				gbc_txtCoordinateX.insets = new Insets(0, 0, 5, 0);
+				gbc_txtCoordinateX.gridwidth = 3;
+				gbc_txtCoordinateX.insets = new Insets(50, 0, 5, 0);
 				gbc_txtCoordinateX.fill = GridBagConstraints.HORIZONTAL;
 				gbc_txtCoordinateX.gridx = 1;
-				gbc_txtCoordinateX.gridy = 1;
+				gbc_txtCoordinateX.gridy = 0;
 				getContentPanel().add(txtX, gbc_txtCoordinateX);
 				txtX.setColumns(10);
 				txtX.addKeyListener(new KeyAdapter() {
 				    public void keyTyped(KeyEvent e) {
-				      char c = e.getKeyChar();
-				      if (!((c >= '0') && (c <= '9') ||
-				         (c == KeyEvent.VK_BACK_SPACE) ||
-				         (c == KeyEvent.VK_DELETE))) {
-				        getToolkit().beep();
-				        e.consume();
-				      }
+				    	checkInputText(e);
 				    }
 				});
 			}
@@ -88,28 +83,22 @@ public abstract class DlgShape extends JDialog {
 				gbc_lblCoordinateY.anchor = GridBagConstraints.EAST;
 				gbc_lblCoordinateY.insets = new Insets(0, 0, 5, 5);
 				gbc_lblCoordinateY.gridx = 0;
-				gbc_lblCoordinateY.gridy = 2;
+				gbc_lblCoordinateY.gridy = 1;
 				getContentPanel().add(lblCoordinateY, gbc_lblCoordinateY);
 			}
 			{
 				txtY = new JTextField();
 				GridBagConstraints gbc_txtCoordinateY = new GridBagConstraints();
-				gbc_txtCoordinateY.gridwidth = 2;
+				gbc_txtCoordinateY.gridwidth = 3;
 				gbc_txtCoordinateY.insets = new Insets(0, 0, 5, 0);
 				gbc_txtCoordinateY.fill = GridBagConstraints.HORIZONTAL;
 				gbc_txtCoordinateY.gridx = 1;
-				gbc_txtCoordinateY.gridy = 2;
+				gbc_txtCoordinateY.gridy = 1;
 				getContentPanel().add(txtY, gbc_txtCoordinateY);
 				txtY.setColumns(10);
 				txtY.addKeyListener(new KeyAdapter() {
 				    public void keyTyped(KeyEvent e) {
-				      char c = e.getKeyChar();
-				      if (!((c >= '0') && (c <= '9') ||
-				         (c == KeyEvent.VK_BACK_SPACE) ||
-				         (c == KeyEvent.VK_DELETE))) {
-				        getToolkit().beep();
-				        e.consume();
-				      }
+				      checkInputText(e);
 				    }
 				});
 			}
@@ -119,7 +108,7 @@ public abstract class DlgShape extends JDialog {
 				gbc_lblEdgeColor.anchor = GridBagConstraints.EAST;
 				gbc_lblEdgeColor.insets = new Insets(0, 0, 5, 5);
 				gbc_lblEdgeColor.gridx = 0;
-				gbc_lblEdgeColor.gridy = 3;
+				gbc_lblEdgeColor.gridy = 4;
 				getContentPanel().add(lblEdgeColor, gbc_lblEdgeColor);
 			}
 			{
@@ -135,12 +124,12 @@ public abstract class DlgShape extends JDialog {
 					}
 				});
 				
-				GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
-				gbc_btnEdgeColor.gridwidth = 2;
+				gbc_btnEdgeColor = new GridBagConstraints();
+				gbc_btnEdgeColor.gridwidth = 3;
 				gbc_btnEdgeColor.fill = GridBagConstraints.BOTH;
 				gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 0);
 				gbc_btnEdgeColor.gridx = 1;
-				gbc_btnEdgeColor.gridy = 3;
+				gbc_btnEdgeColor.gridy = 4;
 				contentPanel.add(btnEdgeColor, gbc_btnEdgeColor);
 			}
 			
@@ -199,10 +188,24 @@ public abstract class DlgShape extends JDialog {
 		getBtnEdgeColor().setBackground(edgeColor);
 	}
 	
+	public void checkInputText(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (!((c >= '0') && (c <= '9') ||
+			(c == KeyEvent.VK_BACK_SPACE) ||
+			(c == KeyEvent.VK_DELETE))) {
+				getToolkit().beep();
+				e.consume();
+		}
+	}
+	
 	public abstract void defineSaveOperation();
 	
 	public JLabel getLblEdgeColor() {
 		return lblEdgeColor;
+	}	
+
+	public GridBagConstraints getGbc_btnEdgeColor() {
+		return gbc_btnEdgeColor;
 	}
 
 	public JButton getSaveButton() {
