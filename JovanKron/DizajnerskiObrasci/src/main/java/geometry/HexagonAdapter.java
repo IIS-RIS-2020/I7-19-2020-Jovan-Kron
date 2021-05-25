@@ -1,6 +1,5 @@
 package geometry;
 
-import geometry.Point;
 import geometry.Shape;
 import geometry.SurfaceShape;
 import hexagon.Hexagon;
@@ -24,6 +23,12 @@ public class HexagonAdapter extends SurfaceShape {
 		setEdgeColor(edgeColor);
 		setFillColor(fillColor);
 	}
+    
+    public HexagonAdapter(int x, int y, int r, Color edgeColor, Color fillColor) {
+        this.hexagon = new Hexagon(x, y, r);
+        setEdgeColor(edgeColor);
+		setFillColor(fillColor);
+    }
 
     @Override
     public boolean contains(int x, int y) {

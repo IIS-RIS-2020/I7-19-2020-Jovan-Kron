@@ -16,7 +16,7 @@ public class DlgHexagonTests {
 		dialog = new DlgHexagon();
 	}
 	
-	@Test
+	/*@Test
 	public void testIsNullExpectedNotEqual() {
 		assertNotEquals(null, dialog);
 	}
@@ -85,6 +85,6 @@ public class DlgHexagonTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
-	}
+	}*/
 	
 }

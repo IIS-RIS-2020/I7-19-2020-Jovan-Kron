@@ -112,23 +112,13 @@ public class DrawingController {
 	}
 	
 	public void addHexagonOnClick(MouseEvent click) {
-		Point p = new Point(click.getX(), click.getY());
-
         DlgHexagon dialog = new DlgHexagon();
-        dialog.setTxtX(Integer.toString(p.getX()));
-        dialog.setTxtY(Integer.toString(p.getY()));
-        dialog.setTxtXEdit(false);
-        dialog.setTxtYEdit(false);
+        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
         dialog.setVisible(true);
-        int radius = Integer.parseInt(dialog.getTxtRadius());
         
-        if(dialog.isOk()) {
-        	HexagonAdapter hexagon = new HexagonAdapter(p.getX(), p.getY(), radius);
-            
-            hexagon.setEdgeColor(currentEdgeColor);
-            hexagon.setFillColor(currentFillColor);
+        if(dialog.isConfirmed()) {
+        	HexagonAdapter hexagon = new HexagonAdapter(click.getX(), click.getY(), dialog.getRadius(), dialog.getEdgeColor(), dialog.getFillColor());
             hexagon.addObserver(new ObserverForButtons(model, frame));
-            
             addShape(hexagon);
         }
 	}
@@ -139,12 +129,10 @@ public class DrawingController {
 		for(int i = model.getShapes().size()-1; i>=0; i--){
 			shape = model.get(i);
 			if(shape.contains(click.getX(), click.getY())) {
-				if(shape.isSelected()) {
+				if(shape.isSelected())
 					cmdSelect = new CmdSelect(shape, false);
-				}
-				else {
+				else
 					cmdSelect = new CmdSelect(shape, true);
-				}
 				break;
 			}
 		}
@@ -225,21 +213,11 @@ public class DrawingController {
             HexagonAdapter oldState = (HexagonAdapter) originalShape;
 
             DlgHexagon dh = new DlgHexagon();
-            dh.setTxtXEdit(true);
-            dh.setTxtYEdit(true);
-            dh.setTxtX(Integer.toString(oldState.getX()));
-            dh.setTxtY(Integer.toString(oldState.getY()));
-            dh.setTxtRadius(Integer.toString(oldState.getR()));
-            dh.setEdgeColor(oldState.getEdgeColor());
-            dh.setFillColor(oldState.getFillColor());
+            dh.fillForModify(oldState.getX(), oldState.getY(), oldState.getR(), oldState.getEdgeColor(), oldState.getFillColor());
             dh.setVisible(true);
 
-            if (dh.isOk()) {
-            	HexagonAdapter newState = new HexagonAdapter(Integer.parseInt(dh.getTxtX()),Integer.parseInt(dh.getTxtY()), Integer.parseInt(dh.getTxtRadius()));
-                newState.setEdgeColor(currentEdgeColor);
-                newState.setFillColor(currentFillColor);
-                updatedShape = newState;
-            }
+            if (dh.isConfirmed())
+            	updatedShape = new HexagonAdapter(dh.getBaseCoordinateX(), dh.getBaseCoordinateY(), dh.getRadius(), dh.getEdgeColor(), dh.getFillColor());
         }
         
         if(originalShape != null && updatedShape != null)
