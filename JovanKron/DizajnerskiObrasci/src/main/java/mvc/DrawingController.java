@@ -53,7 +53,6 @@ public class DrawingController {
 
         if(dialog.isConfirmed()) {
         	Point point = new Point(click.getX(), click.getY(), dialog.getEdgeColor());
-        	point.addObserver(new ObserverForButtons(model, frame));
         	addShape(point);
         }
 	}
@@ -68,7 +67,6 @@ public class DrawingController {
 
             if (dialog.isConfirmed()) {
             	Line line = new Line(startPoint, new Point(click.getX(), click.getY()), dialog.getEdgeColor());
-                line.addObserver(new ObserverForButtons(model, frame));
                 addShape(line);
             }
             startPoint = null;
@@ -82,7 +80,6 @@ public class DrawingController {
 
          if (dialog.isConfirmed()) {
          	Rectangle rectangle = new Rectangle(new Point(click.getX(), click.getY()), dialog.getRectangleWidth(), dialog.getRectangleHeight(), dialog.getEdgeColor(), dialog.getFillColor());
-            rectangle.addObserver(new ObserverForButtons(model, frame));
             addShape(rectangle);
          }
 	}
@@ -94,7 +91,6 @@ public class DrawingController {
 
         if(dialog.isConfirmed()) {
         	Circle circle = new Circle(new Point(click.getX(), click.getY()), dialog.getRadius(), dialog.getEdgeColor(), dialog.getFillColor());
-            circle.addObserver(new ObserverForButtons(model, frame));
             addShape(circle);
         }
 	}
@@ -106,7 +102,6 @@ public class DrawingController {
 
         if(dialog.isConfirmed()) {
         	Donut donut = new Donut(new Point(click.getX(), click.getY()), dialog.getOuterRadius(), dialog.getInnerRadius(), dialog.getEdgeColor(), dialog.getFillColor());
-            donut.addObserver(new ObserverForButtons(model, frame));
             addShape(donut);
         }
 	}
@@ -118,7 +113,6 @@ public class DrawingController {
         
         if(dialog.isConfirmed()) {
         	HexagonAdapter hexagon = new HexagonAdapter(click.getX(), click.getY(), dialog.getRadius(), dialog.getEdgeColor(), dialog.getFillColor());
-            hexagon.addObserver(new ObserverForButtons(model, frame));
             addShape(hexagon);
         }
 	}
@@ -158,66 +152,66 @@ public class DrawingController {
 		Shape updatedShape = null;
 
         if(originalShape instanceof Point) {
-            Point oldState = (Point) originalShape;
+            Point originalPoint = (Point) originalShape;
 
-            DlgPoint mp = new DlgPoint();
-            mp.fillForModify(oldState.getX(), oldState.getY(), oldState.getEdgeColor());
-            mp.setVisible(true);
+            DlgPoint dlgPoint = new DlgPoint();
+            dlgPoint.fillForModify(originalPoint.getX(), originalPoint.getY(), originalPoint.getEdgeColor());
+            dlgPoint.setVisible(true);
 
-            if(mp.isConfirmed())
-            	updatedShape = new Point(mp.getBaseCoordinateX(), mp.getBaseCoordinateY(), mp.getEdgeColor());
+            if(dlgPoint.isConfirmed())
+            	updatedShape = new Point(dlgPoint.getBaseCoordinateX(), dlgPoint.getBaseCoordinateY(), dlgPoint.getEdgeColor());
             	
         } else if(originalShape instanceof Line) {
-            Line oldState = (Line) originalShape;
+            Line originalLine = (Line) originalShape;
 
-            DlgLine ml = new DlgLine();
-            ml.fillForModify(oldState.getStartPoint().getX(), oldState.getStartPoint().getY(),
-            		oldState.getEndPoint().getX(), oldState.getEndPoint().getY(), oldState.getEdgeColor());
-            ml.setVisible(true);
+            DlgLine dlgLine = new DlgLine();
+            dlgLine.fillForModify(originalLine.getStartPoint().getX(), originalLine.getStartPoint().getY(),
+            		originalLine.getEndPoint().getX(), originalLine.getEndPoint().getY(), originalLine.getEdgeColor());
+            dlgLine.setVisible(true);
 
-            if(ml.isConfirmed())
-            	updatedShape = new Line(new Point(ml.getBaseCoordinateX(), ml.getBaseCoordinateY()), new Point(ml.getEndX(), ml.getEndY()), ml.getEdgeColor());
+            if(dlgLine.isConfirmed())
+            	updatedShape = new Line(new Point(dlgLine.getBaseCoordinateX(), dlgLine.getBaseCoordinateY()), new Point(dlgLine.getEndX(), dlgLine.getEndY()), dlgLine.getEdgeColor());
             
         } else if(originalShape instanceof Rectangle) {
-            Rectangle oldState = (Rectangle) originalShape;
+            Rectangle originalRectangle = (Rectangle) originalShape;
 
-            DlgRectangle dr = new DlgRectangle();
-            dr.fillForModify(oldState.getUpperLeftPoint().getX(), oldState.getUpperLeftPoint().getY(), oldState.getWidth(), oldState.getHeight(), oldState.getEdgeColor(), oldState.getFillColor());
-            dr.setVisible(true);
+            DlgRectangle dlgRectangle = new DlgRectangle();
+            dlgRectangle.fillForModify(originalRectangle.getUpperLeftPoint().getX(), originalRectangle.getUpperLeftPoint().getY(), originalRectangle.getWidth(), originalRectangle.getHeight(), originalRectangle.getEdgeColor(), originalRectangle.getFillColor());
+            dlgRectangle.setVisible(true);
 
-            if(dr.isConfirmed())
-            	updatedShape = new Rectangle(new Point(dr.getBaseCoordinateX(), dr.getBaseCoordinateY()), dr.getRectangleWidth(), dr.getRectangleHeight(), dr.getEdgeColor(), dr.getFillColor());
+            if(dlgRectangle.isConfirmed())
+            	updatedShape = new Rectangle(new Point(dlgRectangle.getBaseCoordinateX(), dlgRectangle.getBaseCoordinateY()), dlgRectangle.getRectangleWidth(), dlgRectangle.getRectangleHeight(), dlgRectangle.getEdgeColor(), dlgRectangle.getFillColor());
         
         } else if(originalShape instanceof Donut) {
-            Donut oldState = (Donut) originalShape;
+            Donut originalDonut = (Donut) originalShape;
 
-            DlgDonut dd = new DlgDonut();
-            dd.fillForModify(oldState.getCenter().getX(), oldState.getCenter().getY(), oldState.getInnerRadius(), oldState.getRadius(), oldState.getEdgeColor(), oldState.getFillColor());
-            dd.setVisible(true);
+            DlgDonut dlgDonut = new DlgDonut();
+            dlgDonut.fillForModify(originalDonut.getCenter().getX(), originalDonut.getCenter().getY(), originalDonut.getInnerRadius(), originalDonut.getRadius(), originalDonut.getEdgeColor(), originalDonut.getFillColor());
+            dlgDonut.setVisible(true);
 
-            if(dd.isConfirmed()) {
-            	updatedShape = new Donut(new Point(dd.getBaseCoordinateX(), dd.getBaseCoordinateY()), dd.getOuterRadius(), dd.getInnerRadius(), dd.getEdgeColor(), dd.getFillColor());
+            if(dlgDonut.isConfirmed()) {
+            	updatedShape = new Donut(new Point(dlgDonut.getBaseCoordinateX(), dlgDonut.getBaseCoordinateY()), dlgDonut.getOuterRadius(), dlgDonut.getInnerRadius(), dlgDonut.getEdgeColor(), dlgDonut.getFillColor());
             }
             
         } else if(originalShape instanceof Circle) {
-            Circle oldState = (Circle) originalShape;
+            Circle originalCircle = (Circle) originalShape;
 
-            DlgCircle dc = new DlgCircle();
-            dc.fillForModify(oldState.getCenter().getX(), oldState.getCenter().getY(), oldState.getRadius(), oldState.getEdgeColor(), oldState.getFillColor());
-            dc.setVisible(true);
+            DlgCircle dlgCircle = new DlgCircle();
+            dlgCircle.fillForModify(originalCircle.getCenter().getX(), originalCircle.getCenter().getY(), originalCircle.getRadius(), originalCircle.getEdgeColor(), originalCircle.getFillColor());
+            dlgCircle.setVisible(true);
 
-            if(dc.isConfirmed())
-            	updatedShape = new Circle(new Point(dc.getBaseCoordinateX(), dc.getBaseCoordinateY()), dc.getRadius(), dc.getEdgeColor(), dc.getFillColor());
+            if(dlgCircle.isConfirmed())
+            	updatedShape = new Circle(new Point(dlgCircle.getBaseCoordinateX(), dlgCircle.getBaseCoordinateY()), dlgCircle.getRadius(), dlgCircle.getEdgeColor(), dlgCircle.getFillColor());
 
         } else if(originalShape instanceof HexagonAdapter) {
-            HexagonAdapter oldState = (HexagonAdapter) originalShape;
+            HexagonAdapter originalHexagonAdapter = (HexagonAdapter) originalShape;
 
-            DlgHexagon dh = new DlgHexagon();
-            dh.fillForModify(oldState.getX(), oldState.getY(), oldState.getR(), oldState.getEdgeColor(), oldState.getFillColor());
-            dh.setVisible(true);
+            DlgHexagon dlgHexagon = new DlgHexagon();
+            dlgHexagon.fillForModify(originalHexagonAdapter.getX(), originalHexagonAdapter.getY(), originalHexagonAdapter.getR(), originalHexagonAdapter.getEdgeColor(), originalHexagonAdapter.getFillColor());
+            dlgHexagon.setVisible(true);
 
-            if (dh.isConfirmed())
-            	updatedShape = new HexagonAdapter(dh.getBaseCoordinateX(), dh.getBaseCoordinateY(), dh.getRadius(), dh.getEdgeColor(), dh.getFillColor());
+            if (dlgHexagon.isConfirmed())
+            	updatedShape = new HexagonAdapter(dlgHexagon.getBaseCoordinateX(), dlgHexagon.getBaseCoordinateY(), dlgHexagon.getRadius(), dlgHexagon.getEdgeColor(), dlgHexagon.getFillColor());
         }
         
         if(originalShape != null && updatedShape != null)
@@ -387,6 +381,7 @@ public class DrawingController {
 	}
     
     public void addShape(Shape shape) {
+    	shape.addObserver(new ObserverForButtons(model, frame));
 		CmdAdd cmdAdd = new CmdAdd(shape, model);
 		logCommand(cmdAdd, shape, null);
 	}
