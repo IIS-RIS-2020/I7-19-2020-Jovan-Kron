@@ -28,8 +28,17 @@ public class DrawingFrame extends JFrame {
 	private DrawingView view = new DrawingView();
 	private DrawingController controller;
 	public JToggleButton clickedButton;
+	JToggleButton tglBtnPoint;
+	JToggleButton tglBtnLine;
+	JToggleButton tglBtnCircle;
+	JToggleButton tglBtnRectangle;
+	JToggleButton tglBtnDonut;
+	JToggleButton tglBtnHexagon;
+	JToggleButton tglBtnSelect;
 	JToggleButton tglBtnDelete;
 	JToggleButton tglBtnModify;
+	JToggleButton tglBtnEdgeColor;
+	JToggleButton tglBtnFillColor;
 	JToggleButton tglBtnUndo;
 	JToggleButton tglBtnRedo;
 	private JToggleButton tglBtnBringToBack;
@@ -47,12 +56,11 @@ public class DrawingFrame extends JFrame {
 		panel_1.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(panel_1, BorderLayout.NORTH);
 		
-		JToggleButton tglBtnSelect = new JToggleButton("Select");
+		tglBtnSelect = new JToggleButton("Select");
 		tglBtnSelect.setToolTipText("Select");
 		tglBtnSelect.setMargin(new Insets(0, 0, 0, 0));
-		tglBtnSelect.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
+		tglBtnSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
 				clickedButton = tglBtnSelect;
 			}
@@ -121,9 +129,8 @@ public class DrawingFrame extends JFrame {
 		tglBtnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int answer = JOptionPane.showConfirmDialog (null, "Do you want to delete selected shapes?","Warning",JOptionPane.YES_NO_OPTION);
-				if(answer == JOptionPane.YES_OPTION) {
+				if(answer == JOptionPane.YES_OPTION)
 					controller.deleteShapes();
-				}
 			}
 		});
 		
@@ -192,106 +199,98 @@ public class DrawingFrame extends JFrame {
 		
 		
 		
-		JToggleButton btnPoint = new JToggleButton("Point");
-		btnPoint.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		tglBtnPoint = new JToggleButton("Point");
+		tglBtnPoint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
-				clickedButton = btnPoint;
+				clickedButton = tglBtnPoint;
 			}
 		});
-		panel.add(btnPoint);
-		group.add(btnPoint);
+		panel.add(tglBtnPoint);
+		group.add(tglBtnPoint);
 		
-		JToggleButton btnLine = new JToggleButton("Line");
-		btnLine.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
+		tglBtnLine = new JToggleButton("Line");
+		tglBtnLine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
-				clickedButton = btnLine;
+				clickedButton = tglBtnLine;
 			}
 		});
-		panel.add(btnLine);
-		group.add(btnLine);
+		panel.add(tglBtnLine);
+		group.add(tglBtnLine);
 		
-		JToggleButton btnDonut = new JToggleButton("Donut");
-		btnDonut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		tglBtnDonut = new JToggleButton("Donut");
+		tglBtnDonut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
-				clickedButton = btnDonut;
+				clickedButton = tglBtnDonut;
 			}
 		});
-		panel.add(btnDonut);
-		group.add(btnDonut);
+		panel.add(tglBtnDonut);
+		group.add(tglBtnDonut);
 		
-		JToggleButton btnCirle = new JToggleButton("Circle");
-		btnCirle.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
+		tglBtnCircle = new JToggleButton("Circle");
+		tglBtnCircle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
-				clickedButton = btnCirle;
+				clickedButton = tglBtnCircle;
 			}
 		});
-		panel.add(btnCirle);
-		group.add(btnCirle);
+		panel.add(tglBtnCircle);
+		group.add(tglBtnCircle);
 		
-		JToggleButton btnRectangle = new JToggleButton("Rectangle");
-		btnRectangle.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		tglBtnRectangle = new JToggleButton("Rectangle");
+		tglBtnRectangle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
-				clickedButton = btnRectangle;
+				clickedButton = tglBtnRectangle;
 				
 			}
 		});
-		panel.add(btnRectangle);
-		group.add(btnRectangle);
+		panel.add(tglBtnRectangle);
+		group.add(tglBtnRectangle);
 		
-		JToggleButton btnHexagon = new JToggleButton("Hexagon");
-		btnHexagon.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
+		tglBtnHexagon = new JToggleButton("Hexagon");
+		tglBtnHexagon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
-				clickedButton = btnHexagon;
+				clickedButton = tglBtnHexagon;
 			}
 		});
-		panel.add(btnHexagon);
-		group.add(btnHexagon);
+		panel.add(tglBtnHexagon);
+		group.add(tglBtnHexagon);
 		
 		JLabel lblEdge = new JLabel("Edge");
 		panel.add(lblEdge);
 		
-		JToggleButton btnEdgeColor = new JToggleButton("             ");
-		btnEdgeColor.setToolTipText("Edge color");
-		btnEdgeColor.setBackground(Color.BLACK);
-		btnEdgeColor.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		tglBtnEdgeColor = new JToggleButton("             ");
+		tglBtnEdgeColor.setToolTipText("Edge color");
+		tglBtnEdgeColor.setBackground(Color.BLACK);
+		tglBtnEdgeColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.chooseEdgeColor();
-				btnEdgeColor.setBackground(controller.getCurrentEdgeColor());
-				clickedButton = btnEdgeColor;
+				tglBtnEdgeColor.setBackground(controller.getCurrentEdgeColor());
+				clickedButton = tglBtnEdgeColor;
 			}
 		});
-		panel.add(btnEdgeColor);
-		group.add(btnEdgeColor);
+		panel.add(tglBtnEdgeColor);
+		group.add(tglBtnEdgeColor);
 		
 		JLabel lblSurface = new JLabel("Surface");
 		panel.add(lblSurface);
 		
-		JToggleButton btnFillColor = new JToggleButton("              ");
-		btnFillColor.setToolTipText("Surface color");
-		btnFillColor.setBackground(Color.YELLOW);
-		btnFillColor.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		tglBtnFillColor = new JToggleButton("              ");
+		tglBtnFillColor.setToolTipText("Surface color");
+		tglBtnFillColor.setBackground(Color.YELLOW);
+		tglBtnFillColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controller.chooseFillColor();
-				btnFillColor.setBackground(controller.getCurrentFillColor());
-				clickedButton = btnFillColor;
+				tglBtnFillColor.setBackground(controller.getCurrentFillColor());
+				clickedButton = tglBtnFillColor;
 			}
 		});
-		panel.add(btnFillColor);
-		group.add(btnFillColor);
+		panel.add(tglBtnFillColor);
+		group.add(tglBtnFillColor);
 		
 		JSplitPane southPanel = new JSplitPane();
 		southPanel.setEnabled(false);
@@ -316,20 +315,19 @@ public class DrawingFrame extends JFrame {
 		view.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent click) {
-				if(clickedButton==btnPoint) {
+				if(clickedButton == tglBtnPoint)
 					controller.addPointOnClick(click);
-				}
-				else if(clickedButton==btnLine)
+				else if(clickedButton == tglBtnLine)
 					controller.addLineOnClick(click);
-				else if(clickedButton==btnCirle)
+				else if(clickedButton == tglBtnCircle)
 					controller.addCircleOnClick(click);
-				else if(clickedButton==btnRectangle)
+				else if(clickedButton == tglBtnRectangle)
 					controller.addRectangleOnClick(click);
-				else if(clickedButton==btnDonut)
+				else if(clickedButton == tglBtnDonut)
 					controller.addDonutOnClick(click);
-				else if(clickedButton==btnHexagon)
+				else if(clickedButton == tglBtnHexagon)
 					controller.addHexagonOnClick(click);
-				else if(clickedButton==tglBtnSelect)
+				else if(clickedButton == tglBtnSelect)
 					controller.selectShape(click);
 			}
 		});
@@ -357,12 +355,48 @@ public class DrawingFrame extends JFrame {
 		return controller;
 	}
 
+	public JToggleButton getTglBtnPoint() {
+		return tglBtnPoint;
+	}
+
+	public JToggleButton getTglBtnLine() {
+		return tglBtnLine;
+	}
+
+	public JToggleButton getTglBtnCircle() {
+		return tglBtnCircle;
+	}
+
+	public JToggleButton getTglBtnRectangle() {
+		return tglBtnRectangle;
+	}
+
+	public JToggleButton getTglBtnDonut() {
+		return tglBtnDonut;
+	}
+
+	public JToggleButton getTglBtnHexagon() {
+		return tglBtnHexagon;
+	}
+
+	public JToggleButton getTglBtnSelect() {
+		return tglBtnSelect;
+	}
+
 	public JToggleButton getTglBtnDelete() {
 		return tglBtnDelete;
 	}
 
 	public JToggleButton getTglBtnModify() {
 		return tglBtnModify;
+	}
+
+	public JToggleButton getTglBtnEdgeColor() {
+		return tglBtnEdgeColor;
+	}
+
+	public JToggleButton getTglBtnFillColor() {
+		return tglBtnFillColor;
 	}
 
 	public JToggleButton getTglBtnUndo() {
@@ -392,4 +426,6 @@ public class DrawingFrame extends JFrame {
 	public JTextPane getLogPanel() {
 		return textPane;
 	}
+	
+	
 }

@@ -21,75 +21,75 @@ public class DrawingFrameTests {
 		frame = new DrawingFrame();
 		frame.setController(controller);
 	}
+	
+	@Test
+	public void testDelete() {
+		frame.getTglBtnDelete().setEnabled(true);
+		frame.getTglBtnDelete().doClick();
+		verify(controller).deleteShapes();
+	}
+	
+	@Test
+	public void testModify() {
+		frame.getTglBtnModify().setEnabled(true);
+		frame.getTglBtnModify().doClick();
+		verify(controller).modifyShape();
+	}
+	
+	@Test
+	public void testChooseEdgeColor() {
+		frame.getTglBtnEdgeColor().doClick();
+		verify(controller).chooseEdgeColor();
+	}
+	
+	@Test
+	public void testChooseFillColor() {
+		frame.getTglBtnFillColor().doClick();
+		verify(controller).chooseFillColor();
+	}
+	
+	@Test
+	public void testToFront() {
+		frame.getTglBtnToFront().setEnabled(true);
+		frame.getTglBtnToFront().doClick();
+		verify(controller).positionCommand("TF");
+	}
+	
+	@Test
+	public void testToBack() {
+		frame.getTglBtnToBack().setEnabled(true);
+		frame.getTglBtnToBack().doClick();
+		verify(controller).positionCommand("TB");
+	}
+	
+	@Test
+	public void testBringToFront() {
+		frame.getTglBtnBringToFront().setEnabled(true);
+		frame.getTglBtnBringToFront().doClick();
+		verify(controller).positionCommand("BTF");
+	}
+	
+	@Test
+	public void testBringToBack() {
+		frame.getTglBtnBringToBack().setEnabled(true);
+		frame.getTglBtnBringToBack().doClick();
+		verify(controller).positionCommand("BTB");
+	}
+	
+	@Test
+	public void testUndo() {
+		frame.getTglBtnUndo().setEnabled(true);
+		frame.getTglBtnUndo().doClick();
+		verify(controller).undo();
+	}
+	
+	@Test
+	public void testRedo() {
+		frame.getTglBtnRedo().setEnabled(true);
+		frame.getTglBtnRedo().doClick();
+		verify(controller).redo();
+	}
 	/*
-	@Test
-	public void testDelete() throws Exception {
-		frame.getTglbtnDelete().setEnabled(true);
-		frame.getTglbtnDelete().doClick();
-		verify(controller).onDelete();
-	}
-	
-	@Test
-	public void testEdgeColor() throws Exception {
-		frame.getTglbtnEdgeColor().doClick();
-		verify(controller).setEdgeColor();
-	}
-	
-	@Test
-	public void testFillColor() throws Exception {
-		frame.getTglbtnFillColor().doClick();
-		verify(controller).setFillColor();
-	}
-	
-	@Test
-	public void testModify() throws Exception {
-		frame.getTglbtnModify().setEnabled(true);
-		frame.getTglbtnModify().doClick();
-		verify(controller).onModify();
-	}
-	
-	@Test
-	public void testToFront() throws Exception {
-		frame.getTglbtnToFront().setEnabled(true);
-		frame.getTglbtnToFront().doClick();
-		verify(controller).onToFront();
-	}
-	
-	@Test
-	public void testToBack() throws Exception {
-		frame.getTglbtnToBack().setEnabled(true);
-		frame.getTglbtnToBack().doClick();
-		verify(controller).onToBack();
-	}
-	
-	@Test
-	public void testBringToFront() throws Exception {
-		frame.getTglbtnBringToFront().setEnabled(true);
-		frame.getTglbtnBringToFront().doClick();
-		verify(controller).onBringToFront();
-	}
-	
-	@Test
-	public void testBringToBack() throws Exception {
-		frame.getTglbtnBringToBack().setEnabled(true);
-		frame.getTglbtnBringToBack().doClick();
-		verify(controller).onBringToBack();
-	}
-	
-	@Test
-	public void testUndo() throws Exception {
-		frame.getTglbtnUndo().setEnabled(true);
-		frame.getTglbtnUndo().doClick();
-		verify(controller).onUndo();
-	}
-	
-	@Test
-	public void testRedo() throws Exception {
-		frame.getTglbtnRedo().setEnabled(true);
-		frame.getTglbtnRedo().doClick();
-		verify(controller).onRedo();
-	}
-	
 	@Test
 	public void testSaveShapes() throws Exception {
 		frame.getView().getModel().getUndoStack().push(new CmdAdd(new Point(), frame.getView().getModel()));
