@@ -146,12 +146,33 @@ public class DlgLine extends DlgShape {
 		    }
 		});
 	}
+
+	@Override
+	public void defineSaveOperation() {
+		getSaveButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
+					setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+					endX = Integer.parseInt(txtEndX.getText());
+					endY = Integer.parseInt(txtEndY.getText());
+					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || endX<0 || endY<0)
+						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0");
+					else {
+						setConfirmed(true);
+						dispose();
+					}
+				}
+				catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
+				}
+			}
+		});
+	}
 	
 	public void fillForAdd(int startX, int startY, int endX, int endY, Color edgeColor)
 	{
 		fillForAdd(startX, startY, edgeColor);
-		setEndX(endX);
-		setEndY(endY);
 		txtEndX.setText(Integer.toString(endX));
 		txtEndY.setText(Integer.toString(endY));
 		txtEndX.setEditable(false);
@@ -161,8 +182,6 @@ public class DlgLine extends DlgShape {
 	public void fillForModify(int startX, int startY, int endX, int endY, Color edgeColor)
 	{
 		fillForModify(startX, startY, edgeColor);
-		setEndX(endX);
-		setEndY(endY);
 		txtEndX.setText(Integer.toString(endX));
 		txtEndY.setText(Integer.toString(endY));
 	}
@@ -183,35 +202,12 @@ public class DlgLine extends DlgShape {
 		this.endY = endY;
 	}
 
-	@Override
-	public void defineSaveOperation() {
-		getSaveButton().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (getTxtX().getText().isEmpty() ||
-						getTxtY().getText().isEmpty() || 
-						txtEndX.getText().isEmpty() ||
-						txtEndY.getText().isEmpty()) {
-					setConfirmed(false);
-					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-				} else {
-					try {
-						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
-						endX = Integer.parseInt(txtEndX.getText());
-						endY = Integer.parseInt(txtEndY.getText());
-						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || endX<0 || endY<0)
-							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0");
-						else {
-							setConfirmed(true);
-							dispose();
-						}
-					}
-					catch (NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
-					}
-				}
-			}
-		});
+	public JTextField getTxtEndX() {
+		return txtEndX;
 	}
 
+	public JTextField getTxtEndY() {
+		return txtEndY;
+	}
+	
 }

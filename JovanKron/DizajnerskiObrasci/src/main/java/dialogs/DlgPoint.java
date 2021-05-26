@@ -28,23 +28,18 @@ public class DlgPoint extends DlgShape {
 	public void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (getTxtX().getText().isEmpty() || getTxtY().getText().isEmpty()) {
-					setConfirmed(false);
-					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-				} else {
-					try {
-						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
-						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0)
-							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0!");
-						else {
-							setConfirmed(true);
-							dispose();
-						}
+				try {
+					setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
+					setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0)
+						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0!");
+					else {
+						setConfirmed(true);
+						dispose();
 					}
-					catch (NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
-					}
+				}
+				catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
 				}
 			}
 		});

@@ -168,31 +168,22 @@ public abstract class DlgShape extends JDialog {
 	}
 	
 	public void fillForAdd(int x, int y, Color edgeColor) {
-		setBaseCoordinateX(x);
-		setBaseCoordinateY(y);
-		setEdgeColor(edgeColor);
-		getTxtX().setText(Integer.toString(x));
-		getTxtY().setText(Integer.toString(y));
+		fillForModify(x, y, edgeColor);
 		getTxtX().setEditable(false);
 		getTxtY().setEditable(false);
-		getBtnEdgeColor().setBackground(edgeColor);
 	}
 	
 	public void fillForModify(int x, int y, Color edgeColor)
 	{
-		setBaseCoordinateX(x);
-		setBaseCoordinateY(y);
-		setEdgeColor(edgeColor);
 		getTxtX().setText(Integer.toString(x));
 		getTxtY().setText(Integer.toString(y));
+		setEdgeColor(edgeColor);
 		getBtnEdgeColor().setBackground(edgeColor);
 	}
 	
 	public void checkInputText(KeyEvent e) {
 		char c = e.getKeyChar();
-		if (!((c >= '0') && (c <= '9') ||
-			(c == KeyEvent.VK_BACK_SPACE) ||
-			(c == KeyEvent.VK_DELETE))) {
+		if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
 				getToolkit().beep();
 				e.consume();
 		}
@@ -210,6 +201,10 @@ public abstract class DlgShape extends JDialog {
 
 	public JButton getSaveButton() {
 		return saveButton;
+	}
+	
+	public JButton getCancelButton() {
+		return cancelButton;
 	}
 
 	public JTextField getTxtX() {
