@@ -29,8 +29,7 @@ public class DlgPoint extends DlgShape {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-					setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+					setBaseCoordinates();
 					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0)
 						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0!");
 					else {

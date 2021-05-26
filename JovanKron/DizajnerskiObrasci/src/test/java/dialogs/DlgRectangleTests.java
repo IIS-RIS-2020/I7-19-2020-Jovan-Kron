@@ -2,7 +2,10 @@ package dialogs;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.awt.Color;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +19,7 @@ public class DlgRectangleTests {
 		dialog = new DlgRectangle();
 	}
 	
-	/*@Test
+	@Test
 	public void testIsNullExpectedNotEqual() {
 		assertNotEquals(null, dialog);
 	}
@@ -24,102 +27,234 @@ public class DlgRectangleTests {
 	@Test
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetXExpectedFalse() {
-		dialog.setTxtX("545");
+		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetYExpectedFalse() {
-		dialog.setTxtY("545");
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetWidthExpectedFalse() {
-		dialog.setTxtWidth("545");
+		dialog.getTxtWidth().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetHeightExpectedFalse() {
-		dialog.setTxtHeight("545");
+		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithCoordinatesExpectedFalse() {
-		dialog.setTxtX("545");
-		dialog.setTxtY("545");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithDimensonsExpectedFalse() {
-		dialog.setTxtWidth("545");
-		dialog.setTxtHeight("545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutXExpectedFalse() {
-		dialog.setTxtY("545");
-		dialog.setTxtWidth("545");
-		dialog.setTxtHeight("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutYExpectedFalse() {
-		dialog.setTxtX("545");
-		dialog.setTxtWidth("545");
-		dialog.setTxtHeight("545");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutWidthExpectedFalse() {
-		dialog.setTxtX("545");
-		dialog.setTxtY("545");
-		dialog.setTxtHeight("545");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutHeightExpectedFalse() {
-		dialog.setTxtX("545");
-		dialog.setTxtY("545");
-		dialog.setTxtWidth("545");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithUpperLeftPointXLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithUpperLeftPointYLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithUpperLeftPointLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithWidthLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("-545");
+		dialog.getTxtHeight().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithHeightLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithWidthAndHeightLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("-545");
+		dialog.getTxtHeight().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithJustUpperLeftPointXPostiveExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtWidth().setText("-545");
+		dialog.getTxtHeight().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithJustUpperLeftPointYPostiveExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("-545");
+		dialog.getTxtHeight().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithJustWidthPostiveExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtWidth().setText("545");
+		dialog.getTxtHeight().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithJustHeightPostiveExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtWidth().setText("-545");
+		dialog.getTxtHeight().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveExpectedTrue() {
-		dialog.setTxtX("545");
-		dialog.setTxtY("545");
-		dialog.setTxtWidth("100");
-		dialog.setTxtHeight("20");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtWidth().setText("20");
+		dialog.getTxtHeight().setText("40");
 		dialog.getSaveButton().doClick();
-		assertTrue(dialog.isOk());
+		assertTrue(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testFillForAddExpectedTrue() {
+	    dialog.fillForAdd(1, 1, Color.RED, Color.BLUE);
+	    assertEquals("1", dialog.getTxtX().getText());
+	    assertEquals("1", dialog.getTxtY().getText());
+	    assertFalse(dialog.getTxtX().isEditable());
+	    assertFalse(dialog.getTxtY().isEditable());
+	    assertTrue(dialog.getTxtWidth().isEditable());
+	    assertTrue(dialog.getTxtHeight().isEditable());
+	    assertEquals(Color.RED, dialog.getEdgeColor());
+	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
+	    assertEquals(Color.BLUE, dialog.getFillColor());
+	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
+	}
+	
+	@Test
+	public void testFillForModifyExpectedTrue() {
+	    dialog.fillForModify(1, 1, 10, 20, Color.RED, Color.BLUE);
+	    assertEquals("1", dialog.getTxtX().getText());
+	    assertEquals("1", dialog.getTxtY().getText());
+	    assertEquals("10", dialog.getTxtWidth().getText());
+	    assertEquals("20", dialog.getTxtHeight().getText());
+	    assertTrue(dialog.getTxtX().isEditable());
+	    assertTrue(dialog.getTxtY().isEditable());
+	    assertTrue(dialog.getTxtWidth().isEditable());
+	    assertTrue(dialog.getTxtHeight().isEditable());
+	    assertEquals(Color.RED, dialog.getEdgeColor());
+	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
+	    assertEquals(Color.BLUE, dialog.getFillColor());
+	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
 	}
 	
 	@Test
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
-	}*/
+	}
 }

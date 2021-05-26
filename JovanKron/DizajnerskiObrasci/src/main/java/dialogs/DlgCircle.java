@@ -76,26 +76,18 @@ public class DlgCircle extends DlgSurfaceShape {
 	public void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-				if (getTxtX().getText().isEmpty() ||
-						getTxtY().getText().isEmpty() || 
-						txtRadius.getText().isEmpty()) {
-					setConfirmed(false);
-					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-				} else {
-					try {
-						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
-						radius = Integer.parseInt(txtRadius.getText());
-						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || radius<1)
-							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for radius!");
-						else {
-							setConfirmed(true);
-							dispose();
-						}
+				try {
+					setBaseCoordinates();
+					radius = Integer.parseInt(txtRadius.getText());
+					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || radius<1)
+						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for radius!");
+					else {
+						setConfirmed(true);
+						dispose();
 					}
-					catch (NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
-					}
+				}
+				catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
 				}
 			}
 		});
@@ -105,7 +97,6 @@ public class DlgCircle extends DlgSurfaceShape {
 	public void fillForModify(int startX, int startY, int radius, Color edgeColor, Color fillColor)
 	{
 		super.fillForModify(startX, startY, edgeColor, fillColor);
-		setRadius(radius);
 		txtRadius.setText(Integer.toString(radius));
 	}
 
@@ -116,4 +107,9 @@ public class DlgCircle extends DlgSurfaceShape {
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
+
+	public JTextField getTxtRadius() {
+		return txtRadius;
+	}
+	
 }

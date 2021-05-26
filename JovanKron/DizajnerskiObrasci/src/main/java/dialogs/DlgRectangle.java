@@ -143,29 +143,19 @@ public class DlgRectangle extends DlgSurfaceShape {
 	public void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if (getTxtX().getText().isEmpty() ||
-						getTxtY().getText().isEmpty() || 
-						txtWidth.getText().isEmpty() || 
-						txtHeight.getText().isEmpty()) {
-					setConfirmed(false);
-					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-				} else {
-					try {
-						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
-						width = Integer.parseInt(txtWidth.getText());
-						height = Integer.parseInt(txtHeight.getText());
-						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || width<1 || height<1)
-							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for width/height!");
-						else {
-							setConfirmed(true);
-							dispose();
-						}
+				try {
+					setBaseCoordinates();
+					width = Integer.parseInt(txtWidth.getText());
+					height = Integer.parseInt(txtHeight.getText());
+					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || width<1 || height<1)
+						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for width/height!");
+					else {
+						setConfirmed(true);
+						dispose();
 					}
-					catch (NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
-					}
+				}
+				catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
 				}
 			}
 		});
@@ -173,9 +163,7 @@ public class DlgRectangle extends DlgSurfaceShape {
 	
 	public void fillForModify(int startX, int startY, int width, int height, Color edgeColor, Color fillColor) {
 		super.fillForModify(startX, startY, edgeColor, fillColor);
-		setWidth(width);
 		txtWidth.setText(Integer.toString(width));
-		setHeight(height);
 		txtHeight.setText(Integer.toString(height));
 	}
 
@@ -193,6 +181,14 @@ public class DlgRectangle extends DlgSurfaceShape {
 	
 	public int getRectangleHeight() {
 		return height;
+	}
+
+	public JTextField getTxtWidth() {
+		return txtWidth;
+	}
+
+	public JTextField getTxtHeight() {
+		return txtHeight;
 	}
 
 }

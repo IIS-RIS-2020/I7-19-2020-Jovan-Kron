@@ -152,8 +152,7 @@ public class DlgLine extends DlgShape {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-					setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+					setBaseCoordinates();
 					endX = Integer.parseInt(txtEndX.getText());
 					endY = Integer.parseInt(txtEndY.getText());
 					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || endX<0 || endY<0)

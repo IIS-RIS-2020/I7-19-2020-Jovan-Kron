@@ -145,31 +145,21 @@ public class DlgDonut extends DlgSurfaceShape {
 	public void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if (getTxtX().getText().isEmpty() ||
-						getTxtY().getText().isEmpty() || 
-						txtInner.getText().isEmpty() || 
-						txtOuter.getText().isEmpty()) {
-					setConfirmed(false);
-					JOptionPane.showMessageDialog(null, "All fields must be filled.", "Error!", JOptionPane.WARNING_MESSAGE);
-				} else {
-					try {
-						setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-						setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
-						innerRadius = Integer.parseInt(txtInner.getText());
-						outerRadius = Integer.parseInt(txtOuter.getText());
-						if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || innerRadius<1 || outerRadius<1)
-							JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for inner/outer radius!");
-						else if(innerRadius>=outerRadius)
-							JOptionPane.showMessageDialog(null,"Inner radius must be smaller than outer by at least 1!");
-						else {
-							setConfirmed(true);
-							dispose();
-						}
+				try {
+					setBaseCoordinates();
+					innerRadius = Integer.parseInt(txtInner.getText());
+					outerRadius = Integer.parseInt(txtOuter.getText());
+					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || innerRadius<1 || outerRadius<1)
+						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for inner/outer radius!");
+					else if(innerRadius>=outerRadius)
+						JOptionPane.showMessageDialog(null,"Inner radius must be smaller than outer by at least 1!");
+					else {
+						setConfirmed(true);
+						dispose();
 					}
-					catch (NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
-					}
+				}
+				catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
 				}
 			}
 		});
@@ -178,9 +168,7 @@ public class DlgDonut extends DlgSurfaceShape {
 	public void fillForModify(int startX, int startY, int innerRadius, int outerRadius, Color edgeColor, Color fillColor)
 	{
 		super.fillForModify(startX, startY, edgeColor, fillColor);
-		setInnerRadius(innerRadius);
 		txtInner.setText(Integer.toString(innerRadius));
-		setOuterRadius(outerRadius);
 		txtOuter.setText(Integer.toString(outerRadius));
 	}
 	
@@ -198,6 +186,14 @@ public class DlgDonut extends DlgSurfaceShape {
 
 	public void setOuterRadius(int outerRadius) {
 		this.outerRadius = outerRadius;
+	}
+
+	public JTextField getTxtInner() {
+		return txtInner;
+	}
+
+	public JTextField getTxtOuter() {
+		return txtOuter;
 	}
 	
 }

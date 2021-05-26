@@ -2,7 +2,10 @@ package dialogs;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.awt.Color;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +19,7 @@ public class DlgHexagonTests {
 		dialog = new DlgHexagon();
 	}
 	
-	/*@Test
+	@Test
 	public void testIsNullExpectedNotEqual() {
 		assertNotEquals(null, dialog);
 	}
@@ -24,67 +27,150 @@ public class DlgHexagonTests {
 	@Test
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetXExpectedFalse() {
-		dialog.setTxtX("545");
+		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetYExpectedFalse() {
-		dialog.setTxtY("545");
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithOnlySetWidthExpectedFalse() {
-		dialog.setTxtRadius("545");
+		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutRadiusExpectedFalse() {
-		dialog.setTxtX("545");
-		dialog.setTxtY("545");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutXExpectedFalse() {
-		dialog.setTxtRadius("545");
-		dialog.setTxtY("545");
+		dialog.getTxtRadius().setText("545");
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveWithoutYExpectedFalse() {
-		dialog.setTxtRadius("545");
-		dialog.setTxtX("545");
+		dialog.getTxtRadius().setText("545");
+		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
-		assertFalse(dialog.isOk());
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithCenterXLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtRadius().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithCenterYLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtRadius().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithRadiusLessThanZeroExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtRadius().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithOnlRadiusPositiveExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtRadius().setText("545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithOnlyCenterXPositiveExpectedFalse() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("-545");
+		dialog.getTxtRadius().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testSaveWithOnlyCenterYPositiveExpectedFalse() {
+		dialog.getTxtX().setText("-545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtRadius().setText("-545");
+		dialog.getSaveButton().doClick();
+		assertFalse(dialog.isConfirmed());
 	}
 	
 	@Test
 	public void testSaveExpectedTrue() {
-		dialog.setTxtX("545");
-		dialog.setTxtY("545");
-		dialog.setTxtRadius("100");
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getTxtRadius().setText("100");
 		dialog.getSaveButton().doClick();
-		assertTrue(dialog.isOk());
+		assertTrue(dialog.isConfirmed());
+	}
+	
+	@Test
+	public void testFillForAddExpectedTrue() {
+	    dialog.fillForAdd(1, 1, Color.RED, Color.BLUE);
+	    assertEquals("1", dialog.getTxtX().getText());
+	    assertEquals("1", dialog.getTxtY().getText());
+	    assertFalse(dialog.getTxtX().isEditable());
+	    assertFalse(dialog.getTxtY().isEditable());
+	    assertTrue(dialog.getTxtRadius().isEditable());
+	    assertEquals(Color.RED, dialog.getEdgeColor());
+	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
+	    assertEquals(Color.BLUE, dialog.getFillColor());
+	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
+	}
+	
+	@Test
+	public void testFillForModifyExpectedTrue() {
+	    dialog.fillForModify(1, 1, 5, Color.RED, Color.BLUE);
+	    assertEquals("1", dialog.getTxtX().getText());
+	    assertEquals("1", dialog.getTxtY().getText());
+	    assertEquals("5", dialog.getTxtRadius().getText());
+	    assertTrue(dialog.getTxtX().isEditable());
+	    assertTrue(dialog.getTxtY().isEditable());
+	    assertTrue(dialog.getTxtRadius().isEditable());
+	    assertEquals(Color.RED, dialog.getEdgeColor());
+	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
+	    assertEquals(Color.BLUE, dialog.getFillColor());
+	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
 	}
 	
 	@Test
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
-	}*/
+	}
 	
 }
