@@ -1,5 +1,6 @@
 package mvc;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -122,27 +123,31 @@ public class DrawingControllerTests {
 		assertEquals(Color.YELLOW, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
 	}
 	
-	/*@Test
+	@Test
 	public void testSelect() {
 		click(400, 400);
 		pressEnter(1);
 		frame.getTglBtnSelect().doClick();
 		click(400, 400);		
-		assertEquals(1, model.getSelectedShapes().size());
-		assertTrue(model.getSelectedShapes().get(0) instanceof Point);
-		assertEquals(400, ((Point) model.getSelectedShapes().get(0)).getX());
-		assertEquals(299, ((Point) model.getSelectedShapes().get(0)).getY());
-		assertEquals(Color.BLACK, model.getSelectedShapes().get(0).getEdgeColor());
+		assertTrue(model.get(0).isSelected());
+		assertTrue(model.get(0) instanceof Point);
+		assertEquals(405, ((Point) model.get(0)).getX());
+		assertEquals(350, ((Point) model.get(0)).getY());
+		assertEquals(Color.BLACK, model.get(0).getEdgeColor());
 	}
 	
 	@Test
 	public void testDeselect() {
 		click(400, 400);
 		pressEnter(1);
-		frame.getTglbtnSelect().setSelected(true);
+		frame.getTglBtnSelect().doClick();
 		click(400, 400);
 		click(400, 400);
-		assertEquals(0, model.getSelectedShapes().size());
+		assertFalse(model.get(0).isSelected());
+		assertTrue(model.get(0) instanceof Point);
+		assertEquals(405, ((Point) model.get(0)).getX());
+		assertEquals(350, ((Point) model.get(0)).getY());
+		assertEquals(Color.BLACK, model.get(0).getEdgeColor());
 	}
 	
 	@Test
@@ -151,36 +156,44 @@ public class DrawingControllerTests {
 		pressEnter(1);
 		click(500, 500);
 		pressEnter(1);
-		frame.getTglbtnSelect().setSelected(true);
+		frame.getTglBtnSelect().doClick();
 		click(400, 400);
 		click(500, 500);		
-		assertEquals(2, model.getSelectedShapes().size());
+		assertTrue(model.get(0).isSelected());
+		assertTrue(model.get(0) instanceof Point);
+		assertEquals(405, ((Point) model.get(0)).getX());
+		assertEquals(350, ((Point) model.get(0)).getY());
+		assertEquals(Color.BLACK, model.get(0).getEdgeColor());
+		assertTrue(model.get(1).isSelected());
+		assertTrue(model.get(1) instanceof Point);
+		assertEquals(505, ((Point) model.get(1)).getX());
+		assertEquals(450, ((Point) model.get(1)).getY());
+		assertEquals(Color.BLACK, model.get(1).getEdgeColor());
 	}
-	
+
 	@Test
 	public void testDeselectAllShapes() {
 		click(400, 400);
 		pressEnter(1);
 		click(500, 500);		
 		pressEnter(1);
-		frame.getTglbtnSelect().setSelected(true);
+		frame.getTglBtnSelect().doClick();
 		click(400, 400);		
-		click(500, 500);		
-		click(600, 600);				
-		assertEquals(0, model.getSelectedShapes().size());
+		click(500, 500);
+		frame.getTglBtnSelect().doClick();
+		assertFalse(model.get(0).isSelected());
+		assertFalse(model.get(1).isSelected());
 	}
 	
 	@Test
 	public void testDeleteOneShape() {
 		click(400, 400);		
 		pressEnter(1);
-		frame.getTglbtnSelect().setSelected(true);
-		robot.delay(200);
-		click(400, 400);						
-		pressTab(9);
+		frame.getTglBtnSelect().doClick();
+		click(400, 400);	
+		pressTab(6);
 		pressSpace(2);		
 		assertEquals(0, model.getShapes().size());
-		assertEquals(0, model.getSelectedShapes().size());
 	}
 	
 	@Test
@@ -189,68 +202,71 @@ public class DrawingControllerTests {
 		pressEnter(1);		
 		click(500, 500);
 		pressEnter(1);		
-		frame.getTglbtnSelect().setSelected(true);
+		frame.getTglBtnSelect().doClick();
 		click(400, 400);
 		click(500, 500);				
-		pressTab(8);
+		pressTab(5);
 		pressSpace(2);				
 		assertEquals(0, model.getShapes().size());
-		assertEquals(0, model.getSelectedShapes().size());
 	}
 	
 	@Test
 	public void testModifyPoint() {
 		click(400, 400);		
 		pressEnter(1);
-		frame.getTglbtnSelect().setSelected(true);
+		frame.getTglBtnSelect().doClick();
 		robot.delay(200);
 		click(400, 400);						
-		pressTab(8);
-		controller.setCurrentEdgeColor(Color.RED);
+		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
 	    pressTab(1);
 	    pressBackspace(1);
-	    pressEnter(1);
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(2);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Point);
 		assertEquals(40, ((Point) model.getShapes().get(0)).getX());
-		assertEquals(29, ((Point) model.getShapes().get(0)).getY());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
+		assertEquals(35, ((Point) model.getShapes().get(0)).getY());
+		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
 	}
 	
 	@Test
 	public void testModifyLine() {
-		frame.getTglbtnLine().setSelected(true);
+		frame.getTglBtnLine().doClick();
 		click(400, 400);		
 		click(500, 500);
 		pressEnter(1);
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();	
 		click(450, 450);						
-		pressTab(8);
-		controller.setCurrentEdgeColor(Color.RED);
+		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
 	    pressTab(1);
 	    pressBackspace(1);
-	    pressEnter(1);
+	    pressTab(3);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(2);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Line);
 		assertEquals(40, ((Line) model.getShapes().get(0)).getStartPoint().getX());
-		assertEquals(29, ((Line) model.getShapes().get(0)).getStartPoint().getY());
-		assertEquals(500, ((Line) model.getShapes().get(0)).getEndPoint().getX());
-		assertEquals(399, ((Line) model.getShapes().get(0)).getEndPoint().getY());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
+		assertEquals(35, ((Line) model.getShapes().get(0)).getStartPoint().getY());
+		assertEquals(505, ((Line) model.getShapes().get(0)).getEndPoint().getX());
+		assertEquals(450, ((Line) model.getShapes().get(0)).getEndPoint().getY());
+		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
 	}
 	
 	@Test
 	public void testModifyRectangle() {
 		drawRectangle();
-		frame.getTglbtnSelect().setSelected(true);		
-		click(405, 405);						
-		pressTab(8);
-		controller.setCurrentEdgeColor(Color.RED);
-		controller.setCurrentFillColor(Color.GREEN);
+		frame.getTglBtnSelect().doClick();		
+		click(410, 410);						
+		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
 	    pressTab(1);
@@ -258,25 +274,32 @@ public class DrawingControllerTests {
 	    pressTab(1);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
+	    pressTab(2);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
 	    pressEnter(1);
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(2);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
 		assertEquals(40, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getX());
-		assertEquals(29, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getY());
+		assertEquals(35, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getY());
 		assertEquals(300, ((Rectangle) model.getShapes().get(0)).getHeight());
 		assertEquals(60, ((Rectangle) model.getShapes().get(0)).getWidth());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
-		assertEquals(Color.GREEN, ((Rectangle) model.getShapes().get(0)).getFillColor());
+		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
+		assertEquals(Color.WHITE, ((Rectangle) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
 	public void testModifyDonut() {
 		drawDonut();
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();
 		click(425, 400);						
-		pressTab(8);
-		controller.setCurrentEdgeColor(Color.RED);
-		controller.setCurrentFillColor(Color.GREEN);
+		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
 	    pressTab(1);
@@ -284,25 +307,32 @@ public class DrawingControllerTests {
 	    pressTab(2);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
-	    pressEnter(1);		
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(1);
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(2);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Donut);
 		assertEquals(40, ((Donut) model.getShapes().get(0)).getCenter().getX());
-		assertEquals(29, ((Donut) model.getShapes().get(0)).getCenter().getY());
+		assertEquals(35, ((Donut) model.getShapes().get(0)).getCenter().getY());
 		assertEquals(20, ((Donut) model.getShapes().get(0)).getInnerRadius());
 		assertEquals(300, ((Donut) model.getShapes().get(0)).getRadius());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
-		assertEquals(Color.GREEN, ((Donut) model.getShapes().get(0)).getFillColor());
+		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
+		assertEquals(Color.WHITE, ((Donut) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
 	public void testModifyCircle() {
 		drawCircle();		
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();
 		click(400, 400);				
-		pressTab(8);
-		controller.setCurrentEdgeColor(Color.RED);
-		controller.setCurrentFillColor(Color.GREEN);
+		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
 	    pressTab(1);
@@ -310,24 +340,31 @@ public class DrawingControllerTests {
 	    pressTab(1);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
-	    pressEnter(1);				
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(1);
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(2);				
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Circle);
 		assertEquals(40, ((Circle) model.getShapes().get(0)).getCenter().getX());
-		assertEquals(29, ((Circle) model.getShapes().get(0)).getCenter().getY());
+		assertEquals(35, ((Circle) model.getShapes().get(0)).getCenter().getY());
 		assertEquals(300, ((Circle) model.getShapes().get(0)).getRadius());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
-		assertEquals(Color.GREEN, ((Circle) model.getShapes().get(0)).getFillColor());
+		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
+		assertEquals(Color.WHITE, ((Circle) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
 	public void testModifyHexagon() {
 		drawHexagon();
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();		
 		click(400, 400);				
-		pressTab(8);
-		controller.setCurrentEdgeColor(Color.RED);
-		controller.setCurrentFillColor(Color.GREEN);
+		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
 	    pressTab(1);
@@ -335,14 +372,23 @@ public class DrawingControllerTests {
 	    pressTab(1);
 		robot.keyPress(KeyEvent.VK_0);
 	    robot.keyRelease(KeyEvent.VK_0);
-	    pressEnter(1);		
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(1);
+	    pressTab(1);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+	    pressEnter(2);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
 		assertEquals(40, ((HexagonAdapter) model.getShapes().get(0)).getX());
-		assertEquals(29, ((HexagonAdapter) model.getShapes().get(0)).getY());
+		assertEquals(35, ((HexagonAdapter) model.getShapes().get(0)).getY());
 		assertEquals(400, ((HexagonAdapter) model.getShapes().get(0)).getR());
-		assertEquals(Color.RED, model.getShapes().get(0).getEdgeColor());
-		assertEquals(Color.GREEN, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
+		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
+		assertEquals(Color.WHITE, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
 	}
 	
 	@Test
@@ -350,9 +396,9 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();		
-		frame.getTglbtnSelect().setSelected(true);		
-		click(459, 429);				
-		pressTab(10);		
+		frame.getTglBtnSelect().doClick();	
+		click(450, 420);				
+		pressTab(9);		
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
@@ -365,9 +411,9 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();			
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();		
 		click(400, 400);		
-		pressTab(11);
+		pressTab(8);
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
@@ -380,9 +426,9 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();			
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();	
 		click(459, 429);				
-		pressTab(12);		
+		pressTab(10);		
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(2) instanceof Rectangle);
@@ -395,9 +441,9 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();	
-		frame.getTglbtnSelect().setSelected(true);		
+		frame.getTglBtnSelect().doClick();	
 		click(400, 400);		
-		pressTab(13);
+		pressTab(7);
 		pressSpace(1);
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
@@ -410,7 +456,7 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();	
-		pressTab(8);
+		pressTab(3);
 		pressSpace(1);
 	    assertEquals(2, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
@@ -422,7 +468,7 @@ public class DrawingControllerTests {
 		drawRectangle();
 		drawCircle();
 		drawHexagon();	
-		pressTab(8);
+		pressTab(3);
 		pressSpace(1);
 		pressTab(1);
 		pressSpace(1);
@@ -434,25 +480,23 @@ public class DrawingControllerTests {
 	
 	@Test
 	public void testChangeEdgeColor() {
-		pressTab(8);
+		pressTab(10);
 		pressSpace(1);
 		pressTab(1);
 		pressSpace(1);
-		pressTab(2);
-		pressSpace(1);
+		pressEnter(1);
 	    assertEquals(Color.WHITE, controller.getCurrentEdgeColor());
 	}
 	
 	@Test
 	public void testChangeFillColor() {
-		pressTab(9);
+		pressTab(11);
 		pressSpace(1);
 		pressTab(1);
 		pressSpace(1);
-		pressTab(2);
-		pressSpace(1);
+		pressEnter(1);
 	    assertEquals(Color.WHITE, controller.getCurrentFillColor());
-	}*/
+	}
 	
 	public void drawRectangle() {
 		frame.getTglBtnRectangle().doClick();
@@ -529,14 +573,14 @@ public class DrawingControllerTests {
 		robot.mouseMove(x, y);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(1000);
+		robot.delay(200);
 	}
 	
 	public void pressTab(int numberOfPresses) {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_TAB);
 		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(1000);
+		    robot.delay(100);
 		}
 	}
 	
@@ -560,7 +604,7 @@ public class DrawingControllerTests {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_ENTER);
 		    robot.keyRelease(KeyEvent.VK_ENTER);
-		    robot.delay(1000);
+		    robot.delay(200);
 		}
 	}
 }
