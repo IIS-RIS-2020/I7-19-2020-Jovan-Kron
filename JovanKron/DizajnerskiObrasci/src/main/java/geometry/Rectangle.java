@@ -3,26 +3,19 @@ package geometry;
 import java.awt.*;
 
 public class Rectangle extends SurfaceShape {
+
+	private static final long serialVersionUID = 1L;
 	private Point upperLeftPoint;
 	private int width;
 	private int height;
-	private Color edgeColor;
-	private Color fillColor;
 	
-	public Rectangle() {
-
-	}
+	public Rectangle() {}
 
 	public Rectangle(Point upperLeftPoint, int width, int height) {
 		this.upperLeftPoint = upperLeftPoint;
 		setHeight(height);
 		setWidth(width);
 	}
-
-	/*public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
-		this(upperLeftPoint, height, width);
-		setSelected(selected);
-	}*/
 	
 	public Rectangle(Point upperLeft, int width, int height, Color edgeColor, Color fillColor) {
 		this(upperLeft, width, height);
@@ -32,9 +25,9 @@ public class Rectangle extends SurfaceShape {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(fillColor);
+		g.setColor(getFillColor());
 		g.fillRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.width, this.getHeight());
-		g.setColor(edgeColor);
+		g.setColor(getEdgeColor());
 		g.drawRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.width, this.getHeight());
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
@@ -69,34 +62,55 @@ public class Rectangle extends SurfaceShape {
 			return false;
 		}
 	}
-	/*
-	public boolean contains(Point p) {
-		if (this.getUpperLeftPoint().getX() <= p.getX() 
-				&& p.getX() <= this.getUpperLeftPoint().getX() + width
-				&& this.getUpperLeftPoint().getY() <= p.getY()
-				&& p.getY() <= this.getUpperLeftPoint().getY() + height) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
 
 	public boolean equals(Object obj) {
 		if (obj instanceof Rectangle) {
 			Rectangle r = (Rectangle) obj;
-			if (this.upperLeftPoint.equals(r.getUpperLeftPoint()) && this.height == r.getHeight()
-					&& this.width == r.getWidth()) {
+			if (this.upperLeftPoint.equals(r.getUpperLeftPoint()) && this.height == r.getHeight() && this.width == r.getWidth())
 				return true;
-			} else {
+			else
 				return false;
-			}
-		} else {
+		} else
 			return false;
-		}
 	}
 	
 	public double area() {
 		return width * height;
+	}
+	
+	public String toString() {
+		return String.format("Rectangle:Upper-left(%d,%d),Width=%d,Height=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",upperLeftPoint.getX(),upperLeftPoint.getY(),width,height,
+				getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
+	}
+	
+	@Override
+    public Rectangle clone(Shape s) {
+        Rectangle r = new Rectangle(new Point(0,0), 0, 0);
+        if(s instanceof Rectangle)
+        	r = (Rectangle) s;
+
+        r.getUpperLeftPoint().setX(this.getUpperLeftPoint().getX());
+        r.getUpperLeftPoint().setY(this.getUpperLeftPoint().getY());
+        r.setHeight(this.getHeight());
+        r.setWidth(this.getWidth());
+        r.setFillColor(this.getFillColor());
+        r.setEdgeColor(this.getEdgeColor());
+        return r;
+    }
+	
+	@Override
+	public Rectangle parse(String str) {
+		String [] parts = str.split(",");
+		int x = Integer.parseInt(parts[0].split("\\(")[1]);
+		int y = Integer.parseInt(parts[1].substring(0, parts[1].length() - 1));
+		int width = Integer.parseInt(parts[2].split("=")[1]);
+		int height = Integer.parseInt(parts[3].split("=")[1]);
+		Color edgeColor = getColor(parts[4].split("=")[1]);
+		Color surfaceColor = getColor(parts[5].split("=")[1]);
+		boolean selected = Boolean.parseBoolean(parts[6].split("=")[1]);
+		Rectangle rectangle = new Rectangle(new Point(x,y), width, height, edgeColor, surfaceColor);
+		rectangle.setSelected(selected);
+		return rectangle;
 	}
 	
 	public Point getUpperLeftPoint() {
@@ -116,57 +130,5 @@ public class Rectangle extends SurfaceShape {
 	}
 	public void setHeight(int height) {
 		this.height = height;
-	}
-	
-	public Color getEdgeColor() {
-		return edgeColor;
-	}
-
-	public void setEdgeColor(Color edgeColor) {
-		this.edgeColor = edgeColor;
-	}
-
-	public Color getFillColor() {
-		return fillColor;
-	}
-
-	public void setFillColor(Color fillColor) {
-		this.fillColor = fillColor;
-	}
-	
-	public String toString() {
-		return String.format("Rectangle:Upper-left(%d,%d),Width=%d,Height=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",upperLeftPoint.getX(),upperLeftPoint.getY(),width,height,
-				getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
-	}
-	
-	@Override
-    public Rectangle clone(Shape s) {
-
-        Rectangle r = new Rectangle(new Point(0,0), 0, 0);
-
-        if(s instanceof Rectangle) {
-        	r = (Rectangle) s;
-		}
-
-        r.getUpperLeftPoint().setX(this.getUpperLeftPoint().getX());
-        r.getUpperLeftPoint().setY(this.getUpperLeftPoint().getY());
-        r.setHeight(this.getHeight());
-        r.setWidth(this.getWidth());
-        r.setFillColor(this.getFillColor());
-        r.setEdgeColor(this.getEdgeColor());
-
-        return r;
-    }
-	
-	@Override
-	public Rectangle parse(String str) {
-		Rectangle r = new Rectangle(new Point(0,0), 0, 0);
-		str = str.replaceAll("Rectangle Upper Left ", "");
-
-		r.setUpperLeftPoint(new Point().parse(str.split(" , ")[0] + " , " + str.split(" , ")[1]));
-		r.setHeight(Integer.parseInt(str.split(" , ")[2].split(" = ")[1]));
-		r.setWidth(Integer.parseInt(str.split(" , ")[3].split(" = ")[1]));
-
-		return r;
 	}
 }

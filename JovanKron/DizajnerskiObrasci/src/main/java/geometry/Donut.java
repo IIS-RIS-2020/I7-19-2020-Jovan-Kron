@@ -4,23 +4,19 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
+import geometry.Point;
+
 public class Donut extends Circle {
 	
+	private static final long serialVersionUID = 1L;
 	private int innerRadius;
 
-	public Donut() {
-		
-	}
+	public Donut() {}
 	
 	public Donut(Point center, int radius, int innerRadius) {
 		super(center, radius);
 		this.innerRadius = innerRadius;
 	}
-	/*
-	public Donut(Point center, int radius, int innerRadius, boolean selected) {
-		this(center, radius, innerRadius);
-		setSelected(selected);
-	}*/
 	
 	public Donut(Point center, int radius, int innerRadius, Color edgeColor, Color fillColor) {
 		this(center, radius, innerRadius);
@@ -78,11 +74,6 @@ public class Donut extends Circle {
 		double dFromCenter = this.getCenter().distance(x, y);
 		return super.contains(x, y) && dFromCenter > innerRadius;
 	}
-	/*
-	public boolean contains(Point p) {
-		double dFromCenter = this.getCenter().distance(p.getX(), p.getY());
-		return super.contains(p.getX(), p.getY()) && dFromCenter > innerRadius;
-	}*/
 	
 	public double area() {
 		return super.area() - innerRadius * innerRadius * Math.PI;
@@ -103,6 +94,44 @@ public class Donut extends Circle {
 		}
 	}
 	
+	public String toString() {
+		return String.format("Donut:Center(%d,%d),innerradius=%d,radius=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
+				getCenter().getX(),getCenter().getY(),innerRadius,getRadius(),getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
+	}
+	
+	@Override
+	public Donut clone(Shape s) {
+		Donut d = new Donut(new Point(0,0), 0, 0);
+		if (s instanceof Donut)
+			d = (Donut) s;
+		
+		d.getCenter().setX(this.getCenter().getX());
+		d.getCenter().setY(this.getCenter().getY());
+		d.setRadius(this.getRadius());
+		d.setInnerRadius(this.getInnerRadius());
+		d.setEdgeColor(this.getEdgeColor());
+		d.setFillColor(this.getFillColor());
+		return d;
+	}
+	
+	//Executed CmdAdd_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+	//Executed CmdSelect_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+	//Executed CmdUpdate_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[153-0-0],selected=true
+	//Executed CmdRemove_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[153-0-0],selected=true
+	public Donut parse(String str) {
+		String [] parts = str.split(",");
+		int x = Integer.parseInt(parts[0].split("\\(")[1]);
+		int y = Integer.parseInt(parts[1].substring(0, parts[1].length() - 1));
+		int innerradius = Integer.parseInt(parts[2].split("=")[1]);
+		int radius = Integer.parseInt(parts[3].split("=")[1]);
+		Color edgeColor = getColor(parts[4].split("=")[1]);
+		Color surfaceColor = getColor(parts[5].split("=")[1]);
+		boolean selected = Boolean.parseBoolean(parts[6].split("=")[1]);
+		Donut donut = new Donut(new Point(x,y), radius, innerradius, edgeColor, surfaceColor);
+		donut.setSelected(selected);
+		return donut;
+	}
+	 
 	public int getInnerRadius() {
 		return innerRadius;
 	}
@@ -110,38 +139,5 @@ public class Donut extends Circle {
 	public void setInnerRadius(int innerRadius) {
 	    this.innerRadius = innerRadius;
 	}
-	
-	public String toString() {
-		return String.format("Donut:Center(%d,%d),innerradius=%d,radius=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
-				getCenter().getX(),getCenter().getY(),innerRadius,getRadius(),getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
-	}
-	
-	 @Override
-	 public Donut clone(Shape s) {
-	        Donut d = new Donut(new Point(0,0), 0, 0);
-	        if (s instanceof Donut) {
-	        	d = (Donut) s;
-			}
-
-	        d.getCenter().setX(this.getCenter().getX());
-	        d.getCenter().setY(this.getCenter().getY());
-	        d.setRadius(this.getRadius());
-	        d.setInnerRadius(this.getInnerRadius());
-	        d.setEdgeColor(this.getEdgeColor());
-	        d.setFillColor(this.getFillColor());
-
-	        return d;
-	 }
-	 
-	 public Donut parse(String str) {
-			Donut d = new Donut(new Point(0,0), 0, 0);
-			str = str.replaceAll("Donut Circle Center = ", "");
-
-			d.setCenter(new Point().parse(str.split(" , ")[0] + " , " + str.split(" , ")[1]));
-			d.setRadius(Integer.parseInt(str.split(" , ")[2].split(" = ")[1]));
-			d.setInnerRadius(Integer.parseInt(str.split(" , ")[3].split(" = ")[1]));
-
-			return d;
-		}
 
 }

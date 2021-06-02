@@ -2,40 +2,26 @@ package mvc;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.Scanner;
 import java.util.Stack;
 
 import javax.swing.JColorChooser;
-import javax.swing.JFrame;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import commands.*;
 import dialogs.*;
 import geometry.*;
-import hexagon.Hexagon;
 import observer.ObserverForButtons;
 import strategy.*;
 
 public class DrawingController {
 	private DrawingModel model;
 	private DrawingFrame frame;
-	private Command cmd;
 	private Point startPoint;
-	private Shape tempShape;
+	private boolean flagForLine = true;
 	private Color currentEdgeColor = Color.BLACK;
 	private Color currentFillColor = Color.YELLOW;
-	private SaveManager saveManager;
-    private OpenManager openManager;
-    private Save shapesSave = new ShapesSave(); 
-    private Open shapesOpen = new ShapesOpen();
-    private ListIterator<Shape> it;
-    private Save commandsSave = new CommandsSave();
-    private Open commandsOpen = new CommandsOpen();
-    private LogParser lp;
     private Stack<Command> undoCommandsStack = new Stack<Command>();
 	private Stack<Command> redoCommandsStack = new Stack<Command>();
 	private Stack<String> textUndoCommandsStack = new Stack<String>();
@@ -58,8 +44,9 @@ public class DrawingController {
 	}
 	
 	public void addLineOnClick(MouseEvent click) {
-        if (startPoint == null) {
+        if (flagForLine) {
             startPoint = new Point(click.getX(), click.getY());
+            flagForLine = false;
         } else {
         	DlgLine dialog = new DlgLine();
         	dialog.fillForAdd(startPoint.getX(), startPoint.getY(), click.getX(), click.getY(), currentEdgeColor);
@@ -68,8 +55,8 @@ public class DrawingController {
             if (dialog.isConfirmed()) {
             	Line line = new Line(startPoint, new Point(click.getX(), click.getY()), dialog.getEdgeColor());
                 addShape(line);
+                flagForLine = true;
             }
-            startPoint = null;
         }
 	}
 	
@@ -327,38 +314,52 @@ public class DrawingController {
     	if (chosenFillColor != null)
     		currentFillColor = chosenFillColor;
     }
-    /*
-    public void onSaveShapes() throws IOException {
-        saveManager = new SaveManager(shapesSave);
-        saveManager.save(model.getShapes());
-    }
     
-    public void onOpenShapes() throws IOException, ClassNotFoundException {
-        openManager = new OpenManager(shapesOpen);
-        it = ((ArrayList) openManager.open()).listIterator();
-        while (it.hasNext()) {
-            Shape s = it.next();
-            model.add(s);
+    public void newPainting() {
+		int answer = JOptionPane.showConfirmDialog(null, "Current drawing will be lost, continue anyway?","Warning",JOptionPane.YES_NO_OPTION);
+		if(answer == JOptionPane.YES_OPTION)
+			clearCanvas();
+	}
+	
+	public void savePainting() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
+		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
+		fileChooser.setFileFilter(new FileNameExtensionFilter("log file (.log)", "log"));
+		fileChooser.setDialogTitle("Save file");
+        int returnState = fileChooser.showSaveDialog(null);
+        if (returnState == JFileChooser.APPROVE_OPTION) {
+        	AnyFile anyFile = null;
+        	if(fileChooser.getFileFilter().getDescription().equals("serialized file (.ser)"))
+        		anyFile = new SerializableFile(model,frame);
+        	else
+        		anyFile = new LogFile(model,frame);
+        	FileManager fileManager = new FileManager(anyFile);
+        	fileManager.saveFile(fileChooser.getSelectedFile());
+        
         }
-        frame.repaint();
-    }
-    
-    public void next() throws Exception {
-        lp.read();
-        frame.repaint();
-    }
-
-    public void onSaveCommands() throws IOException {
-        saveManager = new SaveManager(commandsSave);
-        saveManager.save(model.getAllCommands());
-    }
-    
-    public void onOpenCommands() throws IOException, ClassNotFoundException {
-        openManager = new OpenManager(commandsOpen);
-        Scanner myReader = (Scanner)openManager.open();
-        lp = new LogParser(myReader);
-        lp.setModel(model);
-    }*/
+	}
+	
+	public void loadPainting() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
+		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
+		fileChooser.setFileFilter(new FileNameExtensionFilter("log file (.log)", "log"));
+		fileChooser.setDialogTitle("Load file");
+        int returnState = fileChooser.showOpenDialog(null);
+        if (returnState == JFileChooser.APPROVE_OPTION) {
+    		clearCanvas();
+        	AnyFile anyFile = null;
+        	if(fileChooser.getFileFilter().getDescription().equals("serialized file (.ser)"))
+        		anyFile = new SerializableFile(model,frame);
+        	else
+        		anyFile = new LogFile(model,frame);
+        	FileManager fileManager = new FileManager(anyFile);
+        	fileManager.loadFile(fileChooser.getSelectedFile());
+        	frame.repaint();
+        
+        }
+	}
     
     public void logCommand(Command command, Shape shape, Shape updatedShape) {
 		if(updatedShape == null) {
@@ -409,6 +410,20 @@ public class DrawingController {
 		frame.getTglBtnBringToFront().setEnabled(false);
 	}
     
+    public void clearCanvas() {
+		undoCommandsStack.clear();
+		redoCommandsStack.clear();
+		frame.tglBtnRedo.setEnabled(false);
+		frame.tglBtnUndo.setEnabled(false);
+		textRedoCommandsStack.clear();
+		textUndoCommandsStack.clear();
+		model.getShapes().clear();
+		flagForLine = true;
+		disableButtons();
+		frame.getLogPanel().setText(null);
+		frame.repaint();
+	}
+    
     public void unselectAll() {
 		CmdSelect command;
 		for(int i = model.getShapes().size()-1; i>=0; i--) {
@@ -433,5 +448,9 @@ public class DrawingController {
 
 	public void setCurrentFillColor(Color currentFillColor) {
 		this.currentFillColor = currentFillColor;
+	}
+	
+	public void setFlagForLine(boolean flagForLine) {
+		this.flagForLine = flagForLine;
 	}
 }

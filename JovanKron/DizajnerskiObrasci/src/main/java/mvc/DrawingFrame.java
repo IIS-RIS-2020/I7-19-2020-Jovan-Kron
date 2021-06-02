@@ -84,7 +84,7 @@ public class DrawingFrame extends JFrame {
 		btnLoad.setMargin(new Insets(0, 0, 0, 0));
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO
+				controller.loadPainting();
 			}
 		});
 		
@@ -93,7 +93,7 @@ public class DrawingFrame extends JFrame {
 		btnSave.setMargin(new Insets(0, 0, 0, 0));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				controller.savePainting();
 			}
 		});
 		
@@ -102,7 +102,7 @@ public class DrawingFrame extends JFrame {
 		btnNew.setMargin(new Insets(0, 0, 0, 0));
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				controller.newPainting();
 			}
 		});
 		panel_1.add(btnNew);
@@ -213,6 +213,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.unselectAll();
+				controller.setFlagForLine(true);
 				clickedButton = tglBtnLine;
 			}
 		});

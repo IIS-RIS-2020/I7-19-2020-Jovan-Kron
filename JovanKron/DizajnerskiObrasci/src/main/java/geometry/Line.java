@@ -3,12 +3,12 @@ package geometry;
 import java.awt.*;
 
 public class Line extends Shape {
+
+	private static final long serialVersionUID = 1L;
 	private Point startPoint;
 	private Point endPoint;
 	
-	public Line() {
-		
-	}
+	public Line() {}
 	
 	public Line(Point startPoint, Point endPoint) {
 		this.startPoint = startPoint;
@@ -61,29 +61,57 @@ public class Line extends Shape {
 	}
 	
 	public boolean contains(int x, int y) {
-		if ((startPoint.distance(x, y) + endPoint.distance(x, y)) - length() <= 0.05) {
+		return startPoint.distance(x, y) + endPoint.distance(x, y) - length() <= 0.05;
+		/*if ((startPoint.distance(x, y) + endPoint.distance(x, y)) - length() <= 0.05)
 			return true;
-		} else {
-			return false;
-		}
+		else
+			return false;*/
 	}
 	
 	public boolean equals(Object obj) {
 		if (obj instanceof Line) {
 			Line l = (Line) obj;
-			if (this.startPoint.equals(l.getStartPoint()) && 
-					this.endPoint.equals(l.getEndPoint())) {
+			if (this.startPoint.equals(l.getStartPoint()) && this.endPoint.equals(l.getEndPoint()))
 				return true;
-			} else {
+			else
 				return false;
-			}
-		} else {
+		} else
 			return false;
-		}
 	}
 	
 	public double length() {
 		return startPoint.distance(endPoint.getX(), endPoint.getY());
+	}
+	
+	public String toString() {
+		return String.format("Line:(%d,%d)-->(%d,%d),Edge-color=[%d-%d-%d],selected=%b", startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY(), getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
+	}
+	
+	@Override
+    public Line clone(Shape s) {
+        Line l = new Line(new Point(0, 0), new Point(0, 0));
+        if (s instanceof Line)
+            l = (Line) s;
+
+        l.getStartPoint().setX(this.getStartPoint().getX());
+        l.getStartPoint().setY(this.getStartPoint().getY());
+        l.getEndPoint().setX(this.getEndPoint().getX());
+        l.getEndPoint().setY(this.getEndPoint().getY());
+        l.setEdgeColor(getEdgeColor());
+        return l;
+    }
+	
+	public Line parse(String str) {
+		String [] parts = str.split(",");
+		int startX = Integer.parseInt(parts[0].split("\\(")[1]);
+		int startY = Integer.parseInt(parts[1].split("\\)")[0]);
+		int endX = Integer.parseInt(parts[1].split("\\(")[1]);
+		int endY = Integer.parseInt(parts[2].substring(0, parts[2].length() - 1));
+		Color edgeColor = getColor(parts[3].split("=")[1]);
+		boolean selected = Boolean.parseBoolean(parts[4].split("=")[1]);
+		Line line = new Line(new Point(startX, startY), new Point(endX, endY), edgeColor);
+		line.setSelected(selected);
+		return line;
 	}
 	
 	public Point getStartPoint() {
@@ -97,35 +125,5 @@ public class Line extends Shape {
 	}
 	public void setEndPoint(Point endPoint) {
 		this.endPoint = endPoint;
-	}
-	
-	public String toString() {
-		return String.format("Line:(%d,%d)-->(%d,%d),Edge-color=[%d-%d-%d],selected=%b", startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY(), getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
-	}
-	
-	@Override
-    public Line clone(Shape s) {
-        Line l = new Line(new Point(0, 0), new Point(0, 0));
-        if (s instanceof Line) {
-            l = (Line) s;
-        }
-
-        l.getStartPoint().setX(this.getStartPoint().getX());
-        l.getStartPoint().setY(this.getStartPoint().getY());
-        l.getEndPoint().setX(this.getEndPoint().getX());
-        l.getEndPoint().setY(this.getEndPoint().getY());
-        l.setEdgeColor(this.getEdgeColor());
-
-        return l;
-    }
-	
-	public Line parse(String str) {
-		Line l = new Line();
-		str = str.replaceAll("Line ", "");
-
-		l.setStartPoint(new Point().parse(str.split(" --> ")[0]));
-		l.setEndPoint(new Point().parse(str.split(" --> ")[1]));
-
-		return l;
 	}
 }

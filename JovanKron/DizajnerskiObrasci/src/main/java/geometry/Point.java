@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Point extends Shape {
+	
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	
-	public Point() {
-		
-	}
+	public Point() {}
 	
 	public Point(int x, int y) {
 		this.x = x;
@@ -54,15 +54,12 @@ public class Point extends Shape {
 	public boolean equals(Object obj) {
 		if (obj instanceof Point) {
 			Point p = (Point) obj;
-			if (this.x == p.getX() &&
-					this.y == p.getY()) {
+			if (this.x == p.getX() && this.y == p.getY())
 				return true;
-			} else {
+			else
 				return false;
-			}
-		} else {
+		} else
 			return false;
-		}
 	}
 	
 	public double distance(int x2, int y2) {
@@ -70,6 +67,38 @@ public class Point extends Shape {
 		double dy = this.y - y2;
 		double d = Math.sqrt(dx*dx + dy*dy);
 		return d;
+	}
+	
+	public String toString() {
+		return String.format("Point:("+x+","+y+")" + ",Edge-color=[%d-%d-%d],selected=%b", getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
+	}
+	
+	@Override
+    public Point clone(Shape s) {
+	    Point p = new Point();
+	    if (s instanceof Point)
+            p = (Point) s;
+
+        p.setX(this.getX());
+        p.setY(this.getY());
+        p.setEdgeColor(getEdgeColor());
+        return p;
+    }
+
+	//Executed CmdAdd_Point:(746,246),Edge-color=[0-0-0],selected=false
+	//Executed CmdSelect_Point:(746,246),Edge-color=[0-0-0],selected=true
+	//Executed CmdUpdate_Point:(746,246),Edge-color=[0-0-0],selected=true_to_Point:(100,100),Edge-color=[204-0-51],selected=true
+	//Executed CmdBringToFront_Point:(100,100),Edge-color=[204-0-51],selected=true
+	//Executed CmdRemove_Point:(100,100),Edge-color=[204-0-51],selected=true
+	public Point parse(String str) {
+		String [] parts = str.split(",");
+		int x = Integer.parseInt(parts[0].split("\\(")[1]);
+		int y = Integer.parseInt(parts[1].substring(0, parts[1].length() - 1));
+		Color edgeColor = getColor(parts[2].split("=")[1]);
+		boolean selected = Boolean.parseBoolean(parts[3].split("=")[1]);
+		Point point = new Point(x, y, edgeColor);
+		point.setSelected(selected);
+		return point;
 	}
 	
 	public int getX() {
@@ -86,32 +115,5 @@ public class Point extends Shape {
 	
 	public void setY(int y) {
 		this.y = y;
-	}
-	
-	public String toString() {
-		return String.format("Point:("+x+","+y+")" + ",Edge-color=[%d-%d-%d],selected=%b", getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
-		//return "Point ( " + x + " , " + y + " )";
-	}
-	
-	@Override
-    public Point clone(Shape s) {
-	    Point p = new Point();
-	    if (s instanceof Point) {
-            p = (Point) s;
-        }
-
-        p.setX(this.getX());
-        p.setY(this.getY());
-        p.setEdgeColor(this.getEdgeColor());
-
-        return p;
-    }
-	
-	public Point parse(String str) {
-		Point p = new Point();
-		p.setX(Integer.parseInt(str.split(" ")[2]));
-		p.setY(Integer.parseInt(str.split(" ")[4]));
-
-		return p;
 	}
 }
