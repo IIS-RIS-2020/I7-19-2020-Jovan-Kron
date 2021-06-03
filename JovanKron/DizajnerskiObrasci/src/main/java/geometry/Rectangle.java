@@ -41,35 +41,28 @@ public class Rectangle extends SurfaceShape {
 	@Override
 	public void moveBy(int byX, int byY) {
 		upperLeftPoint.moveBy(byX, byY);
-
 	}
 	
 	@Override
-	public int compareTo(Object o) {
-		if (o instanceof Rectangle) {
-			return (int) (this.area() - ((Rectangle) o).area());
+	public int compareTo(Object obj) {
+		if (obj instanceof Rectangle) {
+			return (int) (this.area() - ((Rectangle) obj).area());
 		}
 		return 0;
 	}
 	
 	public boolean contains(int x, int y) {
-		if (this.getUpperLeftPoint().getX() <= x 
-				&& x <= this.getUpperLeftPoint().getX() + width
-				&& this.getUpperLeftPoint().getY() <= y
-				&& y <= this.getUpperLeftPoint().getY() + height) {
+		if (this.getUpperLeftPoint().getX() <= x && x <= this.getUpperLeftPoint().getX() + width
+				&& this.getUpperLeftPoint().getY() <= y && y <= this.getUpperLeftPoint().getY() + height)
 			return true;
-		} else {
+		else
 			return false;
-		}
 	}
 
 	public boolean equals(Object obj) {
 		if (obj instanceof Rectangle) {
 			Rectangle r = (Rectangle) obj;
-			if (this.upperLeftPoint.equals(r.getUpperLeftPoint()) && this.height == r.getHeight() && this.width == r.getWidth())
-				return true;
-			else
-				return false;
+			return this.upperLeftPoint.equals(r.getUpperLeftPoint()) && this.height == r.getHeight() && this.width == r.getWidth();
 		} else
 			return false;
 	}
@@ -79,8 +72,9 @@ public class Rectangle extends SurfaceShape {
 	}
 	
 	public String toString() {
-		return String.format("Rectangle:Upper-left(%d,%d),Width=%d,Height=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",upperLeftPoint.getX(),upperLeftPoint.getY(),width,height,
-				getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
+		return String.format("Rectangle:Upper-left(%d,%d),Width=%d,Height=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
+				upperLeftPoint.getX(), upperLeftPoint.getY(), width, height, getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(),
+				getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
 	}
 	
 	@Override
@@ -88,13 +82,12 @@ public class Rectangle extends SurfaceShape {
         Rectangle r = new Rectangle(new Point(0,0), 0, 0);
         if(s instanceof Rectangle)
         	r = (Rectangle) s;
-
         r.getUpperLeftPoint().setX(this.getUpperLeftPoint().getX());
         r.getUpperLeftPoint().setY(this.getUpperLeftPoint().getY());
         r.setHeight(this.getHeight());
         r.setWidth(this.getWidth());
-        r.setFillColor(this.getFillColor());
-        r.setEdgeColor(this.getEdgeColor());
+        r.setFillColor(getFillColor());
+        r.setEdgeColor(getEdgeColor());
         return r;
     }
 	

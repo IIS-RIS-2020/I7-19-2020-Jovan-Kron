@@ -26,6 +26,5 @@ public class CmdToFront implements Command {
 	@Override
 	public void unexecute() {
 		Collections.swap(model.getShapes(), position, position + 1);
-		
 	}
 }

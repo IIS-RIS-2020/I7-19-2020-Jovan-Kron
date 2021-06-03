@@ -39,10 +39,10 @@ public class Point extends Shape {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		if (o instanceof Point) {
+	public int compareTo(Object obj) {
+		if (obj instanceof Point) {
 			Point start = new Point(0, 0);
-			return (int) (this.distance(start.getX(), start.getY()) - ((Point) o).distance(start.getX(), start.getY()));
+			return (int) (this.distance(start.getX(), start.getY()) - ((Point) obj).distance(start.getX(), start.getY()));
 		}
 		return 0;
 	}
@@ -54,10 +54,7 @@ public class Point extends Shape {
 	public boolean equals(Object obj) {
 		if (obj instanceof Point) {
 			Point p = (Point) obj;
-			if (this.x == p.getX() && this.y == p.getY())
-				return true;
-			else
-				return false;
+			return this.x == p.getX() && this.y == p.getY();
 		} else
 			return false;
 	}
@@ -65,12 +62,12 @@ public class Point extends Shape {
 	public double distance(int x2, int y2) {
 		double dx = this.x - x2;
 		double dy = this.y - y2;
-		double d = Math.sqrt(dx*dx + dy*dy);
-		return d;
+		return Math.sqrt(dx*dx + dy*dy);
 	}
 	
 	public String toString() {
-		return String.format("Point:("+x+","+y+")" + ",Edge-color=[%d-%d-%d],selected=%b", getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
+		return String.format("Point:("+x+","+y+")" + ",Edge-color=[%d-%d-%d],selected=%b", getEdgeColor().getRed(),
+				getEdgeColor().getGreen(), getEdgeColor().getBlue(), isSelected());
 	}
 	
 	@Override
@@ -78,18 +75,12 @@ public class Point extends Shape {
 	    Point p = new Point();
 	    if (s instanceof Point)
             p = (Point) s;
-
         p.setX(this.getX());
         p.setY(this.getY());
         p.setEdgeColor(getEdgeColor());
         return p;
     }
 
-	//Executed CmdAdd_Point:(746,246),Edge-color=[0-0-0],selected=false
-	//Executed CmdSelect_Point:(746,246),Edge-color=[0-0-0],selected=true
-	//Executed CmdUpdate_Point:(746,246),Edge-color=[0-0-0],selected=true_to_Point:(100,100),Edge-color=[204-0-51],selected=true
-	//Executed CmdBringToFront_Point:(100,100),Edge-color=[204-0-51],selected=true
-	//Executed CmdRemove_Point:(100,100),Edge-color=[204-0-51],selected=true
 	public Point parse(String str) {
 		String [] parts = str.split(",");
 		int x = Integer.parseInt(parts[0].split("\\(")[1]);

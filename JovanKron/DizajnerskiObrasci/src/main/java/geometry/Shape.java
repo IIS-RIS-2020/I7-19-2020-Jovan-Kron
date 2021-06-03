@@ -8,7 +8,6 @@ public abstract class Shape extends Observable implements Movable, Comparable<Ob
 	
 	private static final long serialVersionUID = 1L;
 	private boolean selected;
-	private int positionInArray;
 	private Color edgeColor;
 
 	public Shape() { }
@@ -45,14 +44,6 @@ public abstract class Shape extends Observable implements Movable, Comparable<Ob
 		this.selected = selected;
 		setChanged();
 		notifyObservers();
-	}
-
-	public int getPositionInArray() {
-		return positionInArray;
-	}
-
-	public void setPositionInArray(int positionInArray) {
-		this.positionInArray = positionInArray;
 	}
 	
 	public Color getEdgeColor() {

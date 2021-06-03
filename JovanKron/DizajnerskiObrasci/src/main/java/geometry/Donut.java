@@ -26,20 +26,13 @@ public class Donut extends Circle {
 	
 	public void draw(Graphics gr) {
 		Graphics2D g = (Graphics2D)gr;
-
-		g.setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		Ellipse2D outer = new Ellipse2D.Double(
-				this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(),
-				this.getRadius() * 2, this.getRadius() * 2);
-		Ellipse2D inner = new Ellipse2D.Double(
-				this.getCenter().getX() - this.getInnerRadius(), this.getCenter().getY() - this.getInnerRadius(),
-				this.getInnerRadius() * 2, this.getInnerRadius() * 2);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		Ellipse2D outer = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
+				this.getCenter().getY() - this.getRadius(), this.getRadius() * 2, this.getRadius() * 2);
+		Ellipse2D inner = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius(),
+				this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius() * 2, this.getInnerRadius() * 2);
 		Area area = new Area(outer);
 		area.subtract(new Area(inner));
-
 		g.setColor(getFillColor());
 		g.fill(area);
 		g.setColor(getEdgeColor());
@@ -58,21 +51,15 @@ public class Donut extends Circle {
 		}
 	}
 
-	@Override
-	public void setFillColor(Color fillColor) {
-		super.setFillColor(fillColor);
-	}
-
-	public int compareTo(Object o) {
-		if (o instanceof Donut) {
-			return (int) (this.area() - ((Donut) o).area());
-		}
+	public int compareTo(Object obj) {
+		if (obj instanceof Donut)
+			return (int) (this.area() - ((Donut) obj).area());
 		return 0;
 	}
 	
 	public boolean contains(int x, int y) {
-		double dFromCenter = this.getCenter().distance(x, y);
-		return super.contains(x, y) && dFromCenter > innerRadius;
+		double distanceFromCenter = this.getCenter().distance(x, y);
+		return super.contains(x, y) && distanceFromCenter > innerRadius;
 	}
 	
 	public double area() {
@@ -82,21 +69,16 @@ public class Donut extends Circle {
 	public boolean equals(Object obj) {
 		if (obj instanceof Donut) {
 			Donut d = (Donut) obj;
-			if (this.getCenter().equals(d.getCenter()) &&
-					this.getRadius() == d.getRadius() &&
-					innerRadius == d.getInnerRadius()) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
+			return this.getCenter().equals(d.getCenter()) && this.getRadius() == d.getRadius()
+					&& innerRadius == d.getInnerRadius();
+		} else
 			return false;
-		}
 	}
 	
 	public String toString() {
 		return String.format("Donut:Center(%d,%d),innerradius=%d,radius=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
-				getCenter().getX(),getCenter().getY(),innerRadius,getRadius(),getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
+				getCenter().getX(),getCenter().getY(),innerRadius,getRadius(),getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(),
+				getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
 	}
 	
 	@Override
@@ -114,10 +96,6 @@ public class Donut extends Circle {
 		return d;
 	}
 	
-	//Executed CmdAdd_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
-	//Executed CmdSelect_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
-	//Executed CmdUpdate_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[153-0-0],selected=true
-	//Executed CmdRemove_Donut:Center(850,322),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[153-0-0],selected=true
 	public Donut parse(String str) {
 		String [] parts = str.split(",");
 		int x = Integer.parseInt(parts[0].split("\\(")[1]);

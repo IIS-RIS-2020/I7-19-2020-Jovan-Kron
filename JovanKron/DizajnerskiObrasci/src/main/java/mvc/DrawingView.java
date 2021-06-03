@@ -23,8 +23,7 @@ public class DrawingView extends JPanel {
 	
 	public void paint(Graphics g) {
 		ListIterator<Shape> it = model.getShapes().listIterator();
-		while(it.hasNext()) {
+		while(it.hasNext())
 			it.next().draw(g);
-		}
 	}
 }

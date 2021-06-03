@@ -441,14 +441,6 @@ public class DrawingController {
 	public Color getCurrentFillColor() {
 		return currentFillColor;
 	}
-
-	public void setCurrentEdgeColor(Color currentEdgeColor) {
-		this.currentEdgeColor = currentEdgeColor;
-	}
-
-	public void setCurrentFillColor(Color currentFillColor) {
-		this.currentFillColor = currentFillColor;
-	}
 	
 	public void setFlagForLine(boolean flagForLine) {
 		this.flagForLine = flagForLine;

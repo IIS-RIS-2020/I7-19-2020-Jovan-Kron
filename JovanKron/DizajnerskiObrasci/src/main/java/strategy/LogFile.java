@@ -80,7 +80,6 @@ public class LogFile implements AnyFile {
 	        	 String forRemoveUndo = "";
 	        	 String forRemoveRedo = "";
 	             while ((textCommand = bufferedReader.readLine()) != null) {
-	            	            	 
 	            	 if(textCommand.contains("Unexecuted CmdRemove")) {
 	            		 forRemoveUndo = forRemoveUndo + textCommand + "\n";
 	            		 if(!forRemoveRedo.isEmpty()) {
@@ -241,21 +240,20 @@ public class LogFile implements AnyFile {
 	
 	public void checkForRedoUndoRemove(DlgCommands dialog, String forRemoveUndo, String forRemoveRedo) {
 		if(!forRemoveRedo.isEmpty()) {
-   		 dialog.getTextPane().setText(forRemoveRedo);
-   		 forRemoveRedo = "";
-       	 dialog.setVisible(true);
-       	 if(dialog.isConfirmed()) {
-       		 doCommand("Re-executed");
-       	 }
-   	 }
-        if(!forRemoveUndo.isEmpty()) {
-   		 dialog.getTextPane().setText(forRemoveUndo);
-   		 forRemoveUndo = "";
-       	 dialog.setVisible(true);
-       	 if(dialog.isConfirmed()) {
-       		 doCommand("Unexecuted");
-       	 }
-   	 }
+			dialog.getTextPane().setText(forRemoveRedo);
+		   	forRemoveRedo = "";
+		   	dialog.setVisible(true);
+		   	if(dialog.isConfirmed())
+		   		doCommand("Re-executed");
+		}
+		
+		if(!forRemoveUndo.isEmpty()) {
+			dialog.getTextPane().setText(forRemoveUndo);
+   		 	forRemoveUndo = "";
+   		 	dialog.setVisible(true);
+   		 	if(dialog.isConfirmed())
+   		 		doCommand("Unexecuted");
+		}
 	}
 
 }

@@ -45,9 +45,19 @@ public class DlgCommands extends JDialog {
 				dispose();
 	        }
 	    });
-		
+	    
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.SOUTH);
+
+		JButton btnNext = new JButton("Next");
+		getRootPane().setDefaultButton(btnNext);
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setConfirmed(true);
+				dispose();
+			}
+		});
+		panel.add(btnNext);
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
@@ -58,18 +68,8 @@ public class DlgCommands extends JDialog {
 		});
 		panel.add(btnExit);
 		
-		JButton btnNext = new JButton("Next");
-		btnNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setConfirmed(true);
-				dispose();
-			}
-		});
-		panel.add(btnNext);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
-		
 		textPane = new JTextPane();
 		textPane.setEditable(false);
 		scrollPane.setViewportView(textPane);

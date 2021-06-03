@@ -26,6 +26,5 @@ public class CmdToBack implements Command {
 	@Override
 	public void unexecute() {
 		Collections.swap(model.getShapes(), position, position - 1);
-		
 	}
 }

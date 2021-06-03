@@ -427,6 +427,4 @@ public class DrawingFrame extends JFrame {
 	public JTextPane getLogPanel() {
 		return textPane;
 	}
-	
-	
 }

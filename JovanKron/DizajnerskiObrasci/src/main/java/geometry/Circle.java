@@ -26,15 +26,13 @@ public class Circle extends SurfaceShape {
 	public void draw(Graphics gr) {
 		Graphics2D g = (Graphics2D)gr;
 
-		g.setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(getFillColor());
 		g.fillOval(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(),
 					this.getRadius() * 2, this.getRadius() * 2);
 		g.setColor(getEdgeColor());
 		g.drawOval(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(),
-				this.getRadius() * 2, this.getRadius() * 2);
+					this.getRadius() * 2, this.getRadius() * 2);
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
@@ -51,10 +49,9 @@ public class Circle extends SurfaceShape {
 	}
 	
 	@Override
-	public int compareTo(Object o) {
-		if (o instanceof Circle) {
-			return (this.radius - ((Circle) o).radius);
-		}
+	public int compareTo(Object obj) {
+		if (obj instanceof Circle)
+			return (this.radius - ((Circle) obj).radius);
 		return 0;
 	}
 	
@@ -65,14 +62,9 @@ public class Circle extends SurfaceShape {
 	public boolean equals(Object obj) {
 		if (obj instanceof Circle) {
 			Circle c = (Circle) obj;
-			if (this.center.equals(c.getCenter()) && this.radius == c.getRadius()) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
+			return this.center.equals(c.getCenter()) && this.radius == c.getRadius();
+		} else
 			return false;
-		}
 	}
 	
 	public double area() {
@@ -81,22 +73,21 @@ public class Circle extends SurfaceShape {
 	
 	public String toString() {
 		return String.format("Circle:Center(%d,%d),radius=%d,Edge-color=[%d-%d-%d],Surface-color=[%d-%d-%d],selected=%b",
-				center.getX(),center.getY(),radius,getEdgeColor().getRed(), getEdgeColor().getGreen(), getEdgeColor().getBlue(), getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
+				center.getX(), center.getY(), radius, getEdgeColor().getRed(), getEdgeColor().getGreen(),getEdgeColor().getBlue(),
+				getFillColor().getRed(), getFillColor().getGreen(), getFillColor().getBlue(), isSelected());
 	}
 	
 	@Override
     public Circle clone(Shape s) {
         Circle c = new Circle(new Point(0,0), 0);
-        if (s instanceof Circle) {
+        if (s instanceof Circle)
         	c = (Circle) s;
-		}
 
         c.getCenter().setX(this.getCenter().getX());
         c.getCenter().setY(this.getCenter().getY());
         c.setRadius(this.getRadius());
         c.setFillColor(getFillColor());
-        c.setEdgeColor(this.getEdgeColor());
-
+        c.setEdgeColor(getEdgeColor());
         return c;
     }
 	
