@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,13 +17,12 @@ import javax.swing.JTextPane;
 public class DlgCommands extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
-	private int choise=0;
+	private boolean confirmed;
 	JTextPane textPane;
 
 	public static void main(String[] args) {
 		try {
 			DlgCommands dialog = new DlgCommands();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,13 +37,22 @@ public class DlgCommands extends JDialog {
 		setTitle("Log commands dialog");
 		getContentPane().setLayout(new BorderLayout());
 		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	    this.addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowClosing(WindowEvent arg0) {
+	        	setConfirmed(false);
+				dispose();
+	        }
+	    });
+		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.SOUTH);
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choise = 0;
+				setConfirmed(false);
 				dispose();
 			}
 		});
@@ -51,7 +61,7 @@ public class DlgCommands extends JDialog {
 		JButton btnNext = new JButton("Next");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choise = 1;
+				setConfirmed(true);
 				dispose();
 			}
 		});
@@ -65,12 +75,12 @@ public class DlgCommands extends JDialog {
 		scrollPane.setViewportView(textPane);
 	}
 
-	public int getChoise() {
-		return choise;
+	public boolean isConfirmed() {
+		return confirmed;
 	}
 
-	public void setChoise(int choise) {
-		this.choise = choise;
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 
 	public JTextPane getTextPane() {

@@ -86,26 +86,22 @@ public class LogFile implements AnyFile {
 	            		 if(!forRemoveRedo.isEmpty()) {
 	            			 dialog.getTextPane().setText(forRemoveRedo);
 		            		 forRemoveRedo = "";
-			            	 dialog.setChoise(0);
 			            	 dialog.setVisible(true);
-			            	 if(dialog.getChoise() == 1) {
+			            	 if(dialog.isConfirmed())
 			            		 doCommand("Re-executed");
-			            	 } else {
+			            	 else
 			            		 break;
-			            	 }
 	            		 }
 	            		 continue;
 	            	 }
 	            	 if(!forRemoveUndo.isEmpty()) {
 	            		 dialog.getTextPane().setText(forRemoveUndo);
 	            		 forRemoveUndo = "";
-		            	 dialog.setChoise(0);
 		            	 dialog.setVisible(true);
-		            	 if(dialog.getChoise() == 1) {
+		            	 if(dialog.isConfirmed())
 		            		 doCommand("Unexecuted");
-		            	 } else {
+		            	 else
 		            		 break;
-		            	 }
 	            	 }
 	            	 
 	            	 if(textCommand.contains("Re-executed CmdRemove")) {
@@ -115,22 +111,18 @@ public class LogFile implements AnyFile {
 	            	 if(!forRemoveRedo.isEmpty()) {
 	            		 dialog.getTextPane().setText(forRemoveRedo);
 	            		 forRemoveRedo = "";
-		            	 dialog.setChoise(0);
 		            	 dialog.setVisible(true);
-		            	 if(dialog.getChoise() == 1) {
+		            	 if(dialog.isConfirmed())
 		            		 doCommand("Re-executed");
-		            	 } else {
+		            	 else
 		            		 break;
-		            	 }
 	            	 }
 	            	 dialog.getTextPane().setText(textCommand);
-	            	 dialog.setChoise(0);
 	            	 dialog.setVisible(true);
-	            	 if(dialog.getChoise() == 1) {
+	            	 if(dialog.isConfirmed())
 	            		 doCommand(textCommand);
-	            	 } else {
+	            	 else
 	            		 break;
-	            	 }
 	             }
 	             //in case when unexecute or re-execute are last commands in batch do to continue in while will skip them
 	             checkForRedoUndoRemove(dialog, forRemoveUndo, forRemoveRedo);
@@ -139,11 +131,8 @@ public class LogFile implements AnyFile {
 					e2.printStackTrace();
 					JOptionPane.showMessageDialog(frame,"Error reading the log file");
 			 }
-		} else {
+		} else
 			JOptionPane.showMessageDialog(frame,"File has to be of type log");
-		}
-	         	    
-		
 	}
 	
 	public void doCommand (String text) {
@@ -158,7 +147,6 @@ public class LogFile implements AnyFile {
 					if(i != -1) {
 						shape = (Point) model.get(i);
 						updatedShape = new Point().parse(text.split("_to_")[1]);
-						command = new CmdUpdate(shape, updatedShape);
 					}
 				} else
 					shape = new Point().parse(text);
@@ -170,7 +158,6 @@ public class LogFile implements AnyFile {
 					if(i != -1) {
 						shape = (Line) model.get(i);
 						updatedShape = new Line().parse(text.split("_to_")[1]);
-						command = new CmdUpdate(shape, updatedShape);
 					}
 				} else
 					shape = new Line().parse(text);
@@ -182,7 +169,6 @@ public class LogFile implements AnyFile {
 					if(i != -1) {
 						shape = (Circle) model.get(i);
 						updatedShape = new Circle().parse(text.split("_to_")[1]);
-						command = new CmdUpdate(shape, updatedShape);
 					}
 				} else
 					shape = new Circle().parse(text);
@@ -194,7 +180,6 @@ public class LogFile implements AnyFile {
 					if(i != -1) {
 						shape = (Rectangle) model.get(i);
 						updatedShape = new Rectangle().parse(text.split("_to_")[1]);
-						command = new CmdUpdate(shape, updatedShape);
 					}
 				} else
 					shape = new Rectangle().parse(text);
@@ -205,7 +190,6 @@ public class LogFile implements AnyFile {
 					if(i != -1) {
 						shape = (HexagonAdapter) model.get(i);
 						updatedShape = new HexagonAdapter().parse(text.split("_to_")[1]);
-						command = new CmdUpdate(shape, updatedShape);
 					}
 				} else
 					shape = new HexagonAdapter().parse(text);
@@ -216,7 +200,6 @@ public class LogFile implements AnyFile {
 					if(i != -1) {
 						shape = (Donut) model.get(i);
 						updatedShape = new Donut().parse(text.split("_to_")[1]);
-						command = new CmdUpdate(shape, updatedShape);
 					}
 				} else
 					shape = new Donut().parse(text);
@@ -225,8 +208,7 @@ public class LogFile implements AnyFile {
 			if(updatedShape == null) {
 				int pos = model.getShapes().indexOf(shape);
 				if(text.contains("Add")) {
-					ObserverForButtons observerForButtonUpdate = new ObserverForButtons(model, frame);
-					shape.addObserver(observerForButtonUpdate);
+					shape.addObserver(new ObserverForButtons(model, frame));
 					command = new CmdAdd(shape, model);
 				} else if(text.contains("CmdSelect"))
 					command = new CmdSelect(model.get(pos), shape.isSelected());
@@ -234,7 +216,8 @@ public class LogFile implements AnyFile {
 					command = new CmdRemove(model.get(pos), model);
 					frame.getController().disableButtons();
 				}
-			}
+			} else
+				command = new CmdUpdate(shape, updatedShape);
 			
 			if(command == null) {
 	   	 		if(text.contains("BringToBack"))
@@ -260,18 +243,16 @@ public class LogFile implements AnyFile {
 		if(!forRemoveRedo.isEmpty()) {
    		 dialog.getTextPane().setText(forRemoveRedo);
    		 forRemoveRedo = "";
-       	 dialog.setChoise(0);
        	 dialog.setVisible(true);
-       	 if(dialog.getChoise() == 1) {
+       	 if(dialog.isConfirmed()) {
        		 doCommand("Re-executed");
        	 }
    	 }
         if(!forRemoveUndo.isEmpty()) {
    		 dialog.getTextPane().setText(forRemoveUndo);
    		 forRemoveUndo = "";
-       	 dialog.setChoise(0);
        	 dialog.setVisible(true);
-       	 if(dialog.getChoise() == 1) {
+       	 if(dialog.isConfirmed()) {
        		 doCommand("Unexecuted");
        	 }
    	 }

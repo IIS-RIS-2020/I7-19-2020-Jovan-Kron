@@ -13,13 +13,11 @@ public class FileManager implements AnyFile {
 	@Override
 	public void saveFile(File file) {
 		anyFile.saveFile(file);
-		
 	}
 
 	@Override
 	public void loadFile(File file) {
 		anyFile.loadFile(file);
-		
 	}
 
 }

@@ -42,7 +42,6 @@ public class SerializableFile implements AnyFile {
 		} catch(Exception e) {
 				 System.out.println("Objects did not serialize");
 		}
-		
 	}
 
 	@Override
@@ -65,13 +64,12 @@ public class SerializableFile implements AnyFile {
 				FileInputStream theFile = new FileInputStream(file); 
 		        ObjectInputStream inputStream = new ObjectInputStream(theFile);
 				@SuppressWarnings("unchecked")
-				ArrayList<Shape> shapes = (ArrayList<Shape>)inputStream.readObject();
-		        ObserverForButtons observerForButtonUpdate;
-		        for (Shape s : shapes) {
-		        	if(s!=null) {
-		        		observerForButtonUpdate = new ObserverForButtons(model, frame);
-		        		s.addObserver(observerForButtonUpdate);
-		        		model.add(s);
+				ArrayList<Shape> shapes = (ArrayList<Shape>) inputStream.readObject();
+		        for (Shape shape : shapes) {
+		        	if(shape != null) {
+		        		shape.addObserver(new ObserverForButtons(model, frame));
+		        		shape.setSelected(false);
+		        		model.add(shape);
 		        	}
 				}
 		        inputStream.close(); 
@@ -82,10 +80,6 @@ public class SerializableFile implements AnyFile {
 			}
 		} else {
 			JOptionPane.showMessageDialog(frame,"File has to be of type ser");
-		}
-			
+		}		
 	}
-	
-	
-
 }

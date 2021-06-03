@@ -1,3 +1,0 @@
-Add Rectangle Upper Left Point ( 400 , 299 ) , Height = 30 , Width = 60
-Add Circle Center = Point ( 400 , 299 ) , radius = 30
-Add Hexagon x = 400 , y = 299 , radius = 40
