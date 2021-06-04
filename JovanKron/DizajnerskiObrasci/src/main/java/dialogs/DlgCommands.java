@@ -18,7 +18,9 @@ public class DlgCommands extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
 	private boolean confirmed;
-	JTextPane textPane;
+	private JTextPane textPane;
+	private JButton btnNext;
+	JButton btnExit;
 
 	public static void main(String[] args) {
 		try {
@@ -49,7 +51,7 @@ public class DlgCommands extends JDialog {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.SOUTH);
 
-		JButton btnNext = new JButton("Next");
+		btnNext = new JButton("Next");
 		getRootPane().setDefaultButton(btnNext);
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -59,7 +61,7 @@ public class DlgCommands extends JDialog {
 		});
 		panel.add(btnNext);
 		
-		JButton btnExit = new JButton("Exit");
+		btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setConfirmed(false);
@@ -81,6 +83,14 @@ public class DlgCommands extends JDialog {
 
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+
+	public JButton getBtnNext() {
+		return btnNext;
+	}
+
+	public JButton getBtnExit() {
+		return btnExit;
 	}
 
 	public JTextPane getTextPane() {

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.AWTException;
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -476,6 +475,83 @@ public class DrawingControllerTests {
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
 		assertTrue(model.getShapes().get(1) instanceof Circle);
 		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testUndoRemoveOneShape() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();
+		frame.getTglBtnSelect().doClick();	
+		click(459, 429);
+		pressTab(6);
+		pressSpace(2);
+		robot.delay(300);
+		pressTab(3);
+		pressSpace(1);
+		assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testRedoRemoveOneShape() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();
+		frame.getTglBtnSelect().doClick();	
+		click(459, 429);
+		pressTab(6);
+		pressSpace(2);
+		robot.delay(300);
+		pressTab(3);
+		pressSpace(1);
+		robot.delay(300);
+		pressTab(1);
+		pressSpace(1);
+		assertEquals(2, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Circle);
+		assertTrue(model.getShapes().get(1) instanceof HexagonAdapter);
+	}
+
+	@Test
+	public void testUndoRemoveTwoShape() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();
+		frame.getTglBtnSelect().doClick();
+		click(400, 400);
+		click(459, 429);
+		pressTab(5);
+		pressSpace(2);
+		robot.delay(300);
+		pressTab(3);
+		pressSpace(1);
+		assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testRedoRemoveTwoShape() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();
+		frame.getTglBtnSelect().doClick();
+		click(400, 400);
+		click(459, 429);
+		pressTab(5);
+		pressSpace(2);
+		robot.delay(300);
+		pressTab(3);
+		pressSpace(1);
+		robot.delay(300);
+		pressTab(1);
+		pressSpace(1);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Circle);
 	}
 	
 	@Test

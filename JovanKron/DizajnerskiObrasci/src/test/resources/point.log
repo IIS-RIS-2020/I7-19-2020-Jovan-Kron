@@ -1,0 +1,12 @@
+Executed CmdAdd_Point:(800,144),Edge-color=[0-0-0],selected=false
+Executed CmdSelect_Point:(800,144),Edge-color=[0-0-0],selected=true
+Executed CmdUpdate_Point:(800,144),Edge-color=[0-0-0],selected=true_to_Point:(50,100),Edge-color=[255-0-51],selected=true
+Executed CmdRemove_Point:(50,100),Edge-color=[255-0-51],selected=true
+Unexecuted CmdRemove_Point:(50,100),Edge-color=[255-0-51],selected=true
+Unexecuted CmdUpdate_Point:(800,144),Edge-color=[0-0-0],selected=true_to_Point:(50,100),Edge-color=[255-0-51],selected=true
+Unexecuted CmdSelect_Point:(800,144),Edge-color=[0-0-0],selected=true
+Unexecuted CmdAdd_Point:(800,144),Edge-color=[0-0-0],selected=false
+Re-executed CmdAdd_Point:(800,144),Edge-color=[0-0-0],selected=false
+Re-executed CmdSelect_Point:(800,144),Edge-color=[0-0-0],selected=true
+Re-executed CmdUpdate_Point:(800,144),Edge-color=[0-0-0],selected=true_to_Point:(50,100),Edge-color=[255-0-51],selected=true
+Re-executed CmdRemove_Point:(50,100),Edge-color=[255-0-51],selected=true

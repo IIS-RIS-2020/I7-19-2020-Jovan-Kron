@@ -2,13 +2,9 @@ package mvc;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.never;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import commands.CmdAdd;
-import geometry.Point;
 
 public class DrawingFrameTests {
 	
@@ -89,50 +85,22 @@ public class DrawingFrameTests {
 		frame.getTglBtnRedo().doClick();
 		verify(controller).redo();
 	}
-	/*
+	
 	@Test
-	public void testSaveShapes() throws Exception {
-		frame.getView().getModel().getUndoStack().push(new CmdAdd(new Point(), frame.getView().getModel()));
-		frame.getTglbtnSaveShapes().doClick();
-		verify(controller).onSaveShapes();
+	public void testNew() throws Exception {
+		frame.getTglBtnNew().doClick();
+		verify(controller).newPainting();
 	}
 	
 	@Test
-	public void testSaveShapesWitnEmptyUndoStack() throws Exception {
-		frame.getTglbtnSaveShapes().doClick();
-		//never() is used to check if method was not called
-		verify(controller, never()).onSaveShapes();
+	public void testSave() throws Exception {
+		frame.getTglBtnSave().doClick();
+		verify(controller).save();
 	}
 	
 	@Test
-	public void testOpenShapes() throws Exception {
-		frame.getTglbtnOpenShapes().doClick();
-		verify(controller).onOpenShapes();
+	public void testLoad() throws Exception {
+		frame.getTglBtnLoad().doClick();
+		verify(controller).load();
 	}
-	
-	@Test
-	public void testSaveCommands() throws Exception {
-		frame.getView().getModel().getUndoStack().push(new CmdAdd(new Point(), frame.getView().getModel()));
-		frame.getTglbtnSaveCommands().doClick();
-		verify(controller).onSaveCommands();
-	}
-	
-	@Test
-	public void testSaveCommandsWitnEmptyUndoStack() throws Exception {
-		frame.getTglbtnSaveCommands().doClick();
-		//never() is used to check if method was not called
-		verify(controller, never()).onSaveCommands();
-	}
-	
-	@Test
-	public void testOpenCommands() throws Exception {
-		frame.getTglbtnOpenCommands().doClick();
-		verify(controller).onOpenCommands();
-	}
-	
-	@Test
-	public void testNext() throws Exception {
-		frame.getTglbtnNext().doClick();
-		verify(controller).next();
-	}*/
 }

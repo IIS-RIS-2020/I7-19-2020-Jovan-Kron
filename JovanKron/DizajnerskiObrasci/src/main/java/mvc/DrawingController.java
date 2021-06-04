@@ -321,7 +321,7 @@ public class DrawingController {
 			clearCanvas();
 	}
 	
-	public void savePainting() {
+	public void save() {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
@@ -340,8 +340,10 @@ public class DrawingController {
         }
 	}
 	
-	public void loadPainting() {
+	public void load() {
 		JFileChooser fileChooser = new JFileChooser();
+		//File workingDirectory = new File(System.getProperty("user.dir"));
+		//fileChooser.setCurrentDirectory(workingDirectory);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
 		fileChooser.setFileFilter(new FileNameExtensionFilter("log file (.log)", "log"));
@@ -413,8 +415,8 @@ public class DrawingController {
     public void clearCanvas() {
 		undoCommandsStack.clear();
 		redoCommandsStack.clear();
-		frame.tglBtnRedo.setEnabled(false);
-		frame.tglBtnUndo.setEnabled(false);
+		frame.getTglBtnRedo().setEnabled(false);
+		frame.getTglBtnUndo().setEnabled(false);
 		textRedoCommandsStack.clear();
 		textUndoCommandsStack.clear();
 		model.getShapes().clear();

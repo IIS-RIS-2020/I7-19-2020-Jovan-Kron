@@ -1,0 +1,12 @@
+Executed CmdAdd_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Executed CmdSelect_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Executed CmdUpdate_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Rectangle:Upper-left(250,250),Width=300,Height=150,Edge-color=[255-51-204],Surface-color=[51-255-51],selected=true
+Executed CmdRemove_Rectangle:Upper-left(250,250),Width=300,Height=150,Edge-color=[255-51-204],Surface-color=[51-255-51],selected=true
+Unexecuted CmdRemove_Rectangle:Upper-left(250,250),Width=300,Height=150,Edge-color=[255-51-204],Surface-color=[51-255-51],selected=true
+Unexecuted CmdUpdate_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Rectangle:Upper-left(250,250),Width=300,Height=150,Edge-color=[255-51-204],Surface-color=[51-255-51],selected=true
+Unexecuted CmdSelect_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Unexecuted CmdAdd_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Re-executed CmdAdd_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Re-executed CmdSelect_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Re-executed CmdUpdate_Rectangle:Upper-left(1017,238),Width=250,Height=100,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Rectangle:Upper-left(250,250),Width=300,Height=150,Edge-color=[255-51-204],Surface-color=[51-255-51],selected=true
+Re-executed CmdRemove_Rectangle:Upper-left(250,250),Width=300,Height=150,Edge-color=[255-51-204],Surface-color=[51-255-51],selected=true

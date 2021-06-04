@@ -11,7 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,20 +26,23 @@ public class DrawingFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private DrawingView view = new DrawingView();
 	private DrawingController controller;
-	public JToggleButton clickedButton;
-	JToggleButton tglBtnPoint;
-	JToggleButton tglBtnLine;
-	JToggleButton tglBtnCircle;
-	JToggleButton tglBtnRectangle;
-	JToggleButton tglBtnDonut;
-	JToggleButton tglBtnHexagon;
-	JToggleButton tglBtnSelect;
-	JToggleButton tglBtnDelete;
-	JToggleButton tglBtnModify;
-	JToggleButton tglBtnEdgeColor;
-	JToggleButton tglBtnFillColor;
-	JToggleButton tglBtnUndo;
-	JToggleButton tglBtnRedo;
+	private JToggleButton clickedButton;
+	private JToggleButton tglBtnNew;
+	private JToggleButton tglBtnSave;
+	private JToggleButton tglBtnLoad;
+	private JToggleButton tglBtnPoint;
+	private JToggleButton tglBtnLine;
+	private JToggleButton tglBtnCircle;
+	private JToggleButton tglBtnRectangle;
+	private JToggleButton tglBtnDonut;
+	private JToggleButton tglBtnHexagon;
+	private JToggleButton tglBtnSelect;
+	private JToggleButton tglBtnDelete;
+	private JToggleButton tglBtnModify;
+	private JToggleButton tglBtnEdgeColor;
+	private JToggleButton tglBtnFillColor;
+	private JToggleButton tglBtnUndo;
+	private JToggleButton tglBtnRedo;
 	private JToggleButton tglBtnBringToBack;
 	private JToggleButton tglBtnToBack;
 	private JToggleButton tglBtnToFront;
@@ -79,35 +81,35 @@ public class DrawingFrame extends JFrame {
 		
 		group.add(tglBtnUndo);
 		
-		JButton btnLoad = new JButton("Load");
-		btnLoad.setToolTipText("Load");
-		btnLoad.setMargin(new Insets(0, 0, 0, 0));
-		btnLoad.addActionListener(new ActionListener() {
+		tglBtnLoad = new JToggleButton("Load");
+		tglBtnLoad.setToolTipText("Load");
+		tglBtnLoad.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				controller.loadPainting();
+				controller.load();
 			}
 		});
 		
-		JButton btnSave = new JButton("Save");
-		btnSave.setToolTipText("Save");
-		btnSave.setMargin(new Insets(0, 0, 0, 0));
-		btnSave.addActionListener(new ActionListener() {
+		tglBtnSave = new JToggleButton("Save");
+		tglBtnSave.setToolTipText("Save");
+		tglBtnSave.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.savePainting();
+				controller.save();
 			}
 		});
 		
-		JButton btnNew = new JButton("New");
-		btnNew.setToolTipText("New");
-		btnNew.setMargin(new Insets(0, 0, 0, 0));
-		btnNew.addActionListener(new ActionListener() {
+		tglBtnNew = new JToggleButton("New");
+		tglBtnNew.setToolTipText("New");
+		tglBtnNew.setMargin(new Insets(0, 0, 0, 0));
+		tglBtnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.newPainting();
 			}
 		});
-		panel_1.add(btnNew);
-		panel_1.add(btnSave);
-		panel_1.add(btnLoad);
+		panel_1.add(tglBtnNew);
+		panel_1.add(tglBtnSave);
+		panel_1.add(tglBtnLoad);
 		panel_1.add(tglBtnUndo);
 		
 		tglBtnRedo = new JToggleButton("Redo");
@@ -354,6 +356,18 @@ public class DrawingFrame extends JFrame {
 	
 	public DrawingController getController() {
 		return controller;
+	}
+
+	public JToggleButton getTglBtnNew() {
+		return tglBtnNew;
+	}
+
+	public JToggleButton getTglBtnSave() {
+		return tglBtnSave;
+	}
+
+	public JToggleButton getTglBtnLoad() {
+		return tglBtnLoad;
 	}
 
 	public JToggleButton getTglBtnPoint() {

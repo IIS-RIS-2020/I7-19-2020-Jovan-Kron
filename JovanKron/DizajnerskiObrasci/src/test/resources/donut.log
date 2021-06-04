@@ -1,0 +1,12 @@
+Executed CmdAdd_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Executed CmdSelect_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Executed CmdUpdate_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Donut:Center(250,250),innerradius=50,radius=75,Edge-color=[204-0-153],Surface-color=[51-255-0],selected=true
+Executed CmdRemove_Donut:Center(250,250),innerradius=50,radius=75,Edge-color=[204-0-153],Surface-color=[51-255-0],selected=true
+Unexecuted CmdRemove_Donut:Center(250,250),innerradius=50,radius=75,Edge-color=[204-0-153],Surface-color=[51-255-0],selected=true
+Unexecuted CmdUpdate_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Donut:Center(250,250),innerradius=50,radius=75,Edge-color=[204-0-153],Surface-color=[51-255-0],selected=true
+Unexecuted CmdSelect_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Unexecuted CmdAdd_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Re-executed CmdAdd_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Re-executed CmdSelect_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Re-executed CmdUpdate_Donut:Center(947,210),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Donut:Center(250,250),innerradius=50,radius=75,Edge-color=[204-0-153],Surface-color=[51-255-0],selected=true
+Re-executed CmdRemove_Donut:Center(250,250),innerradius=50,radius=75,Edge-color=[204-0-153],Surface-color=[51-255-0],selected=true
