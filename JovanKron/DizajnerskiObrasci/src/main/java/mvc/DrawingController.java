@@ -2,6 +2,7 @@ package mvc;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Stack;
 
 import javax.swing.JColorChooser;
@@ -323,6 +324,8 @@ public class DrawingController {
 	
 	public void save() {
 		JFileChooser fileChooser = new JFileChooser();
+		File workingDirectory = new File(System.getProperty("user.dir") + "/src/test/resources");
+		fileChooser.setCurrentDirectory(workingDirectory);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
 		fileChooser.setFileFilter(new FileNameExtensionFilter("log file (.log)", "log"));
@@ -342,8 +345,8 @@ public class DrawingController {
 	
 	public void load() {
 		JFileChooser fileChooser = new JFileChooser();
-		//File workingDirectory = new File(System.getProperty("user.dir"));
-		//fileChooser.setCurrentDirectory(workingDirectory);
+		File workingDirectory = new File(System.getProperty("user.dir") + "/src/test/resources");
+		fileChooser.setCurrentDirectory(workingDirectory);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
 		fileChooser.setFileFilter(new FileNameExtensionFilter("log file (.log)", "log"));

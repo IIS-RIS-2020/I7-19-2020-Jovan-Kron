@@ -1,16 +1,21 @@
 package strategy;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.Color;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import geometry.Circle;
+import geometry.Donut;
+import geometry.HexagonAdapter;
+import geometry.Line;
+import geometry.Point;
+import geometry.Rectangle;
 import mvc.DrawingController;
 import mvc.DrawingFrame;
 import mvc.DrawingModel;
@@ -41,55 +46,203 @@ public class LogFileTests {
 	
 	@Test
 	public void testLoadFileThatHasNoExtension() {
-		file = new File("src/test/resources/has-no-extension");
+		file = new File("src/test/resources/files/has-no-extension");
 		logFile.loadFile(file);
 	}
 	
 	@Test
 	public void testLoadFileThatHasWrongExtension() {
-		file = new File("src/test/resources/has-wrong-extension.json");
+		file = new File("src/test/resources/files/has-wrong-extension.json");
 		logFile.loadFile(file);
 	}
 	
 	@Test
-	public void testLoadFileWithPointOperations() {
-		file = new File("src/test/resources/point.log");
+	public void testLoadFileWithAddPointOperation() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-point.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Point);
+		assertEquals(801, ((Point) model.get(0)).getX());
+		assertEquals(205, ((Point) model.get(0)).getY());
+		assertEquals(Color.BLACK, ((Point) model.get(0)).getEdgeColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileWithAllPointOperationsWithoutPositioning() {
+		file = new File("src/test/resources/files/logFiles/allShapeCommandsButPositioning/point.log");
 		logFile.loadFile(file);
 		assertEquals(0, model.getShapes().size());
 	}
 	
 	@Test
-	public void testLoadFileWithLineOperations() {
-		file = new File("src/test/resources/line.log");
+	public void testLoadFileWithAddLineOperation() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-line.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Line);
+		assertEquals(592, ((Line) model.get(0)).getStartPoint().getX());
+		assertEquals(409, ((Line) model.get(0)).getStartPoint().getY());
+		assertEquals(898, ((Line) model.get(0)).getEndPoint().getX());
+		assertEquals(196, ((Line) model.get(0)).getEndPoint().getY());
+		assertEquals(Color.BLACK, ((Line) model.get(0)).getEdgeColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileWithAllLineOperationsWithoutPositioning() {
+		file = new File("src/test/resources/files/logFiles/allShapeCommandsButPositioning/line.log");
 		logFile.loadFile(file);
 		assertEquals(0, model.getShapes().size());
 	}
 	
 	@Test
-	public void testLoadFileWithCircleOperations() {
-		file = new File("src/test/resources/circle.log");
+	public void testLoadFileWithAddCircleOperation() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-circle.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Circle);
+		assertEquals(871, ((Circle) model.get(0)).getCenter().getX());
+		assertEquals(271, ((Circle) model.get(0)).getCenter().getY());
+		assertEquals(Color.BLACK, ((Circle) model.get(0)).getEdgeColor());
+		assertEquals(Color.YELLOW, ((Circle) model.get(0)).getFillColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileWithAllCircleOperationsWithoutPositioning() {
+		file = new File("src/test/resources/files/logFiles/allShapeCommandsButPositioning/circle.log");
 		logFile.loadFile(file);
 		assertEquals(0, model.getShapes().size());
 	}
 	
 	@Test
-	public void testLoadFileWithRectangleOperations() {
-		file = new File("src/test/resources/rectangle.log");
+	public void testLoadFileWithAddRectangleOperation() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-rectangle.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Rectangle);
+		assertEquals(681, ((Rectangle) model.get(0)).getUpperLeftPoint().getX());
+		assertEquals(177, ((Rectangle) model.get(0)).getUpperLeftPoint().getY());
+		assertEquals(Color.BLACK, ((Rectangle) model.get(0)).getEdgeColor());
+		assertEquals(Color.YELLOW, ((Rectangle) model.get(0)).getFillColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileWithAllRectangleOperationsWithoutPositioning() {
+		file = new File("src/test/resources/files/logFiles/allShapeCommandsButPositioning/rectangle.log");
 		logFile.loadFile(file);
 		assertEquals(0, model.getShapes().size());
 	}
 	
 	@Test
-	public void testLoadFileWithDonutOperations() {
-		file = new File("src/test/resources/donut.log");
+	public void testLoadFileWithAddDonutOperation() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-donut.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Donut);
+		assertEquals(752, ((Donut) model.get(0)).getCenter().getX());
+		assertEquals(306, ((Donut) model.get(0)).getCenter().getY());
+		assertEquals(Color.BLACK, ((Donut) model.get(0)).getEdgeColor());
+		assertEquals(Color.YELLOW, ((Donut) model.get(0)).getFillColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileWithAllDonutOperationsWithoutPositioning() {
+		file = new File("src/test/resources/files/logFiles/allShapeCommandsButPositioning/donut.log");
 		logFile.loadFile(file);
 		assertEquals(0, model.getShapes().size());
 	}
 	
 	@Test
-	public void testLoadFileWithHexagonAdapterOperations() {
-		file = new File("src/test/resources/hexagon.log");
+	public void testLoadFileWithAddHexagonAdapterOperation() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-hexagon.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof HexagonAdapter);
+		assertEquals(800, ((HexagonAdapter) model.get(0)).getX());
+		assertEquals(339, ((HexagonAdapter) model.get(0)).getY());
+		assertEquals(Color.BLACK, ((HexagonAdapter) model.get(0)).getEdgeColor());
+		assertEquals(Color.YELLOW, ((HexagonAdapter) model.get(0)).getFillColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileWithAllHexagonAdapterOperationsWithoutPositioning() {
+		file = new File("src/test/resources/files/logFiles/allShapeCommandsButPositioning/hexagon.log");
 		logFile.loadFile(file);
 		assertEquals(0, model.getShapes().size());
+	}
+	
+	@Test
+	public void testLoadFileRemoveTwoShapesUndoRedoAll() {
+		file = new File("src/test/resources/files/logFiles/undoRedoRemove/remove-two-shapes-undo-redo-all.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Line);
+		assertEquals(502, ((Line) model.get(0)).getStartPoint().getX());
+		assertEquals(432, ((Line) model.get(0)).getStartPoint().getY());
+		assertEquals(798, ((Line) model.get(0)).getEndPoint().getX());
+		assertEquals(184, ((Line) model.get(0)).getEndPoint().getY());
+		assertEquals(Color.BLACK, ((Line) model.get(0)).getEdgeColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileRemoveTwoShapesUndoRedoRemove() {
+		file = new File("src/test/resources/files/logFiles/undoRedoRemove/remove-two-shapes-undo-redo-remove.log");
+		logFile.loadFile(file);
+		assertEquals(1, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Line);
+		assertEquals(517, ((Line) model.get(0)).getStartPoint().getX());
+		assertEquals(462, ((Line) model.get(0)).getStartPoint().getY());
+		assertEquals(725, ((Line) model.get(0)).getEndPoint().getX());
+		assertEquals(248, ((Line) model.get(0)).getEndPoint().getY());
+		assertEquals(Color.BLACK, ((Line) model.get(0)).getEdgeColor());
+		assertFalse(model.get(0).isSelected());
+	}
+	
+	@Test
+	public void testLoadFileRemoveTwoShapesUndoRemove() {
+		file = new File("src/test/resources/files/logFiles/undoRedoRemove/remove-two-shapes-undo.log");
+		logFile.loadFile(file);
+		assertEquals(3, model.getShapes().size());
+	}
+	
+	@Test
+	public void testLoadFileRedoRemoveFollowedByAdd() {
+		file = new File("src/test/resources/files/logFiles/undoRedoRemove/redo-remove-followed-by-add.log");
+		logFile.loadFile(file);
+		assertEquals(2, model.getShapes().size());
+	}
+	
+	@Test
+	public void testLoadFileToFront() {
+		file = new File("src/test/resources/files/logFiles/positioning/to-front.log");
+		logFile.loadFile(file);
+		assertTrue(model.get(1) instanceof Donut);
+	}
+	
+	@Test
+	public void testLoadFileBringToFront() {
+		file = new File("src/test/resources/files/logFiles/positioning/bring-to-front.log");
+		logFile.loadFile(file);
+		assertTrue(model.get(2) instanceof Donut);
+	}
+	
+	@Test
+	public void testLoadFileToBack() {
+		file = new File("src/test/resources/files/logFiles/positioning/to-back.log");
+		logFile.loadFile(file);
+		assertTrue(model.get(1) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testLoadFileBringToBack() {
+		file = new File("src/test/resources/files/logFiles/positioning/bring-to-back.log");
+		logFile.loadFile(file);
+		assertTrue(model.get(0) instanceof HexagonAdapter);
 	}
 }

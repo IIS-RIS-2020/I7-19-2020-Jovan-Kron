@@ -89,6 +89,7 @@ public class DrawingFrame extends JFrame {
 				controller.load();
 			}
 		});
+		group.add(tglBtnLoad);
 		
 		tglBtnSave = new JToggleButton("Save");
 		tglBtnSave.setToolTipText("Save");
@@ -98,6 +99,7 @@ public class DrawingFrame extends JFrame {
 				controller.save();
 			}
 		});
+		group.add(tglBtnSave);
 		
 		tglBtnNew = new JToggleButton("New");
 		tglBtnNew.setToolTipText("New");
@@ -107,6 +109,8 @@ public class DrawingFrame extends JFrame {
 				controller.newPainting();
 			}
 		});
+		group.add(tglBtnNew);
+		
 		panel_1.add(tglBtnNew);
 		panel_1.add(tglBtnSave);
 		panel_1.add(tglBtnLoad);

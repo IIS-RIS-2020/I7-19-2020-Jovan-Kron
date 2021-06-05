@@ -1,0 +1,7 @@
+Executed CmdAdd_Donut:Center(811,265),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Executed CmdAdd_Circle:Center(826,279),radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Executed CmdAdd_Hexagon:(X=842,Y=296),r=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Executed CmdSelect_Donut:Center(811,265),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Executed CmdToFront_Donut:Center(811,265),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Unexecuted CmdToFront_Donut:Center(811,265),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Re-executed CmdToFront_Donut:Center(811,265),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
