@@ -39,6 +39,20 @@ public class LogFileTests {
 	}
 	
 	@Test
+	public void testSaveFileThatDoesExist() {
+		file = new File("src/test/resources/files/logFiles/addShape/add-point");
+		logFile.saveFile(file);
+	}
+	
+	@Test
+	public void testSaveFileThatDoesntExist() {
+		file = new File("src/test/resources/files/logFiles/addShape/test");
+		logFile.saveFile(file);
+		file = new File("src/test/resources/files/logFiles/addShape/test.log");
+		file.delete();
+	}
+	
+	@Test
 	public void testLoadFileThatDoesntExist() {
 		file = new File("src/test/resources/doesntexist");
 		logFile.loadFile(file);
