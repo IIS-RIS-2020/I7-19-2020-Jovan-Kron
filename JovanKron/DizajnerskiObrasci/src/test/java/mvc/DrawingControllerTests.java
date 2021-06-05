@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JFrame;
 
@@ -45,6 +46,80 @@ public class DrawingControllerTests {
         frame.setVisible(true);
         frame.setResizable(false);
 	}
+	
+	@Test
+	public void testNewPainting() {
+		drawCircle();
+		pressSpace(2);
+		assertEquals(0, model.getShapes().size());
+	}
+	
+	@Test
+	public void testSaveSerializableFile() {
+		drawCircle();
+		pressTab(1);
+		pressSpace(1);
+		robot.keyPress(KeyEvent.VK_A);
+		robot.keyRelease(KeyEvent.VK_A);
+		pressTab(1);
+		pressSpace(1);
+		robot.keyPress(KeyEvent.VK_UP);
+		robot.keyRelease(KeyEvent.VK_UP);
+		pressSpace(1);
+		pressEnter(2);
+		robot.delay(500);
+		assertTrue(new File("src/main/resources/a.ser").delete());
+	}
+	
+	@Test
+	public void tesLoadSerializableFile() {
+		pressTab(2);
+		pressSpace(1);
+		pressTab(1);
+		pressSpace(1);
+		robot.keyPress(KeyEvent.VK_UP);
+		robot.keyRelease(KeyEvent.VK_UP);
+		pressSpace(1);
+		pressTab(9);
+		pressSpace(1);
+		pressEnter(2);
+		robot.delay(500);
+		assertEquals(6, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Point);
+		assertTrue(model.get(1) instanceof Line);
+		assertTrue(model.get(2) instanceof Donut);
+		assertTrue(model.get(3) instanceof Circle);
+		assertTrue(model.get(4) instanceof Rectangle);
+		assertTrue(model.get(5) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testSaveLogFile() {
+		drawCircle();
+		pressTab(1);
+		pressSpace(1);
+		robot.keyPress(KeyEvent.VK_A);
+		robot.keyRelease(KeyEvent.VK_A);
+		pressEnter(2);
+		robot.delay(500);
+		assertTrue(new File("src/main/resources/a.log").delete());
+	}
+	
+	@Test
+	public void tesLoadLogFile() {
+		pressTab(2);
+		pressSpace(1);
+		pressTab(10);
+		pressSpace(1);
+		pressEnter(1);
+		pressSpace(6);
+		assertEquals(3, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Line);
+		assertTrue(model.get(1) instanceof HexagonAdapter);
+		assertTrue(model.get(2) instanceof Circle);
+
+	}
+	
 	
 	@Test
 	public void testDrawPoint() {
@@ -283,6 +358,7 @@ public class DrawingControllerTests {
 		pressTab(1);
 		pressSpace(1);
 	    pressEnter(2);
+	    robot.delay(500);
 		assertEquals(1, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
 		assertEquals(40, ((Rectangle) model.getShapes().get(0)).getUpperLeftPoint().getX());

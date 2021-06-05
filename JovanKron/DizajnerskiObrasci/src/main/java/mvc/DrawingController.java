@@ -324,7 +324,7 @@ public class DrawingController {
 	
 	public void save() {
 		JFileChooser fileChooser = new JFileChooser();
-		File workingDirectory = new File(System.getProperty("user.dir") + "/src/test/resources");
+		File workingDirectory = new File(System.getProperty("user.dir") + "/src/main/resources");
 		fileChooser.setCurrentDirectory(workingDirectory);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
@@ -345,7 +345,7 @@ public class DrawingController {
 	
 	public void load() {
 		JFileChooser fileChooser = new JFileChooser();
-		File workingDirectory = new File(System.getProperty("user.dir") + "/src/test/resources");
+		File workingDirectory = new File(System.getProperty("user.dir") + "/src/main/resources");
 		fileChooser.setCurrentDirectory(workingDirectory);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
 		fileChooser.setFileFilter(new FileNameExtensionFilter("serialized file (.ser)", "ser"));
