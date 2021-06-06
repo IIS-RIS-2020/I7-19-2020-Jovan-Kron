@@ -185,4 +185,41 @@ public class DonutTests {
 		Point p = new Point();
 		assertNotEquals(d1.hashCode(), d2.clone(p).hashCode());
 	}
+	
+	@Test
+	public void testToStringWhenSelected() {
+		donut.setSelected(true);
+		assertEquals("Donut:Center(5,5),innerradius=10,radius=20,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=true", donut.toString());
+	}
+	
+	@Test
+	public void testToStringWhenNotSelected() {
+		assertEquals("Donut:Center(5,5),innerradius=10,radius=20,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=false", donut.toString());
+	}
+	
+	@Test
+	public void testParseWhenSelected() {
+		String str = "Donut:Center(752,306),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true";
+		Donut d = new Donut().parse(str);
+		assertEquals(752, d.getCenter().getX());
+		assertEquals(306, d.getCenter().getY());
+		assertEquals(50, d.getRadius());
+		assertEquals(25, d.getInnerRadius());
+		assertEquals(Color.BLACK, d.getEdgeColor());
+		assertEquals(Color.YELLOW, d.getFillColor());
+		assertTrue(d.isSelected());
+	}
+	
+	@Test
+	public void testParseWhenNotSelected() {
+		String str = "Donut:Center(752,306),innerradius=25,radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false";
+		Donut d = new Donut().parse(str);
+		assertEquals(752, d.getCenter().getX());
+		assertEquals(306, d.getCenter().getY());
+		assertEquals(50, d.getRadius());
+		assertEquals(25, d.getInnerRadius());
+		assertEquals(Color.BLACK, d.getEdgeColor());
+		assertEquals(Color.YELLOW, d.getFillColor());
+		assertFalse(d.isSelected());
+	}
 }

@@ -158,4 +158,39 @@ public class LineTests {
 		Point p = new Point();
 		assertNotEquals(l1.hashCode(), l2.clone(p).hashCode());
 	}
+	
+	@Test
+	public void testToStringWhenSelected() {
+		line.setSelected(true);
+		assertEquals("Line:(1,1)-->(5,5),Edge-color=[255-0-0],selected=true", line.toString());
+	}
+	
+	@Test
+	public void testToStringWhenNotSelected() {
+		assertEquals("Line:(1,1)-->(5,5),Edge-color=[255-0-0],selected=false", line.toString());
+	}
+	
+	@Test
+	public void testParseWhenSelected() {
+		String str = "Line:(592,409)-->(898,196),Edge-color=[0-0-0],selected=true";
+		Line l = new Line().parse(str);
+		assertEquals(592, l.getStartPoint().getX());
+		assertEquals(409, l.getStartPoint().getY());
+		assertEquals(898, l.getEndPoint().getX());
+		assertEquals(196, l.getEndPoint().getY());
+		assertEquals(Color.BLACK, l.getEdgeColor());
+		assertTrue(l.isSelected());
+	}
+	
+	@Test
+	public void testParseWhenNotSelected() {
+		String str = "Line:(592,409)-->(898,196),Edge-color=[0-0-0],selected=false";
+		Line l = new Line().parse(str);
+		assertEquals(592, l.getStartPoint().getX());
+		assertEquals(409, l.getStartPoint().getY());
+		assertEquals(898, l.getEndPoint().getX());
+		assertEquals(196, l.getEndPoint().getY());
+		assertEquals(Color.BLACK, l.getEdgeColor());
+		assertFalse(l.isSelected());
+	}
 }

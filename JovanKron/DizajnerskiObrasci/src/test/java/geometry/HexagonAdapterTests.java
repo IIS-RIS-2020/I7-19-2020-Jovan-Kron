@@ -159,4 +159,39 @@ public class HexagonAdapterTests {
 		assertNotEquals(h1.hashCode(), h2.clone(p).hashCode());
 	}
 	
+	@Test
+	public void testToStringWhenSelected() {
+		hexagonAdapter.setSelected(true);
+		assertEquals("Hexagon:(X=5,Y=5),r=25,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=true", hexagonAdapter.toString());
+	}
+	
+	@Test
+	public void testToStringWhenNotSelected() {
+		assertEquals("Hexagon:(X=5,Y=5),r=25,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=false", hexagonAdapter.toString());
+	}
+	
+	@Test
+	public void testParseWhenSelected() {
+		String str = "Hexagon:(X=800,Y=339),r=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true";
+		HexagonAdapter h = new HexagonAdapter().parse(str);
+		assertEquals(800, h.getX());
+		assertEquals(339, h.getY());
+		assertEquals(55, h.getR());
+		assertEquals(Color.BLACK, h.getEdgeColor());
+		assertEquals(Color.YELLOW, h.getFillColor());
+		assertTrue(h.isSelected());
+	}
+	
+	@Test
+	public void testParseWhenNotSelected() {
+		String str = "Hexagon:(X=800,Y=339),r=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false";
+		HexagonAdapter h = new HexagonAdapter().parse(str);
+		assertEquals(800, h.getX());
+		assertEquals(339, h.getY());
+		assertEquals(55, h.getR());
+		assertEquals(Color.BLACK, h.getEdgeColor());
+		assertEquals(Color.YELLOW, h.getFillColor());
+		assertFalse(h.isSelected());
+	}
+	
 }

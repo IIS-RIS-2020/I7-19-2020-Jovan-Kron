@@ -161,4 +161,39 @@ public class CircleTests {
 		Point p = new Point();
 		assertNotEquals(c1.hashCode(), c2.clone(p).hashCode());
 	}
+	
+	@Test
+	public void testToStringWhenSelected() {
+		circle.setSelected(true);
+		assertEquals("Circle:Center(5,5),radius=25,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=true", circle.toString());
+	}
+	
+	@Test
+	public void testToStringWhenNotSelected() {
+		assertEquals("Circle:Center(5,5),radius=25,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=false", circle.toString());
+	}
+	
+	@Test
+	public void testParseWhenSelected() {
+		String str = "Circle:Center(871,271),radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true";
+		Circle c = new Circle().parse(str);
+		assertEquals(871, c.getCenter().getX());
+		assertEquals(271, c.getCenter().getY());
+		assertEquals(50, c.getRadius());
+		assertEquals(Color.BLACK, c.getEdgeColor());
+		assertEquals(Color.YELLOW, c.getFillColor());
+		assertTrue(c.isSelected());
+	}
+	
+	@Test
+	public void testParseWhenNotSelected() {
+		String str = "Circle:Center(871,271),radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false";
+		Circle c = new Circle().parse(str);
+		assertEquals(871, c.getCenter().getX());
+		assertEquals(271, c.getCenter().getY());
+		assertEquals(50, c.getRadius());
+		assertEquals(Color.BLACK, c.getEdgeColor());
+		assertEquals(Color.YELLOW, c.getFillColor());
+		assertFalse(c.isSelected());
+	}
 }

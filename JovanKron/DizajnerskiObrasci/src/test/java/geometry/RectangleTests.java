@@ -183,4 +183,41 @@ public class RectangleTests {
 		Point p = new Point();
 		assertNotEquals(r1.hashCode(), r2.clone(p).hashCode());
 	}
+	
+	@Test
+	public void testToStringWhenSelected() {
+		rectangle.setSelected(true);
+		assertEquals("Rectangle:Upper-left(5,5),Width=20,Height=10,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=true", rectangle.toString());
+	}
+	
+	@Test
+	public void testToStringWhenNotSelected() {
+		assertEquals("Rectangle:Upper-left(5,5),Width=20,Height=10,Edge-color=[255-0-0],Surface-color=[255-255-0],selected=false", rectangle.toString());
+	}
+	
+	@Test
+	public void testParseWhenSelected() {
+		String str = "Rectangle:Upper-left(681,177),Width=250,Height=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true";
+		Rectangle r = new Rectangle().parse(str);
+		assertEquals(681, r.getUpperLeftPoint().getX());
+		assertEquals(177, r.getUpperLeftPoint().getY());
+		assertEquals(250, r.getWidth());
+		assertEquals(50, r.getHeight());
+		assertEquals(Color.BLACK, r.getEdgeColor());
+		assertEquals(Color.YELLOW, r.getFillColor());
+		assertTrue(r.isSelected());
+	}
+	
+	@Test
+	public void testParseWhenNotSelected() {
+		String str = "Rectangle:Upper-left(681,177),Width=250,Height=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false";
+		Rectangle r = new Rectangle().parse(str);
+		assertEquals(681, r.getUpperLeftPoint().getX());
+		assertEquals(177, r.getUpperLeftPoint().getY());
+		assertEquals(250, r.getWidth());
+		assertEquals(50, r.getHeight());
+		assertEquals(Color.BLACK, r.getEdgeColor());
+		assertEquals(Color.YELLOW, r.getFillColor());
+		assertFalse(r.isSelected());
+	}
 }

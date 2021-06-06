@@ -148,4 +148,35 @@ public class PointTests {
 		Line l = new Line();
 		assertNotEquals(p1.hashCode(), p2.clone(l).hashCode());
 	}
+	
+	@Test
+	public void testToStringWhenSelected() {
+		point.setSelected(true);
+		assertEquals("Point:(3,7),Edge-color=[255-0-0],selected=true", point.toString());
+	}
+	
+	@Test
+	public void testToStringWhenNotSelected() {
+		assertEquals("Point:(3,7),Edge-color=[255-0-0],selected=false", point.toString());
+	}
+	
+	@Test
+	public void testParseWhenSelected() {
+		String str = "Point:(801,205),Edge-color=[0-0-0],selected=true";
+		Point p = new Point().parse(str);
+		assertEquals(801, p.getX());
+		assertEquals(205, p.getY());
+		assertEquals(Color.BLACK, p.getEdgeColor());
+		assertTrue(p.isSelected());
+	}
+	
+	@Test
+	public void testParseWhenNotSelected() {
+		String str = "Point:(801,205),Edge-color=[0-0-0],selected=false";
+		Point p = new Point().parse(str);
+		assertEquals(801, p.getX());
+		assertEquals(205, p.getY());
+		assertEquals(Color.BLACK, p.getEdgeColor());
+		assertFalse(p.isSelected());
+	}
 }
