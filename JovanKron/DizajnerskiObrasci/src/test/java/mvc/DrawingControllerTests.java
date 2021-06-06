@@ -59,15 +59,21 @@ public class DrawingControllerTests {
 		drawCircle();
 		pressTab(1);
 		pressSpace(1);
+		robot.delay(1000);
 		robot.keyPress(KeyEvent.VK_A);
+		robot.delay(1000);
 		robot.keyRelease(KeyEvent.VK_A);
 		pressTab(1);
 		pressSpace(1);
+		robot.delay(1000);
 		robot.keyPress(KeyEvent.VK_UP);
+		robot.delay(1000);
 		robot.keyRelease(KeyEvent.VK_UP);
+		robot.delay(1000);
 		pressSpace(1);
+		robot.delay(1000);
 		pressEnter(2);
-		robot.delay(500);
+		robot.delay(2000);
 		assertTrue(new File("src/main/resources/a.ser").delete());
 	}
 	
@@ -83,7 +89,7 @@ public class DrawingControllerTests {
 		pressTab(9);
 		pressSpace(1);
 		pressEnter(2);
-		robot.delay(500);
+		robot.delay(2000);
 		assertEquals(6, model.getShapes().size());
 		assertTrue(model.get(0) instanceof Point);
 		assertTrue(model.get(1) instanceof Line);
@@ -338,8 +344,10 @@ public class DrawingControllerTests {
 	@Test
 	public void testModifyRectangle() {
 		drawRectangle();
+		robot.delay(500);
 		frame.getTglBtnSelect().doClick();		
-		click(410, 410);						
+		click(410, 410);
+		robot.delay(500);
 		pressTab(5);
 		pressSpace(1);
 	    pressBackspace(1);
@@ -732,7 +740,7 @@ public class DrawingControllerTests {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_TAB);
 		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(100);
+		    robot.delay(150);
 		}
 	}
 	
@@ -756,7 +764,7 @@ public class DrawingControllerTests {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_ENTER);
 		    robot.keyRelease(KeyEvent.VK_ENTER);
-		    robot.delay(200);
+		    robot.delay(300);
 		}
 	}
 }

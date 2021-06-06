@@ -1,5 +1,6 @@
 package mvc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -17,14 +18,7 @@ public class DrawingFrameTests {
 		frame = new DrawingFrame();
 		frame.setController(controller);
 	}
-	
-	@Test
-	public void testDelete() {
-		frame.getTglBtnDelete().setEnabled(true);
-		frame.getTglBtnDelete().doClick();
-		verify(controller).deleteShapes();
-	}
-	
+
 	@Test
 	public void testModify() {
 		frame.getTglBtnModify().setEnabled(true);
@@ -87,20 +81,78 @@ public class DrawingFrameTests {
 	}
 	
 	@Test
-	public void testNew() throws Exception {
+	public void testNew() {
 		frame.getTglBtnNew().doClick();
 		verify(controller).newPainting();
 	}
 	
 	@Test
-	public void testSave() throws Exception {
+	public void testSave() {
 		frame.getTglBtnSave().doClick();
 		verify(controller).save();
 	}
 	
 	@Test
-	public void testLoad() throws Exception {
+	public void testLoad() {
 		frame.getTglBtnLoad().doClick();
 		verify(controller).load();
 	}
+	
+	@Test
+	public void testSelectTglBtnClicked() {
+		frame.getTglBtnSelect().doClick();
+		verify(controller).unselectAll();
+		assertEquals(frame.getTglBtnSelect(), frame.getClickedButton());
+	}
+	
+	@Test
+	public void testPointTglBtnClicked() {
+		frame.getTglBtnPoint().doClick();
+		verify(controller).unselectAll();
+		assertEquals(frame.getTglBtnPoint(), frame.getClickedButton());
+	}
+	
+	@Test
+	public void testLineTglBtnClicked() {
+		frame.getTglBtnLine().doClick();
+		verify(controller).unselectAll();
+		verify(controller).setFlagForLine(true);
+		assertEquals(frame.getTglBtnLine(), frame.getClickedButton());
+	}
+	
+	@Test
+	public void testCircleTglBtnClicked() {
+		frame.getTglBtnCircle().doClick();
+		verify(controller).unselectAll();
+		assertEquals(frame.getTglBtnCircle(), frame.getClickedButton());
+	}
+	
+	@Test
+	public void testRectangleTglBtnClicked() {
+		frame.getTglBtnRectangle().doClick();
+		verify(controller).unselectAll();
+		assertEquals(frame.getTglBtnRectangle(), frame.getClickedButton());
+	}
+	
+	@Test
+	public void testDonutTglBtnClicked() {
+		frame.getTglBtnDonut().doClick();
+		verify(controller).unselectAll();
+		assertEquals(frame.getTglBtnDonut(), frame.getClickedButton());
+	}
+	
+	@Test
+	public void testHexagonTglBtnClicked() {
+		frame.getTglBtnHexagon().doClick();
+		verify(controller).unselectAll();
+		assertEquals(frame.getTglBtnHexagon(), frame.getClickedButton());
+	}
+	
+	/*
+	@Test
+	public void testDelete() {
+		frame.getTglBtnDelete().setEnabled(true);
+		frame.getTglBtnDelete().doClick();
+		verify(controller).deleteShapes();
+	}*/
 }

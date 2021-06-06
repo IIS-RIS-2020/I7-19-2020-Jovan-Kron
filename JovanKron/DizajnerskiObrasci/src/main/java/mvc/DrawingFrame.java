@@ -362,6 +362,10 @@ public class DrawingFrame extends JFrame {
 		return controller;
 	}
 
+	public JToggleButton getClickedButton() {
+		return clickedButton;
+	}
+
 	public JToggleButton getTglBtnNew() {
 		return tglBtnNew;
 	}
