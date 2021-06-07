@@ -1,40 +1,13 @@
 package dialogs;
 
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
-
-import javax.swing.JTextField;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JSeparator;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class DlgLine extends DlgShape {
-
 	private static final long serialVersionUID = 1L;
-	private JTextField txtEndX;
-	private JTextField txtEndY;
+	private JTextField txtEndX, txtEndY;
 	private int endX, endY;
-
-	public static void main(String[] args) {
-		try {
-			DlgLine dialog = new DlgLine();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public DlgLine() {
 		setTitle("Line dialog");
@@ -43,7 +16,6 @@ public class DlgLine extends DlgShape {
 		getBtnEdgeColor().setMinimumSize(new Dimension(33, 25));
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-		
 		
 		GridBagLayout gridBagLayout = (GridBagLayout) getContentPanel().getLayout();
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -79,8 +51,6 @@ public class DlgLine extends DlgShape {
 		gbc_separator.gridx = 0;
 		gbc_separator.gridy = 2;
 		getContentPanel().add(separator, gbc_separator);
-		
-		
 		
 		JLabel lblEndPoint = new JLabel("End point");
 		GridBagConstraints gbc_lblEndPoint = new GridBagConstraints();
@@ -148,14 +118,14 @@ public class DlgLine extends DlgShape {
 	}
 
 	@Override
-	public void defineSaveOperation() {
+	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					setBaseCoordinates();
+					readBaseCoordinates();
 					endX = Integer.parseInt(txtEndX.getText());
 					endY = Integer.parseInt(txtEndY.getText());
-					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || endX<0 || endY<0)
+					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || endX < 0 || endY < 0)
 						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0");
 					else {
 						setConfirmed(true);
@@ -169,8 +139,7 @@ public class DlgLine extends DlgShape {
 		});
 	}
 	
-	public void fillForAdd(int startX, int startY, int endX, int endY, Color edgeColor)
-	{
+	public void fillForAdd(int startX, int startY, int endX, int endY, Color edgeColor) {
 		fillForAdd(startX, startY, edgeColor);
 		txtEndX.setText(Integer.toString(endX));
 		txtEndY.setText(Integer.toString(endY));
@@ -178,8 +147,7 @@ public class DlgLine extends DlgShape {
 		txtEndY.setEditable(false);
 	}
 	
-	public void fillForModify(int startX, int startY, int endX, int endY, Color edgeColor)
-	{
+	public void fillForModify(int startX, int startY, int endX, int endY, Color edgeColor) {
 		fillForModify(startX, startY, edgeColor);
 		txtEndX.setText(Integer.toString(endX));
 		txtEndY.setText(Integer.toString(endY));
@@ -189,16 +157,8 @@ public class DlgLine extends DlgShape {
 		return endX;
 	}
 
-	public void setEndX(int endX) {
-		this.endX = endX;
-	}
-
 	public int getEndY() {
 		return endY;
-	}
-
-	public void setEndY(int endY) {
-		this.endY = endY;
 	}
 
 	public JTextField getTxtEndX() {

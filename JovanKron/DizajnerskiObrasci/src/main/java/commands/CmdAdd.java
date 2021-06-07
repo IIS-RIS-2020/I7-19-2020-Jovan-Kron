@@ -4,7 +4,6 @@ import mvc.DrawingModel;
 import geometry.Shape;
 
 public class CmdAdd implements Command {
-	
 	private Shape shape;
 	private DrawingModel model;
 
@@ -22,4 +21,5 @@ public class CmdAdd implements Command {
 	public void unexecute() {
 		model.remove(shape);	
 	}
+	
 }

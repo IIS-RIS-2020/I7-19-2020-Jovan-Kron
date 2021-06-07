@@ -1,42 +1,15 @@
 package dialogs;
 
-import javax.swing.JDialog;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Toolkit;
-
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class DlgRectangle extends DlgSurfaceShape {
-	
 	private static final long serialVersionUID = 1L;
-	private int width;
-	private int height;
-	private JTextField txtWidth;
-	private JTextField txtHeight;
-	
-	public static void main(String[] args) {
-		try {
-			DlgRectangle dialog = new DlgRectangle();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private int width, height;
+	private JTextField txtWidth, txtHeight;
 
 	public DlgRectangle() {
-		
 		setTitle("Rectangle dialog");
 		defineSaveOperation();
 		setBounds(100, 100, 198, 310);
@@ -61,7 +34,6 @@ public class DlgRectangle extends DlgSurfaceShape {
 		gbc_separator.gridx = 0;
 		gbc_separator.gridy = 2;
 		getContentPanel().add(separator, gbc_separator);
-		
 		
 		JLabel lblHeight = new JLabel("Height:");
 		GridBagConstraints gbc_lblHeight = new GridBagConstraints();
@@ -140,14 +112,14 @@ public class DlgRectangle extends DlgSurfaceShape {
 	}
 
 	@Override
-	public void defineSaveOperation() {
+	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					setBaseCoordinates();
+					readBaseCoordinates();
 					width = Integer.parseInt(txtWidth.getText());
 					height = Integer.parseInt(txtHeight.getText());
-					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || width<1 || height<1)
+					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || width < 1 || height < 1)
 						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for width/height!");
 					else {
 						setConfirmed(true);
@@ -167,18 +139,10 @@ public class DlgRectangle extends DlgSurfaceShape {
 		txtHeight.setText(Integer.toString(height));
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	
 	public int getRectangleWidth() {
 		return width;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	
 	public int getRectangleHeight() {
 		return height;
 	}

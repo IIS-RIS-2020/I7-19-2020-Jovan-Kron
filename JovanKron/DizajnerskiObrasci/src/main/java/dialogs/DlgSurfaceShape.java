@@ -1,18 +1,10 @@
 package dialogs;
-import javax.swing.JLabel;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-import java.awt.GridBagLayout;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public abstract class DlgSurfaceShape extends DlgShape {
-	
 	private static final long serialVersionUID = 1L;
 	private Color fillColor;
 	private JButton btnFillColor;
@@ -22,9 +14,8 @@ public abstract class DlgSurfaceShape extends DlgShape {
 		GridBagLayout gridBagLayout = (GridBagLayout) getContentPanel().getLayout();
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 30};
-		
 		setBounds(100, 100, 198, 300);
-				
+	
 		lblFillColor = new JLabel("Fill color:");
 		GridBagConstraints gbc_lblFillColor = new GridBagConstraints();
 		gbc_lblFillColor.anchor = GridBagConstraints.EAST;
@@ -79,16 +70,8 @@ public abstract class DlgSurfaceShape extends DlgShape {
 		return btnFillColor;
 	}
 
-	public void setBtnFillColor(JButton btnFillColor) {
-		this.btnFillColor = btnFillColor;
-	}
-
 	public JLabel getLblFillColor() {
 		return lblFillColor;
-	}
-
-	public void setLblFillColor(JLabel lblFillColor) {
-		this.lblFillColor = lblFillColor;
 	}
 
 }

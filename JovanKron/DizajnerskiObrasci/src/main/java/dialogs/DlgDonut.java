@@ -1,44 +1,15 @@
 package dialogs;
 
-
-import javax.swing.JDialog;
-import javax.swing.JSeparator;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Toolkit;
-
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class DlgDonut extends DlgSurfaceShape {
-
 	private static final long serialVersionUID = 1L;
-	private int innerRadius;
-	private int outerRadius;
-	private JTextField txtInner;
-	private JTextField txtOuter;
-
-	public static void main(String[] args) {
-		try {
-			DlgDonut dialog = new DlgDonut();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private int innerRadius, outerRadius;
+	private JTextField txtInner, txtOuter;
 
 	public DlgDonut() {
-		
 		setTitle("Donut dialog");
 		defineSaveOperation();
 		setBounds(100, 100, 198, 310);
@@ -63,7 +34,6 @@ public class DlgDonut extends DlgSurfaceShape {
 		gbc_separator.gridx = 0;
 		gbc_separator.gridy = 2;
 		getContentPanel().add(separator, gbc_separator);
-		
 		
 		JLabel lblInnerRaduis = new JLabel("Inner radius:");
 		GridBagConstraints gbc_lblInnerRadius = new GridBagConstraints();
@@ -142,16 +112,16 @@ public class DlgDonut extends DlgSurfaceShape {
 	}
 
 	@Override
-	public void defineSaveOperation() {
+	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					setBaseCoordinates();
+					readBaseCoordinates();
 					innerRadius = Integer.parseInt(txtInner.getText());
 					outerRadius = Integer.parseInt(txtOuter.getText());
-					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || innerRadius<1 || outerRadius<1)
+					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || innerRadius < 1 || outerRadius <1 )
 						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for inner/outer radius!");
-					else if(innerRadius>=outerRadius)
+					else if(innerRadius >= outerRadius)
 						JOptionPane.showMessageDialog(null,"Inner radius must be smaller than outer by at least 1!");
 					else {
 						setConfirmed(true);
@@ -165,8 +135,7 @@ public class DlgDonut extends DlgSurfaceShape {
 		});
 	}
 	
-	public void fillForModify(int startX, int startY, int innerRadius, int outerRadius, Color edgeColor, Color fillColor)
-	{
+	public void fillForModify(int startX, int startY, int innerRadius, int outerRadius, Color edgeColor, Color fillColor) {
 		super.fillForModify(startX, startY, edgeColor, fillColor);
 		txtInner.setText(Integer.toString(innerRadius));
 		txtOuter.setText(Integer.toString(outerRadius));
@@ -176,16 +145,8 @@ public class DlgDonut extends DlgSurfaceShape {
 		return innerRadius;
 	}
 
-	public void setInnerRadius(int innerRadius) {
-		this.innerRadius = innerRadius;
-	}
-
 	public int getOuterRadius() {
 		return outerRadius;
-	}
-
-	public void setOuterRadius(int outerRadius) {
-		this.outerRadius = outerRadius;
 	}
 
 	public JTextField getTxtInner() {

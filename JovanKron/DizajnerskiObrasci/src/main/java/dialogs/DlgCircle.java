@@ -2,26 +2,12 @@ package dialogs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class DlgCircle extends DlgSurfaceShape {
-
 	private static final long serialVersionUID = 1L;
 	private int radius;
 	private JTextField txtRadius;
-
-	public static void main(String[] args) {
-		try {
-			DlgCircle dialog = new DlgCircle();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public DlgCircle() {
 		setTitle("Circle dialog");
@@ -48,7 +34,6 @@ public class DlgCircle extends DlgSurfaceShape {
 		gbc_separator.gridy = 2;
 		getContentPanel().add(separator, gbc_separator);
 		
-		
 		JLabel lblRaduis = new JLabel("Radius:");
 		GridBagConstraints gbc_lblFillColor = new GridBagConstraints();
 		gbc_lblFillColor.anchor = GridBagConstraints.EAST;
@@ -73,13 +58,13 @@ public class DlgCircle extends DlgSurfaceShape {
 	}
 
 	@Override
-	public void defineSaveOperation() {
+	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				try {
-					setBaseCoordinates();
+					readBaseCoordinates();
 					radius = Integer.parseInt(txtRadius.getText());
-					if(getBaseCoordinateX()<0 || getBaseCoordinateY()<0 || radius<1)
+					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || radius < 1)
 						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for radius!");
 					else {
 						setConfirmed(true);
@@ -91,21 +76,15 @@ public class DlgCircle extends DlgSurfaceShape {
 				}
 			}
 		});
-		
 	}
 	
-	public void fillForModify(int startX, int startY, int radius, Color edgeColor, Color fillColor)
-	{
+	public void fillForModify(int startX, int startY, int radius, Color edgeColor, Color fillColor) {
 		super.fillForModify(startX, startY, edgeColor, fillColor);
 		txtRadius.setText(Integer.toString(radius));
 	}
 
 	public int getRadius() {
 		return radius;
-	}
-
-	public void setRadius(int radius) {
-		this.radius = radius;
 	}
 
 	public JTextField getTxtRadius() {

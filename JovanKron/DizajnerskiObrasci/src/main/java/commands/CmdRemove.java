@@ -4,7 +4,6 @@ import mvc.DrawingModel;
 import geometry.Shape;
 
 public class CmdRemove implements Command {
-	
 	private Shape shape;
 	private DrawingModel model;
 	private int oldPosition;
@@ -26,4 +25,5 @@ public class CmdRemove implements Command {
 		model.addAtIndex(oldPosition, shape);
 
 	}
+	
 }

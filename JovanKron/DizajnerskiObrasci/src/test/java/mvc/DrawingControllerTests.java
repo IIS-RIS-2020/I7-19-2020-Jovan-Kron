@@ -269,10 +269,14 @@ public class DrawingControllerTests {
 	public void testDeleteOneShape() {
 		click(400, 400);		
 		pressEnter(1);
+		robot.delay(500);
 		frame.getTglBtnSelect().doClick();
-		click(400, 400);	
+		robot.delay(500);
+		click(400, 400);
+		robot.delay(500);
 		pressTab(6);
 		pressSpace(2);		
+		robot.delay(500);
 		assertEquals(0, model.getShapes().size());
 	}
 	

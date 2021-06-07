@@ -4,7 +4,6 @@ import mvc.DrawingModel;
 import geometry.Shape;
 
 public class CmdBringToFront implements Command {
-	
 	private DrawingModel model;
 	private Shape shape;
 	private int oldPosition;
@@ -27,4 +26,5 @@ public class CmdBringToFront implements Command {
 		model.getShapes().add(oldPosition, shape);
 		
 	}
+	
 }

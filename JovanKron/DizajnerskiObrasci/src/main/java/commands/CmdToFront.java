@@ -7,7 +7,6 @@ import java.util.Collections;
 import geometry.Shape;
 
 public class CmdToFront implements Command {
-	
 	private DrawingModel model;
 	private Shape shape;
 	private int position;
@@ -27,4 +26,5 @@ public class CmdToFront implements Command {
 	public void unexecute() {
 		Collections.swap(model.getShapes(), position, position + 1);
 	}
+	
 }

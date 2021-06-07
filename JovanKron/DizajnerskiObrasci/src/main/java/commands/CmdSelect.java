@@ -3,7 +3,6 @@ package commands;
 import geometry.Shape;
 
 public class CmdSelect implements Command {
-	
 	private Shape shape;
 	private boolean selected;
 	
@@ -24,4 +23,5 @@ public class CmdSelect implements Command {
 		else 
 			shape.setSelected(true);
 	}
+	
 }

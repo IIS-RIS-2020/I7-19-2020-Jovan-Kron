@@ -4,7 +4,6 @@ import mvc.DrawingModel;
 import geometry.Shape;
 
 public class CmdBringToBack implements Command {
-
     private DrawingModel model;
 	private Shape shape;
 	private int oldPosition;
@@ -25,6 +24,6 @@ public class CmdBringToBack implements Command {
 	public void unexecute() {
 		model.getShapes().remove(0);
 		model.getShapes().add(oldPosition, shape);
-		
 	}
+	
 }
