@@ -2,10 +2,11 @@ package geometry;
 
 import java.awt.*;
 
-public abstract class SurfaceShape extends Shape{
-
+public abstract class SurfaceShape extends Shape {
 	private static final long serialVersionUID = 1L;
 	private Color fillColor;
+	
+	public abstract double area();
 
     public Color getFillColor() {
 		return fillColor;
@@ -15,5 +16,4 @@ public abstract class SurfaceShape extends Shape{
         this.fillColor = fillColor;
     }
 
-    public abstract double area();
 }

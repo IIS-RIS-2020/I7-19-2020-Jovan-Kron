@@ -94,6 +94,11 @@ public class HexagonAdapterTests {
 	}
 	
 	@Test
+	public void testAreaExpectedEqual() {
+		assertEquals(0, hexagonAdapter.area(), 0.00000000001d);
+	}
+	
+	@Test
 	public void testCompareToExpectedEqual() {
 		HexagonAdapter h = new HexagonAdapter(5, 5, 15);
 		assertEquals(10, hexagonAdapter.compareTo(h));
