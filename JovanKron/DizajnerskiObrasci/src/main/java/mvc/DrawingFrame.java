@@ -306,6 +306,15 @@ public class DrawingFrame extends JFrame {
 		}
 	}
 	
+	public void setAllShapeManipultationButtonsState(boolean areActive) {
+		getTglBtnDelete().setEnabled(areActive);
+		getTglBtnModify().setEnabled(areActive);
+		getTglBtnBringToBack().setEnabled(areActive);
+		getTglBtnToBack().setEnabled(areActive);
+		getTglBtnToFront().setEnabled(areActive);
+		getTglBtnBringToFront().setEnabled(areActive);
+	}
+	
 	public DrawingView getView() {
 		return view;
 	}

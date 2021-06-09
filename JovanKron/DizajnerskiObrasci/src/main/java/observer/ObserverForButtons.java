@@ -1,14 +1,10 @@
 package observer;
 
-import java.util.Observable;
-import java.util.Observer;
-
+import java.util.*;
 import geometry.Shape;
-import mvc.DrawingFrame;
-import mvc.DrawingModel;
+import mvc.*;
 
 public class ObserverForButtons implements Observer  {
-
 	private DrawingModel model;
 	private DrawingFrame frame;
 	
@@ -17,44 +13,20 @@ public class ObserverForButtons implements Observer  {
 		this.frame=frame;
 	}
 	
-	@Override
-	public void update(Observable o, Object arg) {
-		int numberOfSelectedShapes=0;
-		
+	public void update(Observable observable, Object arg) {
+		int numberOfSelectedShapes = 0;
 		for(Shape shape : model.getShapes()) {
 			if(shape.isSelected())
 				numberOfSelectedShapes++;
 		}
-		
-		if(numberOfSelectedShapes == 0) {
-			frame.getTglBtnDelete().setEnabled(false);
-			frame.getTglBtnModify().setEnabled(false);
-			
-			frame.getTglBtnBringToBack().setEnabled(false);
-			frame.getTglBtnBringToFront().setEnabled(false);
-			frame.getTglBtnToFront().setEnabled(false);
-			frame.getTglBtnToBack().setEnabled(false);
-			
-		}else if(numberOfSelectedShapes == 1) {
+		if (numberOfSelectedShapes == 0)
+			frame.setAllShapeManipultationButtonsState(false);			
+		else if (numberOfSelectedShapes == 1)
+			frame.setAllShapeManipultationButtonsState(true);
+		else if (numberOfSelectedShapes > 1) {
+			frame.setAllShapeManipultationButtonsState(false);
 			frame.getTglBtnDelete().setEnabled(true);
-			frame.getTglBtnModify().setEnabled(true);
-			
-			frame.getTglBtnBringToBack().setEnabled(true);
-			frame.getTglBtnBringToFront().setEnabled(true);
-			frame.getTglBtnToFront().setEnabled(true);
-			frame.getTglBtnToBack().setEnabled(true);
-			
-		}else if(numberOfSelectedShapes > 1) {
-			frame.getTglBtnDelete().setEnabled(true);
-			frame.getTglBtnModify().setEnabled(false);
-			
-			frame.getTglBtnBringToBack().setEnabled(false);
-			frame.getTglBtnBringToFront().setEnabled(false);
-			frame.getTglBtnToFront().setEnabled(false);
-			frame.getTglBtnToBack().setEnabled(false);
-			
 		}
-		
 	}
 
 }

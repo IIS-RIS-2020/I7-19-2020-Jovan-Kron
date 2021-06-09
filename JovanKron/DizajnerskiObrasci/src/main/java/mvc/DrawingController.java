@@ -121,7 +121,7 @@ public class DrawingController {
 				executeAndLogCommand(cmdRemove, shape, null);
 			}
 		}
-		setAllShapeManipultationButtonsState(false);
+		frame.setAllShapeManipultationButtonsState(false);
     }
 	
 	public void modifyShape() {
@@ -255,7 +255,7 @@ public class DrawingController {
 				deletedShapesToUndoCount++;
 			}
 			if(deletedShapesToUndoCount == 1)
-				setAllShapeManipultationButtonsState(true);
+				frame.setAllShapeManipultationButtonsState(true);
 			else {
 				frame.getTglBtnModify().setEnabled(false);
 				frame.getTglBtnDelete().setEnabled(true);
@@ -280,7 +280,7 @@ public class DrawingController {
 		if (!(redoCommandsStack.peek() instanceof CmdRemove))
 			executeRedo();
 		else {
-			setAllShapeManipultationButtonsState(false);
+			frame.setAllShapeManipultationButtonsState(false);
 			while (redoCommandsStack.peek() instanceof CmdRemove) {
 				executeRedo();
 				if(redoCommandsStack.isEmpty())
@@ -414,15 +414,6 @@ public class DrawingController {
 		return null;
 	}
     
-    public void setAllShapeManipultationButtonsState(boolean areActive) {
-		frame.getTglBtnDelete().setEnabled(areActive);
-		frame.getTglBtnModify().setEnabled(areActive);
-		frame.getTglBtnBringToBack().setEnabled(areActive);
-		frame.getTglBtnToBack().setEnabled(areActive);
-		frame.getTglBtnToFront().setEnabled(areActive);
-		frame.getTglBtnBringToFront().setEnabled(areActive);
-	}
-    
     private void clearCanvas() {
 		undoCommandsStack.clear();
 		redoCommandsStack.clear();
@@ -432,7 +423,7 @@ public class DrawingController {
 		textUndoCommandsStack.clear();
 		model.getShapes().clear();
 		flagForLine = true;
-		setAllShapeManipultationButtonsState(false);
+		frame.setAllShapeManipultationButtonsState(false);
 		frame.getLogPanel().setText(null);
 		frame.repaint();
 	} 
