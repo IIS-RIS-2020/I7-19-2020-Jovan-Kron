@@ -2,13 +2,10 @@ package mvc;
 
 import java.awt.Graphics;
 import java.util.ListIterator;
-
 import javax.swing.JPanel;
-
 import geometry.Shape;
 
 public class DrawingView extends JPanel {
-
 	private static final long serialVersionUID = 1L;
 	private DrawingModel model = new DrawingModel();
 
@@ -21,9 +18,10 @@ public class DrawingView extends JPanel {
 		return model;
 	}
 	
-	public void paint(Graphics g) {
-		ListIterator<Shape> it = model.getShapes().listIterator();
-		while(it.hasNext())
-			it.next().draw(g);
+	@Override
+	public void paint(Graphics graphics) {
+		ListIterator<Shape> iterator = model.getShapes().listIterator();
+		while(iterator.hasNext())
+			iterator.next().draw(graphics);
 	}
 }

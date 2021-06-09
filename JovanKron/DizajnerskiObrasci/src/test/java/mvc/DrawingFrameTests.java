@@ -148,11 +148,4 @@ public class DrawingFrameTests {
 		assertEquals(frame.getTglBtnHexagon(), frame.getClickedButton());
 	}
 	
-	/*
-	@Test
-	public void testDelete() {
-		frame.getTglBtnDelete().setEnabled(true);
-		frame.getTglBtnDelete().doClick();
-		verify(controller).deleteShapes();
-	}*/
 }

@@ -1,58 +1,22 @@
 package mvc;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JToggleButton;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
-import javax.swing.JTextPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.text.*;
 
 public class DrawingFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private DrawingView view = new DrawingView();
 	private DrawingController controller;
-	private JToggleButton clickedButton;
-	private JToggleButton tglBtnNew;
-	private JToggleButton tglBtnSave;
-	private JToggleButton tglBtnLoad;
-	private JToggleButton tglBtnPoint;
-	private JToggleButton tglBtnLine;
-	private JToggleButton tglBtnCircle;
-	private JToggleButton tglBtnRectangle;
-	private JToggleButton tglBtnDonut;
-	private JToggleButton tglBtnHexagon;
-	private JToggleButton tglBtnSelect;
-	private JToggleButton tglBtnDelete;
-	private JToggleButton tglBtnModify;
-	private JToggleButton tglBtnEdgeColor;
-	private JToggleButton tglBtnFillColor;
-	private JToggleButton tglBtnUndo;
-	private JToggleButton tglBtnRedo;
-	private JToggleButton tglBtnBringToBack;
-	private JToggleButton tglBtnToBack;
-	private JToggleButton tglBtnToFront;
-	private JToggleButton tglBtnBringToFront;
+	private JToggleButton clickedButton, tglBtnNew, tglBtnSave, tglBtnLoad, tglBtnPoint,
+				tglBtnLine, tglBtnCircle, tglBtnRectangle, tglBtnDonut, tglBtnHexagon,
+				tglBtnSelect, tglBtnDelete, tglBtnModify, tglBtnEdgeColor, tglBtnFillColor,
+				tglBtnUndo, tglBtnRedo, tglBtnBringToBack, tglBtnToBack, tglBtnToFront, tglBtnBringToFront;
 	private JTextPane textPane;
 	
 	public DrawingFrame() {
-		
 		ButtonGroup group = new ButtonGroup();
-		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
@@ -78,7 +42,6 @@ public class DrawingFrame extends JFrame {
 				controller.undo();
 			}
 		});
-		
 		group.add(tglBtnUndo);
 		
 		tglBtnLoad = new JToggleButton("Load");
@@ -110,7 +73,6 @@ public class DrawingFrame extends JFrame {
 			}
 		});
 		group.add(tglBtnNew);
-		
 		panel_1.add(tglBtnNew);
 		panel_1.add(tglBtnSave);
 		panel_1.add(tglBtnLoad);
@@ -202,8 +164,6 @@ public class DrawingFrame extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		
 		
 		tglBtnPoint = new JToggleButton("Point");
 		tglBtnPoint.addActionListener(new ActionListener() {
@@ -312,12 +272,9 @@ public class DrawingFrame extends JFrame {
 		textPane = new JTextPane();
 		textPane.setEditable(false);
 		logPanel.setViewportView(textPane);
-		
 		getContentPane().add(southPanel, BorderLayout.SOUTH);
-		
 		setBounds(100, 100, 1100, 650);
 		setBackground(new Color(192, 192, 192));
-		
 		
 		view.addMouseListener(new MouseAdapter() {
 			@Override
@@ -449,4 +406,5 @@ public class DrawingFrame extends JFrame {
 	public JTextPane getLogPanel() {
 		return textPane;
 	}
+	
 }

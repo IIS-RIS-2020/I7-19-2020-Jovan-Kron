@@ -213,7 +213,7 @@ public class LogFile implements AnyFile {
 					command = new CmdSelect(model.get(pos), shape.isSelected());
 				else if(text.contains("Remove")) {
 					command = new CmdRemove(model.get(pos), model);
-					frame.getController().disableButtons();
+					frame.getController().setAllShapeManipultationButtonsState(false);
 				}
 			} else
 				command = new CmdUpdate(shape, updatedShape);
@@ -230,7 +230,7 @@ public class LogFile implements AnyFile {
 	   	 	}
 			
 			if(command != null)
-				frame.getController().logCommand(command, shape, updatedShape);
+				frame.getController().executeAndLogCommand(command, shape, updatedShape);
 			
 		} else if (text.contains("Unexecuted"))
 			frame.getController().undo();
