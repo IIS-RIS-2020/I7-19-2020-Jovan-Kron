@@ -1,37 +1,15 @@
 package strategy;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+import java.io.*;
+import java.nio.file.*;
 import javax.swing.JOptionPane;
-
-import commands.CmdAdd;
-import commands.CmdBringToBack;
-import commands.CmdBringToFront;
-import commands.CmdRemove;
-import commands.CmdSelect;
-import commands.CmdToBack;
-import commands.CmdToFront;
-import commands.CmdUpdate;
-import commands.Command;
+import commands.*;
 import dialogs.DlgCommands;
-import geometry.Circle;
-import geometry.Donut;
-import geometry.HexagonAdapter;
-import geometry.Line;
-import geometry.Point;
-import geometry.Rectangle;
-import geometry.Shape;
-import mvc.DrawingFrame;
-import mvc.DrawingModel;
+import geometry.*;
+import mvc.*;
 import observer.ObserverForButtons;
 
 public class LogFile implements AnyFile {
-
 	private DrawingModel model;
 	private DrawingFrame frame;
 	
@@ -40,9 +18,8 @@ public class LogFile implements AnyFile {
 		this.frame = frame;
 	}
 	
-	@Override
 	public void saveFile(File file) {
-		if(Files.exists(Paths.get(file.toString()+".log"))) { 
+		if(Files.exists(Paths.get(file.toString() + ".log"))) { 
 			JOptionPane.showMessageDialog(frame,"File with same name already exists");
 			return;
 		}
@@ -57,8 +34,7 @@ public class LogFile implements AnyFile {
         }
 		
 	}
-
-	@Override
+	
 	public void loadFile(File file) {
 		if(!Files.exists(Paths.get(file.toString()))) { 
 			JOptionPane.showMessageDialog(frame,"File does not exist");
@@ -73,65 +49,68 @@ public class LogFile implements AnyFile {
 			JOptionPane.showMessageDialog(frame,"File can't be loaded");
 			return;
 		}
-		if(ext.equals("log")) {
-	         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-	        	 DlgCommands dialog = new DlgCommands();
-	        	 String textCommand;
-	        	 String forRemoveUndo = "";
-	        	 String forRemoveRedo = "";
-	             while ((textCommand = bufferedReader.readLine()) != null) {
-	            	 if(textCommand.contains("Unexecuted CmdRemove")) {
-	            		 forRemoveUndo = forRemoveUndo + textCommand + "\n";
-	            		 if(!forRemoveRedo.isEmpty()) {
-	            			 dialog.getTextPane().setText(forRemoveRedo);
-		            		 forRemoveRedo = "";
-			            	 dialog.setVisible(true);
-			            	 if(dialog.isConfirmed())
-			            		 doCommand("Re-executed");
-			            	 else
-			            		 break;
-	            		 }
-	            		 continue;
-	            	 }
-	            	 if(!forRemoveUndo.isEmpty()) {
-	            		 dialog.getTextPane().setText(forRemoveUndo);
-	            		 forRemoveUndo = "";
-		            	 dialog.setVisible(true);
-		            	 if(dialog.isConfirmed())
-		            		 doCommand("Unexecuted");
-		            	 else
-		            		 break;
-	            	 }
-	            	 
-	            	 if(textCommand.contains("Re-executed CmdRemove")) {
-	            		 forRemoveRedo = forRemoveRedo + textCommand + "\n";
-	            		 continue;
-	            	 }
-	            	 if(!forRemoveRedo.isEmpty()) {
-	            		 dialog.getTextPane().setText(forRemoveRedo);
-	            		 forRemoveRedo = "";
-		            	 dialog.setVisible(true);
-		            	 if(dialog.isConfirmed())
-		            		 doCommand("Re-executed");
-		            	 else
-		            		 break;
-	            	 }
-	            	 dialog.getTextPane().setText(textCommand);
-	            	 dialog.setVisible(true);
+		if(ext.equals("log"))
+			parseLogFile(file);
+	    else
+			JOptionPane.showMessageDialog(frame,"File has to be of type log");
+	}
+	
+	private void parseLogFile(File file) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+       	 	DlgCommands dialog = new DlgCommands();
+       	 	String textCommand;
+       	 	String forRemoveUndo = "";
+       	 	String forRemoveRedo = "";
+            while ((textCommand = bufferedReader.readLine()) != null) {
+		       	if(textCommand.contains("Unexecuted CmdRemove")) {
+		       		forRemoveUndo = forRemoveUndo + textCommand + "\n";
+		       		if(!forRemoveRedo.isEmpty()) {
+		       			dialog.getTextPane().setText(forRemoveRedo);
+		            	forRemoveRedo = "";
+			            dialog.setVisible(true);
+			            if(dialog.isConfirmed())
+			            	doCommand("Re-executed");
+			            else
+			            	break;
+		       		 }
+		       		 continue;
+		       	 }
+		       	 if(!forRemoveUndo.isEmpty()) {
+		       		 dialog.getTextPane().setText(forRemoveUndo);
+		       		 forRemoveUndo = "";
+		       		 dialog.setVisible(true);
 	            	 if(dialog.isConfirmed())
-	            		 doCommand(textCommand);
+	            		 doCommand("Unexecuted");
 	            	 else
 	            		 break;
-	             }
-	             //in case when unexecute or re-execute are last commands in batch do to continue in while will skip them
-	             checkForRedoUndoRemove(dialog, forRemoveUndo, forRemoveRedo);
-	             
-	         } catch (Exception e2) {
-					e2.printStackTrace();
-					JOptionPane.showMessageDialog(frame,"Error reading the log file");
-			 }
-		} else
-			JOptionPane.showMessageDialog(frame,"File has to be of type log");
+		       	 }
+	           	 if(textCommand.contains("Re-executed CmdRemove")) {
+	           		 forRemoveRedo = forRemoveRedo + textCommand + "\n";
+	           		 continue;
+	           	 }
+	           	 if(!forRemoveRedo.isEmpty()) {
+	           		 dialog.getTextPane().setText(forRemoveRedo);
+	           		 forRemoveRedo = "";
+	            	 dialog.setVisible(true);
+	            	 if(dialog.isConfirmed())
+	            		 doCommand("Re-executed");
+	            	 else
+	            		 break;
+	           	 }
+	           	 dialog.getTextPane().setText(textCommand);
+	           	 dialog.setVisible(true);
+	           	 if(dialog.isConfirmed())
+	           		 doCommand(textCommand);
+	           	 else
+	           		 break;
+            }
+            //in case when unexecute or re-execute are last commands in batch do to continue in while will skip them
+            checkForRedoUndoRemove(dialog, forRemoveUndo, forRemoveRedo);
+            
+        } catch (Exception e2) {
+				e2.printStackTrace();
+				JOptionPane.showMessageDialog(frame,"Error reading the log file");
+		}
 	}
 	
 	public void doCommand (String text) {
@@ -246,7 +225,6 @@ public class LogFile implements AnyFile {
 		   	if(dialog.isConfirmed())
 		   		doCommand("Re-executed");
 		}
-		
 		if(!forRemoveUndo.isEmpty()) {
 			dialog.getTextPane().setText(forRemoveUndo);
    		 	forRemoveUndo = "";

@@ -1,23 +1,14 @@
 package strategy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-
 import geometry.Shape;
-import mvc.DrawingFrame;
-import mvc.DrawingModel;
+import mvc.*;
 import observer.ObserverForButtons;
 
 public class SerializableFile implements AnyFile {
-
 	private DrawingModel model;
 	private DrawingFrame frame;
 	
@@ -26,14 +17,13 @@ public class SerializableFile implements AnyFile {
 		this.frame=frame;
 	}
 	
-	@Override
 	public void saveFile(File file) {
-		if(Files.exists(Paths.get(file.toString()+".ser"))) { 
+		if(Files.exists(Paths.get(file.toString() + ".ser"))) { 
 			JOptionPane.showMessageDialog(frame,"File with same name already exists");
 			return;
 		}
 		try {
-			 FileOutputStream theFile = new FileOutputStream(file+".ser"); 
+			 FileOutputStream theFile = new FileOutputStream(file + ".ser"); 
 	         ObjectOutputStream outputStream = new ObjectOutputStream(theFile); 
 	         outputStream.writeObject(model.getShapes()); 
 	         outputStream.close(); 
@@ -44,7 +34,6 @@ public class SerializableFile implements AnyFile {
 		}
 	}
 
-	@Override
 	public void loadFile(File file) {
 		if(!Files.exists(Paths.get(file.toString()))) { 
 			JOptionPane.showMessageDialog(frame,"File does not exist");
@@ -82,4 +71,5 @@ public class SerializableFile implements AnyFile {
 			JOptionPane.showMessageDialog(frame,"File has to be of type ser");
 		}		
 	}
+	
 }
