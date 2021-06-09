@@ -42,28 +42,28 @@ public class DrawingFrameTests {
 	public void testToFront() {
 		frame.getTglBtnToFront().setEnabled(true);
 		frame.getTglBtnToFront().doClick();
-		verify(controller).positionCommand("TF");
+		verify(controller).toFront();
 	}
 	
 	@Test
 	public void testToBack() {
 		frame.getTglBtnToBack().setEnabled(true);
 		frame.getTglBtnToBack().doClick();
-		verify(controller).positionCommand("TB");
+		verify(controller).toBack();
 	}
 	
 	@Test
 	public void testBringToFront() {
 		frame.getTglBtnBringToFront().setEnabled(true);
 		frame.getTglBtnBringToFront().doClick();
-		verify(controller).positionCommand("BTF");
+		verify(controller).bringToFront();
 	}
 	
 	@Test
 	public void testBringToBack() {
 		frame.getTglBtnBringToBack().setEnabled(true);
 		frame.getTglBtnBringToBack().doClick();
-		verify(controller).positionCommand("BTB");
+		verify(controller).bringToBack();
 	}
 	
 	@Test

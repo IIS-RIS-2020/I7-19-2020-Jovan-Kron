@@ -126,8 +126,6 @@ public class DrawingController {
 	
 	public void modifyShape() {
 		Shape originalShape = findMostTopSelectedShape();
-		if(originalShape == null)
-			return;
         if(originalShape instanceof Point)
         	modifyPoint(originalShape);
         else if(originalShape instanceof Line)
@@ -215,34 +213,36 @@ public class DrawingController {
         }
 	}
 	
-	public void positionCommand(String typeOfAction) {
+	public void toBack() {
 		Shape shapeToMove = findMostTopSelectedShape();
-		if(shapeToMove == null)
-			return;
-		Command command = null;
-		if(typeOfAction.equals("BTB")) {
-			if(model.getShapes().indexOf(shapeToMove) != 0)
-				command = new CmdBringToBack(shapeToMove, model);
-			else
-				JOptionPane.showMessageDialog(null, "Shape is already on the back");
-		} else if(typeOfAction.equals("TB")) {
-			if(model.getShapes().indexOf(shapeToMove) != 0)
-				command = new CmdToBack(shapeToMove, model);
-			else
-				JOptionPane.showMessageDialog(null, "Shape is already on the back");
-		} else if(typeOfAction.equals("TF")) {
-			if(model.getShapes().indexOf(shapeToMove) != model.getShapes().size()-1)
-				command = new CmdToFront(shapeToMove, model);
-			else
-				JOptionPane.showMessageDialog(null, "Shape is already on the front");
-		} else if(typeOfAction.equals("BTF")) {
-			if(model.getShapes().indexOf(shapeToMove) != model.getShapes().size()-1)
-				command = new CmdBringToFront(shapeToMove, model);
-			else
-				JOptionPane.showMessageDialog(null, "Shape is already on the front");
-		}
-		if(command != null) 
-			executeAndLogCommand(command, shapeToMove, null);
+		if(model.getShapes().indexOf(shapeToMove) != 0)
+			executeAndLogCommand(new CmdToBack(shapeToMove, model), shapeToMove, null);
+		else
+			JOptionPane.showMessageDialog(null, "Shape is already on the back");
+	}
+	
+	public void toFront() {
+		Shape shapeToMove = findMostTopSelectedShape();
+		if(model.getShapes().indexOf(shapeToMove) != model.getShapes().size() - 1)
+			executeAndLogCommand(new CmdToFront(shapeToMove, model), shapeToMove, null);
+		else
+			JOptionPane.showMessageDialog(null, "Shape is already on the front");
+	}
+	
+	public void bringToBack() {
+		Shape shapeToMove = findMostTopSelectedShape();
+		if(model.getShapes().indexOf(shapeToMove) != 0)
+			executeAndLogCommand(new CmdBringToBack(shapeToMove, model), shapeToMove, null);
+		else
+			JOptionPane.showMessageDialog(null, "Shape is already on the back");
+	}
+	
+	public void bringToFront() {
+		Shape shapeToMove = findMostTopSelectedShape();
+		if(model.getShapes().indexOf(shapeToMove) != model.getShapes().size() - 1)
+			executeAndLogCommand(new CmdBringToFront(shapeToMove, model), shapeToMove, null);
+		else
+			JOptionPane.showMessageDialog(null, "Shape is already on the front");
 	}
 	
 	public void undo() {

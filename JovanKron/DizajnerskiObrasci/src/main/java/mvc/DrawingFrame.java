@@ -121,7 +121,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnBringToBack.setEnabled(false);
 		tglBtnBringToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				controller.positionCommand("BTB");
+				controller.bringToBack();
 			}
 		});
 		panel_1.add(tglBtnBringToBack);
@@ -132,7 +132,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnToBack.setEnabled(false);
 		tglBtnToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.positionCommand("TB");
+				controller.toBack();
 			}
 		});
 		panel_1.add(tglBtnToBack);
@@ -143,7 +143,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnToFront.setEnabled(false);
 		tglBtnToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.positionCommand("TF");
+				controller.toFront();
 			}
 		});
 		panel_1.add(tglBtnToFront);
@@ -154,7 +154,7 @@ public class DrawingFrame extends JFrame {
 		tglBtnBringToFront.setEnabled(false);
 		tglBtnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.positionCommand("BTF");
+				controller.bringToFront();
 			}
 		});
 		panel_1.add(tglBtnBringToFront);

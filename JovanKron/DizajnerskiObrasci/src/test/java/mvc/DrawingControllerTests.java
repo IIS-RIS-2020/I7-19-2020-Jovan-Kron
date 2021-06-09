@@ -477,7 +477,7 @@ public class DrawingControllerTests {
 		assertEquals(Color.WHITE, model.getShapes().get(0).getEdgeColor());
 		assertEquals(Color.WHITE, ((HexagonAdapter) model.getShapes().get(0)).getFillColor());
 	}
-	
+
 	@Test
 	public void testToFront() {
 		drawRectangle();
@@ -490,6 +490,22 @@ public class DrawingControllerTests {
 	    assertEquals(3, model.getShapes().size());
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
 		assertTrue(model.getShapes().get(0) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testToFrontWhenShapeAlreadyOnFront() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();		
+		frame.getTglBtnSelect().doClick();	
+		click(400, 400);				
+		pressTab(9);		
+		pressSpace(1);
+		pressEnter(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
 		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
 	}
 	
@@ -509,6 +525,22 @@ public class DrawingControllerTests {
 	}
 	
 	@Test
+	public void testToBackWhenShapeAlreadyOnBack() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();			
+		frame.getTglBtnSelect().doClick();		
+		click(450, 420);		
+		pressTab(8);
+		pressSpace(1);
+		pressEnter(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
 	public void testBringToFront() {
 		drawRectangle();
 		drawCircle();
@@ -524,6 +556,22 @@ public class DrawingControllerTests {
 	}
 	
 	@Test
+	public void testBringToFrontWhenShapeAlreadyOnFront() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();			
+		frame.getTglBtnSelect().doClick();	
+		click(400, 400);				
+		pressTab(10);		
+		pressSpace(1);
+		pressEnter(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
+	}
+	
+	@Test
 	public void testBringToBack() {
 		drawRectangle();
 		drawCircle();
@@ -536,6 +584,22 @@ public class DrawingControllerTests {
 		assertTrue(model.getShapes().get(1) instanceof Rectangle);
 		assertTrue(model.getShapes().get(2) instanceof Circle);
 		assertTrue(model.getShapes().get(0) instanceof HexagonAdapter);
+	}
+	
+	@Test
+	public void testBringToBackWhenShapeAlreadyOnBack() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();	
+		frame.getTglBtnSelect().doClick();	
+		click(450, 420);		
+		pressTab(7);
+		pressSpace(1);
+		pressEnter(1);
+	    assertEquals(3, model.getShapes().size());
+		assertTrue(model.getShapes().get(0) instanceof Rectangle);
+		assertTrue(model.getShapes().get(1) instanceof Circle);
+		assertTrue(model.getShapes().get(2) instanceof HexagonAdapter);
 	}
 	
 	@Test
