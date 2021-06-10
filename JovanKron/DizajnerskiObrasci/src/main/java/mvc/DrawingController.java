@@ -379,7 +379,7 @@ public class DrawingController {
 	
 	public void unselectAll() {
 		CmdSelect command;
-		for(int i = model.getShapes().size()-1; i>=0; i--) {
+		for(int i = model.getShapes().size() - 1; i >= 0; i--) {
 			if(model.get(i).isSelected()) {
 				command = new CmdSelect(model.get(i), false);
 				executeAndLogCommand(command, model.get(i), null);
@@ -408,7 +408,7 @@ public class DrawingController {
 	}
 	
     private Shape findMostTopSelectedShape() {
-		for(int i = model.getShapes().size()-1; i>=0; i--)
+		for(int i = model.getShapes().size() - 1; i >= 0; i--)
 			if(model.get(i).isSelected())
 				return model.get(i);
 		return null;
