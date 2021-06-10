@@ -67,9 +67,8 @@ public class LogFile implements AnyFile {
 		       	if(textCommand.contains("Unexecuted CmdRemove")) {
 		       		forRemoveUndo = forRemoveUndo + textCommand + "\n";
 		       		if(!forRemoveRedo.isEmpty()) {
-		       			dialog.getTextPane().setText(forRemoveRedo);
+		       			showDlgCommand(dialog, forRemoveRedo);
 		            	forRemoveRedo = "";
-			            dialog.setVisible(true);
 			            if(dialog.isConfirmed())
 			            	executeCommand("Re-executed");
 			            else
@@ -78,9 +77,8 @@ public class LogFile implements AnyFile {
 		       		 continue;
 		       	 }
 		       	 if(!forRemoveUndo.isEmpty()) {
-		       		 dialog.getTextPane().setText(forRemoveUndo);
+		       		 showDlgCommand(dialog, forRemoveUndo);
 		       		 forRemoveUndo = "";
-		       		 dialog.setVisible(true);
 	            	 if(dialog.isConfirmed())
 	            		 executeCommand("Unexecuted");
 	            	 else
@@ -91,16 +89,14 @@ public class LogFile implements AnyFile {
 	           		 continue;
 	           	 }
 	           	 if(!forRemoveRedo.isEmpty()) {
-	           		 dialog.getTextPane().setText(forRemoveRedo);
+	           		 showDlgCommand(dialog, forRemoveRedo);
 	           		 forRemoveRedo = "";
-	            	 dialog.setVisible(true);
 	            	 if(dialog.isConfirmed())
 	            		 executeCommand("Re-executed");
 	            	 else
 	            		 break;
 	           	 }
-	           	 dialog.getTextPane().setText(textCommand);
-	           	 dialog.setVisible(true);
+	           	 showDlgCommand(dialog, textCommand);
 	           	 if(dialog.isConfirmed())
 	           		executeCommand(textCommand);
 	           	 else
@@ -113,6 +109,11 @@ public class LogFile implements AnyFile {
 				e2.printStackTrace();
 				JOptionPane.showMessageDialog(frame,"Error reading the log file");
 		}
+	}
+	
+	private void showDlgCommand(DlgCommands dialog, String textCommand) {
+		dialog.getTextPane().setText(textCommand);
+      	dialog.setVisible(true);
 	}
 	
 	private void executeCommand(String text) {
@@ -260,7 +261,7 @@ public class LogFile implements AnyFile {
    		 	forRemoveUndo = "";
    		 	dialog.setVisible(true);
    		 	if(dialog.isConfirmed())
-   		 	executeCommand("Unexecuted");
+   		 		executeCommand("Unexecuted");
 		}
 	}
 
