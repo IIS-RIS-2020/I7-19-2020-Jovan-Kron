@@ -1,30 +1,16 @@
 package mvc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.awt.AWTException;
-import java.awt.Color;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import static org.junit.Assert.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
-
 import javax.swing.JFrame;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import geometry.Circle;
-import geometry.Donut;
-import geometry.HexagonAdapter;
-import geometry.Line;
+import org.junit.*;
+import geometry.*;
 import geometry.Point;
 import geometry.Rectangle;
 
 public class DrawingControllerTests {
-
 	private DrawingFrame frame;
 	private DrawingModel model;
 	private DrawingController controller;
@@ -45,6 +31,11 @@ public class DrawingControllerTests {
         frame.getTglBtnPoint().doClick();
         frame.setVisible(true);
         frame.setResizable(false);
+	}
+	
+	@After
+	public void tearDown() {
+		frame.dispose();
 	}
 	
 	@Test
@@ -726,7 +717,7 @@ public class DrawingControllerTests {
 	    assertEquals(Color.WHITE, controller.getCurrentFillColor());
 	}
 	
-	public void drawRectangle() {
+	private void drawRectangle() {
 		frame.getTglBtnRectangle().doClick();
 		click(400, 400);
 		pressTab(2);
@@ -747,7 +738,7 @@ public class DrawingControllerTests {
 		robot.delay(500);
 	}
 	
-	public void drawDonut() {
+	private void drawDonut() {
 		frame.getTglBtnDonut().doClick();
 		click(400, 400);
 		pressTab(2);
@@ -769,7 +760,7 @@ public class DrawingControllerTests {
 		
 	}
 	
-	public void drawCircle() {
+	private void drawCircle() {
 		frame.getTglBtnCircle().doClick();
 		click(400, 400);
 		pressTab(2);
@@ -783,7 +774,7 @@ public class DrawingControllerTests {
 		robot.delay(500);
 	}
 	
-	public void drawHexagon() {
+	private void drawHexagon() {
 		frame.getTglBtnHexagon().doClick();
 		click(400, 400);
 		pressTab(2);
@@ -797,14 +788,14 @@ public class DrawingControllerTests {
 		robot.delay(500);
 	}
 	
-	public void click(int x, int y) {
+	private void click(int x, int y) {
 		robot.mouseMove(x, y);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		robot.delay(200);
 	}
 	
-	public void pressTab(int numberOfPresses) {
+	private void pressTab(int numberOfPresses) {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_TAB);
 		    robot.keyRelease(KeyEvent.VK_TAB);
@@ -812,7 +803,7 @@ public class DrawingControllerTests {
 		}
 	}
 	
-	public void pressSpace(int numberOfPresses) {
+	private void pressSpace(int numberOfPresses) {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_SPACE);
 		    robot.keyRelease(KeyEvent.VK_SPACE);
@@ -820,7 +811,7 @@ public class DrawingControllerTests {
 		}
 	}
 	
-	public void pressBackspace(int numberOfPresses) {
+	private void pressBackspace(int numberOfPresses) {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_BACK_SPACE);
 		    robot.keyRelease(KeyEvent.VK_BACK_SPACE);
@@ -828,7 +819,7 @@ public class DrawingControllerTests {
 		}
 	}
 	
-	public void pressEnter(int numberOfPresses) {
+	private void pressEnter(int numberOfPresses) {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_ENTER);
 		    robot.keyRelease(KeyEvent.VK_ENTER);

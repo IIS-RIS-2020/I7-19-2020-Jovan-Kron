@@ -1,18 +1,11 @@
 package mvc;
 
 import java.awt.Graphics;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import geometry.Circle;
-import geometry.Point;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import org.junit.*;
+import geometry.*;
+import static org.mockito.Mockito.*;
 
 public class DrawingViewTests {
-	
 	DrawingView view;
 	Graphics graphics;
 
@@ -31,20 +24,21 @@ public class DrawingViewTests {
 	
 	@Test
 	public void testPaintWithOneShapeExpectedTrue() {
-		Point p = mock(Point.class);
-		view.getModel().add(p);
+		Point point = mock(Point.class);
+		view.getModel().add(point);
 		view.paint(graphics);
-		verify(p).draw(graphics);
+		verify(point).draw(graphics);
 	}
 	
 	@Test
 	public void testPaintWithMoreThanOneShapeExpectedTrue() {
-		Point p = mock(Point.class);
-		Circle c = mock(Circle.class);
-		view.getModel().add(p);
-		view.getModel().add(c);
+		Point point = mock(Point.class);
+		Circle circle = mock(Circle.class);
+		view.getModel().add(point);
+		view.getModel().add(circle);
 		view.paint(graphics);
-		verify(p).draw(graphics);
-		verify(c).draw(graphics);
+		verify(point).draw(graphics);
+		verify(circle).draw(graphics);
 	}
+	
 }

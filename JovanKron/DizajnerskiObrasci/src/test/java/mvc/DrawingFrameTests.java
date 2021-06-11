@@ -1,14 +1,10 @@
 package mvc;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import org.junit.*;
 
 public class DrawingFrameTests {
-	
 	private DrawingFrame frame;
 	private DrawingController controller;
 
