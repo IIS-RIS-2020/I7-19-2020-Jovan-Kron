@@ -1,20 +1,11 @@
 package geometry;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import java.awt.*;
+import org.junit.*;
 
 public class CircleTests {
-
 	private Circle circle;
 	private Graphics2D graphics2D;
 	
@@ -196,4 +187,5 @@ public class CircleTests {
 		assertEquals(Color.YELLOW, c.getFillColor());
 		assertFalse(c.isSelected());
 	}
+	
 }

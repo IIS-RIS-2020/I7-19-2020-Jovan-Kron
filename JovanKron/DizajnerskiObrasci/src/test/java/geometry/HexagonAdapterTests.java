@@ -1,22 +1,12 @@
 package geometry;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import java.awt.Color;
-import java.awt.Graphics;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import java.awt.*;
+import org.junit.*;
 import hexagon.Hexagon;
 
 public class HexagonAdapterTests {
-	
 	private HexagonAdapter hexagonAdapter;
 	private Graphics graphics;
 	private Hexagon hexagon;

@@ -1,11 +1,9 @@
 package geometry;
 
 import static org.junit.Assert.*;
-import org.junit.*;
 import static org.mockito.Mockito.*;
-
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+import org.junit.*;
 
 public class PointTests {
 	private Point point;
@@ -179,4 +177,5 @@ public class PointTests {
 		assertEquals(Color.BLACK, p.getEdgeColor());
 		assertFalse(p.isSelected());
 	}
+	
 }

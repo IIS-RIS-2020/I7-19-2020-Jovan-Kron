@@ -1,24 +1,14 @@
 package geometry;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import java.awt.*;
+import java.awt.geom.*;
 import java.awt.Shape;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.ArgumentCaptor;
 
 public class DonutTests {
-	
 	private Donut donut;
 	private Graphics2D graphics2D;
 	ArgumentCaptor<Shape> argument;
@@ -222,4 +212,5 @@ public class DonutTests {
 		assertEquals(Color.YELLOW, d.getFillColor());
 		assertFalse(d.isSelected());
 	}
+	
 }
