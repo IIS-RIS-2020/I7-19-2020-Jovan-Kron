@@ -1,28 +1,17 @@
 package dialogs;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.awt.AWTException;
-import java.awt.Button;
-import java.awt.Color;
+import static org.junit.Assert.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JTextField;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 
 public class DlgPointTests {
-
 	private DlgPoint dialog;
 	private JTextField txtInput;
 	
 	@Before
-	public void setUp() throws AWTException {
+	public void setUp() {
 		dialog = new DlgPoint();
 		txtInput = new JTextField("545");
 	}

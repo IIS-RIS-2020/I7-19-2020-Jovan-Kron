@@ -1,17 +1,10 @@
 package dialogs;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.Assert.*;
 import java.awt.Color;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class DlgRectangleTests {
-
 	private DlgRectangle dialog;
 	
 	@Before
@@ -257,4 +250,5 @@ public class DlgRectangleTests {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
 	}
+	
 }
