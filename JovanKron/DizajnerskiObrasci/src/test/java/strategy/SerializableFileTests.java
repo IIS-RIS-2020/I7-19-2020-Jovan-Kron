@@ -1,37 +1,22 @@
 package strategy;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.Assert.*;
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import geometry.Circle;
-import geometry.Donut;
-import geometry.HexagonAdapter;
-import geometry.Line;
-import geometry.Point;
-import geometry.Rectangle;
-import mvc.DrawingController;
-import mvc.DrawingFrame;
-import mvc.DrawingModel;
+import org.junit.*;
+import geometry.*;
+import mvc.*;
 
 public class SerializableFileTests {
-
-	private DrawingFrame frame;
 	private DrawingModel model;
-	private DrawingController controller;
 	private File file;
 	private SerializableFile serializableFile;
 
 	@Before
 	public void setUp() {
 		model = new DrawingModel();
-        frame = new DrawingFrame();
+		DrawingFrame frame = new DrawingFrame();
         frame.getView().setModel(model);
-        controller = new DrawingController(model, frame);
+        DrawingController controller = new DrawingController(model, frame);
         frame.setController(controller);
         serializableFile = new SerializableFile(model, frame);
 	}
@@ -80,4 +65,5 @@ public class SerializableFileTests {
 		assertTrue(model.get(4) instanceof Rectangle);
 		assertTrue(model.get(5) instanceof HexagonAdapter);
 	}
+	
 }

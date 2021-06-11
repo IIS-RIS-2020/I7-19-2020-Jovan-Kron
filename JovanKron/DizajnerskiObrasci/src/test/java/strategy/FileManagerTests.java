@@ -1,15 +1,10 @@
 package strategy;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
+import static org.mockito.Mockito.*;
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class FileManagerTests {
-	
 	private FileManager fileManager;
 	private AnyFile anyFile;
 	private File file;
@@ -32,4 +27,5 @@ public class FileManagerTests {
 		fileManager.loadFile(file);
 		verify(anyFile).loadFile(file);
 	}
+	
 }
