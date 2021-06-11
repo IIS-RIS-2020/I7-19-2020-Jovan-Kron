@@ -12,6 +12,6 @@ import org.junit.runners.Suite.SuiteClasses;
 	DialogsTestSuite.class,
 	StrategyTestSuite.class
 	})
-public class DizajnerskiObrasciTestSuite {
+public class ProjectTestSuite {
 
 }
