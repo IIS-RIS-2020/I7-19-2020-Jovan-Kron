@@ -1,18 +1,12 @@
 package commands;
 
 import static org.junit.Assert.assertEquals;
-
 import java.awt.Color;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import geometry.Circle;
-import geometry.Point;
+import org.junit.*;
+import geometry.*;
 import mvc.DrawingModel;
 
 public class CmdUpdateTests {
-	
 	private CmdUpdate cmdUpdate;
 	private DrawingModel model;
 	private Circle originalCircle;
@@ -46,4 +40,5 @@ public class CmdUpdateTests {
 		assertEquals(Color.RED, originalCircle.getEdgeColor());
 		assertEquals(Color.YELLOW, originalCircle.getFillColor());
 	}
+	
 }

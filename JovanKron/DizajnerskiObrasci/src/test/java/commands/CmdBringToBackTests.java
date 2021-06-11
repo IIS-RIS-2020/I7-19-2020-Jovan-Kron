@@ -1,16 +1,12 @@
 package commands;
 
 import static org.junit.Assert.assertEquals;
-
-import org.junit.Before;
+import org.junit.*;
 import org.junit.Test;
-
-import geometry.Circle;
-import geometry.Point;
+import geometry.*;
 import mvc.DrawingModel;
 
 public class CmdBringToBackTests {
-
 	private CmdBringToBack cmdBringToBack;
 	private DrawingModel model;
 	private Point point;
@@ -40,4 +36,5 @@ public class CmdBringToBackTests {
 		assertEquals(circle, model.get(1));
 		assertEquals(point, model.get(0));
 	}
+	
 }

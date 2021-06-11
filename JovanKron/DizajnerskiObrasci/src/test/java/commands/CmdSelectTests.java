@@ -1,15 +1,10 @@
 package commands;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.Assert.*;
+import org.junit.*;
 import geometry.Point;
 
 public class CmdSelectTests {
-
 	private CmdSelect cmdSelect;
 	private Point point; 
 
@@ -36,4 +31,5 @@ public class CmdSelectTests {
 		cmdSelect.unexecute();
 		assertTrue(point.isSelected());
 	}
+	
 }

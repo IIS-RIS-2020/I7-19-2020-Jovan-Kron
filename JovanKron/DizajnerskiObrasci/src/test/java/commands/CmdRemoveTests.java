@@ -1,10 +1,7 @@
 package commands;
 
 import static org.junit.Assert.assertEquals;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 import geometry.Point;
 import mvc.DrawingModel;
 
@@ -34,4 +31,5 @@ public class CmdRemoveTests {
 		cmdRemove.unexecute();
 		assertEquals(1, model.getShapes().size());
 	}
+	
 }
