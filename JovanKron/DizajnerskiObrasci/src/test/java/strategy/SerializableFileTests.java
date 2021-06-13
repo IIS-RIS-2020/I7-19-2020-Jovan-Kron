@@ -32,7 +32,7 @@ public class SerializableFileTests {
 		file = new File("src/test/resources/files/serializableFiles/test");
 		serializableFile.saveFile(file);
 		file = new File("src/test/resources/files/serializableFiles/test.ser");
-		file.delete();
+		assertTrue(file.delete());
 	}
 	
 	@Test

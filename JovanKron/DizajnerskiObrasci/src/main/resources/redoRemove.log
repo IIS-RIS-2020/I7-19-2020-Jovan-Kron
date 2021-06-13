@@ -1,0 +1,10 @@
+Executed CmdAdd_Point:(662,296),Edge-color=[0-0-0],selected=false
+Executed CmdAdd_Line:(731,470)-->(832,195),Edge-color=[0-0-0],selected=false
+Executed CmdAdd_Circle:Center(810,247),radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
+Executed CmdAdd_Rectangle:Upper-left(787,243),Width=250,Height=50,Edge-color=[0-0-0],Surface-color=[153-255-153],selected=false
+Executed CmdSelect_Line:(731,470)-->(832,195),Edge-color=[0-0-0],selected=true
+Executed CmdSelect_Circle:Center(810,247),radius=50,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
+Executed CmdSelect_Rectangle:Upper-left(787,243),Width=250,Height=50,Edge-color=[0-0-0],Surface-color=[153-255-153],selected=true
+Executed CmdRemove_for_3_shape(s)
+Unexecuted CmdRemove_for_3_shape(s)
+Re-executed CmdRemove_for_3_shape(s)

@@ -1,12 +1,12 @@
 Executed CmdAdd_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
 Executed CmdSelect_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
 Executed CmdUpdate_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Circle:Center(250,250),radius=70,Edge-color=[204-0-0],Surface-color=[153-204-0],selected=true
-Executed CmdRemove_Circle:Center(250,250),radius=70,Edge-color=[204-0-0],Surface-color=[153-204-0],selected=true
-Unexecuted CmdRemove_Circle:Center(250,250),radius=70,Edge-color=[204-0-0],Surface-color=[153-204-0],selected=true
+Executed CmdRemove_for_1_shape(s)
+Unexecuted CmdRemove_for_1_shape(s)
 Unexecuted CmdUpdate_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Circle:Center(250,250),radius=70,Edge-color=[204-0-0],Surface-color=[153-204-0],selected=true
 Unexecuted CmdSelect_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
 Unexecuted CmdAdd_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
 Re-executed CmdAdd_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=false
 Re-executed CmdSelect_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true
 Re-executed CmdUpdate_Circle:Center(806,251),radius=55,Edge-color=[0-0-0],Surface-color=[255-255-0],selected=true_to_Circle:Center(250,250),radius=70,Edge-color=[204-0-0],Surface-color=[153-204-0],selected=true
-Re-executed CmdRemove_Circle:Center(250,250),radius=70,Edge-color=[204-0-0],Surface-color=[153-204-0],selected=true
+Re-executed CmdRemove_for_1_shape(s)

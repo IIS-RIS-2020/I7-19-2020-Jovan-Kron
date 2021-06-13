@@ -3,10 +3,8 @@ Executed CmdAdd_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=false
 Executed CmdAdd_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=false
 Executed CmdSelect_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=true
 Executed CmdSelect_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=true
-Executed CmdRemove_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=true
-Executed CmdRemove_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=true
-Unexecuted CmdRemove_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=true
-Unexecuted CmdRemove_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=true
+Executed CmdRemove_for_2_shape(s)
+Unexecuted CmdRemove_for_2_shape(s)
 Unexecuted CmdSelect_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=true
 Unexecuted CmdSelect_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=true
 Unexecuted CmdAdd_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=false
@@ -17,5 +15,4 @@ Re-executed CmdAdd_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=false
 Re-executed CmdAdd_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=false
 Re-executed CmdSelect_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=true
 Re-executed CmdSelect_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=true
-Re-executed CmdRemove_Line:(968,302)-->(766,586),Edge-color=[0-0-0],selected=true
-Re-executed CmdRemove_Line:(589,512)-->(846,240),Edge-color=[0-0-0],selected=true
+Re-executed CmdRemove_for_2_shape(s)

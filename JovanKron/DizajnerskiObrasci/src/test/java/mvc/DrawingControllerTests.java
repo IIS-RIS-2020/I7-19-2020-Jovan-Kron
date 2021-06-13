@@ -103,7 +103,7 @@ public class DrawingControllerTests {
 	}
 	
 	@Test
-	public void tesLoadLogFile() {
+	public void testLoadLogFile() {
 		pressTab(2);
 		pressSpace(1);
 		pressTab(10);
@@ -114,9 +114,7 @@ public class DrawingControllerTests {
 		assertTrue(model.get(0) instanceof Line);
 		assertTrue(model.get(1) instanceof HexagonAdapter);
 		assertTrue(model.get(2) instanceof Circle);
-
 	}
-	
 	
 	@Test
 	public void testDrawPoint() {
@@ -826,4 +824,5 @@ public class DrawingControllerTests {
 		    robot.delay(300);
 		}
 	}
+	
 }

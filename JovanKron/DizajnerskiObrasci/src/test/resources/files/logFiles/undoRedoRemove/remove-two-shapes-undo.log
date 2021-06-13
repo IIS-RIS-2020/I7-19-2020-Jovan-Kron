@@ -3,7 +3,5 @@ Executed CmdAdd_Line:(605,475)-->(784,276),Edge-color=[0-0-0],selected=false
 Executed CmdAdd_Line:(751,530)-->(970,327),Edge-color=[0-0-0],selected=false
 Executed CmdSelect_Line:(751,530)-->(970,327),Edge-color=[0-0-0],selected=true
 Executed CmdSelect_Line:(605,475)-->(784,276),Edge-color=[0-0-0],selected=true
-Executed CmdRemove_Line:(751,530)-->(970,327),Edge-color=[0-0-0],selected=true
-Executed CmdRemove_Line:(605,475)-->(784,276),Edge-color=[0-0-0],selected=true
-Unexecuted CmdRemove_Line:(605,475)-->(784,276),Edge-color=[0-0-0],selected=true
-Unexecuted CmdRemove_Line:(751,530)-->(970,327),Edge-color=[0-0-0],selected=true
+Executed CmdRemove_for_2_shape(s)
+Unexecuted CmdRemove_for_2_shape(s)

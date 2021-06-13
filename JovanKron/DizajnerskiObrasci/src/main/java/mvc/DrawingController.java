@@ -112,17 +112,22 @@ public class DrawingController {
 	}
 	
 	public void deleteShapes() {
-		CmdRemove cmdRemove;
+		CmdRemove cmdRemove = new CmdRemove(model);
 		Shape shape;
-		for(int i = model.getShapes().size() - 1; i >= 0; i--) {
+		for(int i = 0; i < model.getShapes().size(); i++) {
 			shape = model.get(i);
-			if(shape.isSelected()) {
-				cmdRemove = new CmdRemove(shape, model);
-				executeAndLogCommand(cmdRemove, shape, null);
-			}
+			if(shape.isSelected())
+				cmdRemove.addShapeToRemove(shape);
 		}
+		executeAndLogRemoveCmd(cmdRemove);
 		frame.setAllShapeManipultationButtonsState(false);
     }
+	
+	public void executeAndLogRemoveCmd(CmdRemove cmdRemove) {
+		frame.appendToLogPanel("Executed" + " " + cmdRemove.getClass().getSimpleName() + "_for_" + cmdRemove.getShapesToBeRemoved().size() + "_shape(s)" + "\n");
+		textUndoCommandsStack.push("Executed" + " " + cmdRemove.getClass().getSimpleName() + "_for_" + cmdRemove.getShapesToBeRemoved().size() + "_shape(s)" + "\n");
+		executeCommand(cmdRemove);
+	}
 	
 	public void modifyShape() {
 		Shape originalShape = findMostTopSelectedShape();
@@ -246,21 +251,10 @@ public class DrawingController {
 	}
 	
 	public void undo() {
-		if (!(undoCommandsStack.peek() instanceof CmdRemove))
-			executeUndo();
-		else {
-			int deletedShapesToUndoCount = 0;
-			while (undoCommandsStack.peek() instanceof CmdRemove) {
-				executeUndo();
-				deletedShapesToUndoCount++;
-			}
-			if(deletedShapesToUndoCount == 1)
-				frame.setAllShapeManipultationButtonsState(true);
-			else {
-				frame.getTglBtnModify().setEnabled(false);
-				frame.getTglBtnDelete().setEnabled(true);
-			}
-		}
+		if (undoCommandsStack.peek() instanceof CmdRemove)
+			realizeUndoForCmdRemove();
+		else
+			realizeUndo();
 		if(undoCommandsStack.isEmpty())
 			frame.getTglBtnUndo().setEnabled(false);
 		if(!redoCommandsStack.isEmpty())
@@ -268,25 +262,37 @@ public class DrawingController {
 		frame.repaint();
 	}
 	
+	private void realizeUndoForCmdRemove() {		
+		if(((CmdRemove) undoCommandsStack.peek()).getShapesToBeRemoved().size() == 1)
+			frame.setAllShapeManipultationButtonsState(true);
+		else {
+			frame.setAllShapeManipultationButtonsState(false);
+			frame.getTglBtnDelete().setEnabled(true);
+		}
+		realizeUndo();
+	}
+	
+	private void realizeUndo() {
+		executeUndo();
+		logUndo();
+	}
+	
 	private void executeUndo() {
 		redoCommandsStack.push(undoCommandsStack.peek());
 		undoCommandsStack.pop().unexecute();
+	}
+	
+	private void logUndo() {
 		textRedoCommandsStack.push(textUndoCommandsStack.peek());
 		String[] textToLog = textUndoCommandsStack.pop().split(" ");
 		frame.appendToLogPanel("Unexecuted " + textToLog[1]);
 	}
-	
+
 	public void redo() {
-		if (!(redoCommandsStack.peek() instanceof CmdRemove))
-			executeRedo();
-		else {
-			frame.setAllShapeManipultationButtonsState(false);
-			while (redoCommandsStack.peek() instanceof CmdRemove) {
-				executeRedo();
-				if(redoCommandsStack.isEmpty())
-					break;
-			}
-		}
+		if (redoCommandsStack.peek() instanceof CmdRemove)
+			realizeRedoForCmdRemove();
+		else
+			realizeRedo();
 		if(redoCommandsStack.isEmpty())
 			frame.getTglBtnRedo().setEnabled(false);
 		if(!undoCommandsStack.isEmpty())
@@ -294,9 +300,22 @@ public class DrawingController {
 		frame.repaint();
 	}
 	
+	private void realizeRedoForCmdRemove() {		
+		realizeRedo();
+		frame.setAllShapeManipultationButtonsState(false);
+	}
+	
+	private void realizeRedo() {
+		executeRedo();
+		logRedo();
+	}
+	
 	private void executeRedo() {
 		undoCommandsStack.push(redoCommandsStack.peek());
 		redoCommandsStack.pop().execute();
+	}
+	
+	private void logRedo() {
 		textUndoCommandsStack.push(textRedoCommandsStack.peek());
 		String[] textToLog = textRedoCommandsStack.pop().split(" ");
 		frame.appendToLogPanel("Re-executed " + textToLog[1]);
@@ -330,14 +349,8 @@ public class DrawingController {
 		fileChooser.setDialogTitle("Save file");
         int returnState = fileChooser.showSaveDialog(null);
         if (returnState == JFileChooser.APPROVE_OPTION) {
-        	AnyFile anyFile = null;
-        	if(fileChooser.getFileFilter().getDescription().equals("serialized file (.ser)"))
-        		anyFile = new SerializableFile(model,frame);
-        	else
-        		anyFile = new LogFile(model,frame);
-        	FileManager fileManager = new FileManager(anyFile);
+        	FileManager fileManager = initalizeFile(fileChooser);
         	fileManager.saveFile(fileChooser.getSelectedFile());
-        
         }
 	}
 	
@@ -352,16 +365,17 @@ public class DrawingController {
         int returnState = fileChooser.showOpenDialog(null);
         if (returnState == JFileChooser.APPROVE_OPTION) {
     		clearCanvas();
-        	AnyFile anyFile = null;
-        	if(fileChooser.getFileFilter().getDescription().equals("serialized file (.ser)"))
-        		anyFile = new SerializableFile(model,frame);
-        	else
-        		anyFile = new LogFile(model,frame);
-        	FileManager fileManager = new FileManager(anyFile);
+        	FileManager fileManager = initalizeFile(fileChooser);
         	fileManager.loadFile(fileChooser.getSelectedFile());
         	frame.repaint();
-        
         }
+	}
+	
+	private FileManager initalizeFile(JFileChooser fileChooser) {
+    	if(fileChooser.getFileFilter().getDescription().equals("serialized file (.ser)"))
+    		return new FileManager(new SerializableFile(model,frame));
+    	else
+    		return new FileManager(new LogFile(model,frame));
 	}
 	
 	private void addShape(Shape shape) {
@@ -390,22 +404,26 @@ public class DrawingController {
     public void executeAndLogCommand(Command command, Shape shape, Shape updatedShape) {
 		if(updatedShape == null) {
 			//execute command before logging so that the new shape state will be logged e.g. CmdSelect changes state from false to true  
-			command.execute();
+			executeCommand(command);
 			frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
 			textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
 		} else {
 			frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
 			textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
 			//execute command after logging, otherwise shape and updatedShape will be the same
-			command.execute();
+			executeCommand(command);
 		}
-		undoCommandsStack.push(command);
-		frame.getTglBtnUndo().setEnabled(true);
-		redoCommandsStack.clear();
-		textRedoCommandsStack.clear();
-		frame.getTglBtnRedo().setEnabled(false);
-		frame.repaint();
 	}
+    
+    private void executeCommand(Command command) {
+    	command.execute();
+    	undoCommandsStack.push(command);
+    	redoCommandsStack.clear();
+		frame.getTglBtnUndo().setEnabled(true);
+		frame.getTglBtnRedo().setEnabled(false);
+		textRedoCommandsStack.clear();
+		frame.repaint();
+    }
 	
     private Shape findMostTopSelectedShape() {
 		for(int i = model.getShapes().size() - 1; i >= 0; i--)

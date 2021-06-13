@@ -50,6 +50,7 @@ public abstract class DlgShape extends JDialog {
 		getContentPanel().add(txtX, gbc_txtCoordinateX);
 		txtX.setColumns(10);
 		txtX.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
@@ -73,6 +74,7 @@ public abstract class DlgShape extends JDialog {
 		getContentPanel().add(txtY, gbc_txtCoordinateY);
 		txtY.setColumns(10);
 		txtY.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		      checkInputText(e);
 		    }

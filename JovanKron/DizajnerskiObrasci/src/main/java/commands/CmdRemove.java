@@ -1,29 +1,41 @@
 package commands;
 
 import mvc.DrawingModel;
+
+import java.util.ArrayList;
+
 import geometry.Shape;
 
 public class CmdRemove implements Command {
-	private Shape shape;
 	private DrawingModel model;
-	private int oldPosition;
+	private ArrayList<Shape> shapesToBeRemoved = new ArrayList<Shape>();
+	private ArrayList<Integer> oldPositions = new ArrayList<Integer>();
 
-	public CmdRemove(Shape shape, DrawingModel model) {
-		this.shape = shape;
+	public CmdRemove(DrawingModel model) {
 		this.model = model;
+	}
+	
+	public void addShapeToRemove(Shape shape) {
+		shapesToBeRemoved.add(shape);
+	}
+	
+	public ArrayList<Shape> getShapesToBeRemoved() {
+		return shapesToBeRemoved;
 	}
 
 	@Override
 	public void execute() {
-		oldPosition = model.getShapes().indexOf(shape);
-		model.remove(shape);
-
+		for (Shape shapeToBeRemoved : shapesToBeRemoved)
+			oldPositions.add(model.getShapes().indexOf(shapeToBeRemoved));
+		for (Shape shapeToBeRemoved : shapesToBeRemoved)
+			model.remove(shapeToBeRemoved);
 	}
 
 	@Override
 	public void unexecute() {
-		model.addAtIndex(oldPosition, shape);
-
+		for (int i = 0; i < shapesToBeRemoved.size(); i++)
+			model.addAtIndex(oldPositions.get(i), shapesToBeRemoved.get(i));
+		oldPositions.clear();
 	}
 	
 }

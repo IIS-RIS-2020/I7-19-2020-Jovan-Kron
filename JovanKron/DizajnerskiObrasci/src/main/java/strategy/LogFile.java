@@ -13,9 +13,8 @@ public class LogFile implements AnyFile {
 	private DrawingModel model;
 	private DrawingFrame frame;
 	private Shape shape, updatedShape;
-	private Command command;
 	
-	public LogFile (DrawingModel model,DrawingFrame frame) {
+	public LogFile (DrawingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
 	}
@@ -59,115 +58,90 @@ public class LogFile implements AnyFile {
 	
 	private void parseLogFile(File file) {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-       	 	DlgCommands dialog = new DlgCommands();
-       	 	String textCommand;
-       	 	String forRemoveUndo = "";
-       	 	String forRemoveRedo = "";
-            while ((textCommand = bufferedReader.readLine()) != null) {
-		       	if(textCommand.contains("Unexecuted CmdRemove")) {
-		       		forRemoveUndo = forRemoveUndo + textCommand + "\n";
-		       		if(!forRemoveRedo.isEmpty()) {
-		       			showDlgCommand(dialog, forRemoveRedo);
-		            	forRemoveRedo = "";
-			            if(dialog.isConfirmed())
-			            	executeCommand("Re-executed");
-			            else
-			            	break;
-		       		 }
-		       		 continue;
-		       	 }
-		       	 if(!forRemoveUndo.isEmpty()) {
-		       		 showDlgCommand(dialog, forRemoveUndo);
-		       		 forRemoveUndo = "";
-	            	 if(dialog.isConfirmed())
-	            		 executeCommand("Unexecuted");
-	            	 else
-	            		 break;
-		       	 }
-	           	 if(textCommand.contains("Re-executed CmdRemove")) {
-	           		 forRemoveRedo = forRemoveRedo + textCommand + "\n";
-	           		 continue;
-	           	 }
-	           	 if(!forRemoveRedo.isEmpty()) {
-	           		 showDlgCommand(dialog, forRemoveRedo);
-	           		 forRemoveRedo = "";
-	            	 if(dialog.isConfirmed())
-	            		 executeCommand("Re-executed");
-	            	 else
-	            		 break;
-	           	 }
-	           	 showDlgCommand(dialog, textCommand);
-	           	 if(dialog.isConfirmed())
-	           		executeCommand(textCommand);
-	           	 else
-	           		 break;
+	   	 	DlgCommands dialog = new DlgCommands();
+	   	 	String textCommand;
+	        while ((textCommand = bufferedReader.readLine()) != null) {
+	        	showDlgCommand(dialog, textCommand);
+	        	if(dialog.isConfirmed())
+	        		executeCommand(textCommand);
+	        	else
+	        		break;
             }
-            //in case when unexecute or re-execute are last commands in batch do to continue in while will skip them
-            checkForRedoUndoRemove(dialog, forRemoveUndo, forRemoveRedo);
-            
         } catch (Exception e2) {
-				e2.printStackTrace();
-				JOptionPane.showMessageDialog(frame,"Error reading the log file");
+			e2.printStackTrace();
+			JOptionPane.showMessageDialog(frame,"Error reading the log file");
 		}
 	}
-	
+
 	private void showDlgCommand(DlgCommands dialog, String textCommand) {
 		dialog.getTextPane().setText(textCommand);
       	dialog.setVisible(true);
 	}
 	
 	private void executeCommand(String text) {
-		command = null;
+		Command command = null;
 		shape = null;
 		updatedShape = null;
 		if(text.contains("Executed")) {
-			parseTextToShape(text);
-			if(updatedShape == null)
-				createAddSelectOrRemoveCmd(text);
-			else
-				command = new CmdUpdate(shape, updatedShape);
-			if(command == null)
-	   	 		createPositioningCmd(text);
-			if(command != null)
-				frame.getController().executeAndLogCommand(command, shape, updatedShape);
+			if(text.contains("CmdRemove"))
+				frame.getController().deleteShapes();
+			else {
+				if(text.contains("Update")) {
+					parseTextToUpdatedShape(text);
+					command = new CmdUpdate(shape, updatedShape);
+				} else
+					command = createAddOrSelectCmd(text);
+				if(command == null)
+					command = createPositioningCmd(text);
+				if(command != null)
+					frame.getController().executeAndLogCommand(command, shape, updatedShape);
+			}
 		} else if (text.contains("Unexecuted"))
 			frame.getController().undo();
 		else if (text.contains("Re-executed"))
 			frame.getController().redo();
 	}
 	
-	private void parseTextToShape(String text) {
-		if(text.contains("Point")) {
-			if(text.contains("Update"))
-				modifyPoint(text);
-			else
-				shape = new Point().parse(text);
-		} else if(text.contains("Line")) {
-			if(text.contains("Update"))
-				modifyLine(text);
-			else
-				shape = new Line().parse(text);
-		} else if(text.contains("Circle")) {
-			if(text.contains("Update"))
-				modifyCircle(text);
-			else
-				shape = new Circle().parse(text);
-		} else if(text.contains("Rectangle")) {
-			if(text.contains("Update"))
-				modifyRectangle(text);
-			else
-				shape = new Rectangle().parse(text);
-		} else if(text.contains("Hexagon")) {
-			if(text.contains("Update"))
-				modifyHexagon(text);
-			else
-				shape = new HexagonAdapter().parse(text);
-		} else if(text.contains("Donut")) {
-			if(text.contains("Update"))
-				modifyDonut(text);
-			else
-				shape = new Donut().parse(text);
+	private void parseTextToUpdatedShape(String text) {
+		if(text.contains("Point"))
+			modifyPoint(text);
+		else if(text.contains("Line"))
+			modifyLine(text);
+		else if(text.contains("Circle"))
+			modifyCircle(text);
+		else if(text.contains("Rectangle"))
+			modifyRectangle(text);
+		else if(text.contains("Hexagon"))
+			modifyHexagon(text);
+		else if(text.contains("Donut"))
+			modifyDonut(text);
+	}
+	
+	private Command createAddOrSelectCmd(String text) {
+		parseTextToShape(text);
+		if(text.contains("Add")) {
+			shape.addObserver(new ObserverForButtons(model, frame));
+			return new CmdAdd(shape, model);
+		} else if(text.contains("CmdSelect")) {
+			int pos = model.getShapes().indexOf(shape);
+			return new CmdSelect(model.get(pos), shape.isSelected());
 		}
+		return null;
+	}
+	
+	private void parseTextToShape(String text) {
+		if(text.contains("Point"))
+			shape = new Point().parse(text);
+		else if(text.contains("Line"))
+			shape = new Line().parse(text);
+		else if(text.contains("Circle"))
+			shape = new Circle().parse(text);
+		else if(text.contains("Rectangle"))
+			shape = new Rectangle().parse(text);
+		else if(text.contains("Hexagon"))
+			shape = new HexagonAdapter().parse(text);
+		else if(text.contains("Donut"))
+			shape = new Donut().parse(text);
 	}
 	
 	private void modifyPoint(String text) {
@@ -224,45 +198,16 @@ public class LogFile implements AnyFile {
 		}
 	}
 
-	private void createAddSelectOrRemoveCmd(String text) {
-		int pos = model.getShapes().indexOf(shape);
-		if(text.contains("Add")) {
-			shape.addObserver(new ObserverForButtons(model, frame));
-			command = new CmdAdd(shape, model);
-		} else if(text.contains("CmdSelect"))
-			command = new CmdSelect(model.get(pos), shape.isSelected());
-		else if(text.contains("Remove")) {
-			command = new CmdRemove(model.get(pos), model);
-			frame.setAllShapeManipultationButtonsState(false);
-		}
-	}
-	
-	private void createPositioningCmd(String text) {
+	private Command createPositioningCmd(String text) {
 		if(text.contains("BringToBack"))
-	 			command = new CmdBringToBack(shape, model);
+	 		return new CmdBringToBack(shape, model);
  		else if(text.contains("BringToFront"))
- 			command = new CmdBringToFront(shape, model);
+ 			return new CmdBringToFront(shape, model);
  		else if(text.contains("CmdToBack"))
- 			command = new CmdToBack(shape, model);
+ 			return new CmdToBack(shape, model);
  		else if(text.contains("CmdToFront"))
- 			command = new CmdToFront(shape, model);
+ 			return new CmdToFront(shape, model);
+		return null;
 	}
 	
-	private void checkForRedoUndoRemove(DlgCommands dialog, String forRemoveUndo, String forRemoveRedo) {
-		if(!forRemoveRedo.isEmpty()) {
-			dialog.getTextPane().setText(forRemoveRedo);
-		   	forRemoveRedo = "";
-		   	dialog.setVisible(true);
-		   	if(dialog.isConfirmed())
-		   		executeCommand("Re-executed");
-		}
-		if(!forRemoveUndo.isEmpty()) {
-			dialog.getTextPane().setText(forRemoveUndo);
-   		 	forRemoveUndo = "";
-   		 	dialog.setVisible(true);
-   		 	if(dialog.isConfirmed())
-   		 		executeCommand("Unexecuted");
-		}
-	}
-
 }
