@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import org.junit.*;
 
+import geometry.Donut;
+import geometry.Point;
+
 public class DlgDonutTests {
 	private DlgDonut dialog;
 	
@@ -235,7 +238,7 @@ public class DlgDonutTests {
 	
 	@Test
 	public void testFillForAddExpectedTrue() {
-	    dialog.fillForAdd(1, 1, Color.RED, Color.BLUE);
+	    dialog.fillForAdd(new Point(1, 1), Color.RED, Color.BLUE);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertFalse(dialog.getTxtX().isEditable());
@@ -250,7 +253,7 @@ public class DlgDonutTests {
 	
 	@Test
 	public void testFillForModifyExpectedTrue() {
-	    dialog.fillForModify(1, 1, 10, 20, Color.RED, Color.BLUE);
+	    dialog.fillForModify(new Donut(new Point(1, 1), 20, 10, Color.RED, Color.BLUE));
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertEquals("10", dialog.getTxtInner().getText());
@@ -263,6 +266,19 @@ public class DlgDonutTests {
 	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
 	    assertEquals(Color.BLUE, dialog.getFillColor());
 	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
+	}
+	
+	@Test
+	public void testCreateDonutFromInputExpectedEqual() {
+	    dialog.fillForModify(new Donut(new Point(1, 1), 20, 10, Color.RED, Color.BLUE));
+	    dialog.getSaveButton().doClick();
+	    Donut d = dialog.createDonutFromInput();
+		assertEquals(1, d.getCenter().getX());
+		assertEquals(1, d.getCenter().getY());
+		assertEquals(20, d.getRadius());
+		assertEquals(10, d.getInnerRadius());
+		assertEquals(Color.RED, d.getEdgeColor());
+		assertEquals(Color.BLUE, d.getFillColor());
 	}
 	
 	@Test

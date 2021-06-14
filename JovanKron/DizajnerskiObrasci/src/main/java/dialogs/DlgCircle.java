@@ -1,6 +1,7 @@
 package dialogs;
 
 import javax.swing.*;
+import geometry.Circle;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -78,9 +79,13 @@ public class DlgCircle extends DlgSurfaceShape {
 		});
 	}
 	
-	public void fillForModify(int startX, int startY, int radius, Color edgeColor, Color fillColor) {
-		super.fillForModify(startX, startY, edgeColor, fillColor);
-		txtRadius.setText(Integer.toString(radius));
+	public void fillForModify(Circle circle) {
+		fillForModify(circle.getCenter(), circle.getEdgeColor(), circle.getFillColor());
+		txtRadius.setText(Integer.toString(circle.getRadius()));
+	}
+	
+	public Circle createCircleFromInput() {
+		return new Circle(createBasePointFromInput(), radius, getEdgeColor(), getFillColor());
 	}
 
 	public int getRadius() {

@@ -1,6 +1,8 @@
 package dialogs;
 
 import javax.swing.*;
+import geometry.Point;
+import geometry.Line;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -139,26 +141,22 @@ public class DlgLine extends DlgShape {
 		});
 	}
 	
-	public void fillForAdd(int startX, int startY, int endX, int endY, Color edgeColor) {
-		fillForAdd(startX, startY, edgeColor);
-		txtEndX.setText(Integer.toString(endX));
-		txtEndY.setText(Integer.toString(endY));
+	public void fillForAdd(Point basePoint, Point endPoint, Color edgeColor) {
+		fillForAdd(basePoint, edgeColor);
+		txtEndX.setText(Integer.toString(endPoint.getX()));
+		txtEndY.setText(Integer.toString(endPoint.getY()));
 		txtEndX.setEditable(false);
 		txtEndY.setEditable(false);
 	}
 	
-	public void fillForModify(int startX, int startY, int endX, int endY, Color edgeColor) {
-		fillForModify(startX, startY, edgeColor);
-		txtEndX.setText(Integer.toString(endX));
-		txtEndY.setText(Integer.toString(endY));
+	public void fillForModify(Line line) {
+		fillForModify(line.getStartPoint(), line.getEdgeColor());
+		txtEndX.setText(Integer.toString(line.getEndPoint().getX()));
+		txtEndY.setText(Integer.toString(line.getEndPoint().getY()));
 	}
-
-	public int getEndX() {
-		return endX;
-	}
-
-	public int getEndY() {
-		return endY;
+	
+	public Line createLineFromInput() {
+		return new Line(createBasePointFromInput(), new Point(endX, endY), getEdgeColor());
 	}
 
 	public JTextField getTxtEndX() {

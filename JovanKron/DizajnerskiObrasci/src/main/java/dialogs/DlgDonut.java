@@ -1,6 +1,9 @@
 package dialogs;
 
 import javax.swing.*;
+
+import geometry.Donut;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -135,18 +138,14 @@ public class DlgDonut extends DlgSurfaceShape {
 		});
 	}
 	
-	public void fillForModify(int startX, int startY, int innerRadius, int outerRadius, Color edgeColor, Color fillColor) {
-		super.fillForModify(startX, startY, edgeColor, fillColor);
-		txtInner.setText(Integer.toString(innerRadius));
-		txtOuter.setText(Integer.toString(outerRadius));
+	public void fillForModify(Donut donut) {
+		fillForModify(donut.getCenter(), donut.getEdgeColor(), donut.getFillColor());
+		txtInner.setText(Integer.toString(donut.getInnerRadius()));
+		txtOuter.setText(Integer.toString(donut.getRadius()));
 	}
 	
-	public int getInnerRadius() {
-		return innerRadius;
-	}
-
-	public int getOuterRadius() {
-		return outerRadius;
+	public Donut createDonutFromInput() {
+		return new Donut(createBasePointFromInput(), outerRadius, innerRadius, getEdgeColor(), getFillColor());
 	}
 
 	public JTextField getTxtInner() {

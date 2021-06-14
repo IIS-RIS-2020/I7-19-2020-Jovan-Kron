@@ -3,6 +3,7 @@ package dialogs;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import geometry.Rectangle;
 
 public class DlgRectangle extends DlgSurfaceShape {
 	private static final long serialVersionUID = 1L;
@@ -133,18 +134,14 @@ public class DlgRectangle extends DlgSurfaceShape {
 		});
 	}
 	
-	public void fillForModify(int startX, int startY, int width, int height, Color edgeColor, Color fillColor) {
-		super.fillForModify(startX, startY, edgeColor, fillColor);
-		txtWidth.setText(Integer.toString(width));
-		txtHeight.setText(Integer.toString(height));
+	public void fillForModify(Rectangle rectangle) {
+		fillForModify(rectangle.getUpperLeftPoint(), rectangle.getEdgeColor(), rectangle.getFillColor());
+		txtWidth.setText(Integer.toString(rectangle.getWidth()));
+		txtHeight.setText(Integer.toString(rectangle.getHeight()));
 	}
-
-	public int getRectangleWidth() {
-		return width;
-	}
-
-	public int getRectangleHeight() {
-		return height;
+	
+	public Rectangle createRectangleFromInput() {
+		return new Rectangle(createBasePointFromInput(), width, height, getEdgeColor(), getFillColor());
 	}
 
 	public JTextField getTxtWidth() {

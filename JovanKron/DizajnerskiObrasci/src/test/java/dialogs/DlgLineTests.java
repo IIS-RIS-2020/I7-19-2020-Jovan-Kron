@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import org.junit.*;
 
+import geometry.Line;
+import geometry.Point;
+
 public class DlgLineTests {
 	private DlgLine dialog;
 	
@@ -215,7 +218,7 @@ public class DlgLineTests {
 	
 	@Test
 	public void testFillForAddExpectedTrue() {
-	    dialog.fillForAdd(1, 1, 5, 5, Color.RED);
+	    dialog.fillForAdd(new Point(1, 1), new Point(5, 5), Color.RED);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertEquals("5", dialog.getTxtEndX().getText());
@@ -230,7 +233,7 @@ public class DlgLineTests {
 	
 	@Test
 	public void testFillForModifyExpectedTrue() {
-	    dialog.fillForModify(1, 1, 5, 5, Color.RED);
+	    dialog.fillForModify(new Line(new Point(1, 1), new Point(5, 5), Color.RED));
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertEquals("5", dialog.getTxtEndX().getText());
@@ -241,6 +244,18 @@ public class DlgLineTests {
 	    assertTrue(dialog.getTxtEndY().isEditable());
 	    assertEquals(Color.RED, dialog.getEdgeColor());
 	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
+	}
+	
+	@Test
+	public void testCreateLineFromInputExpectedEqual() {
+	    dialog.fillForModify(new Line(new Point(1, 1), new Point(5, 5), Color.RED));
+	    dialog.getSaveButton().doClick();
+	    Line l = dialog.createLineFromInput();
+	    assertEquals(1, l.getStartPoint().getX());
+		assertEquals(1, l.getStartPoint().getY());
+		assertEquals(5, l.getEndPoint().getX());
+		assertEquals(5, l.getEndPoint().getY());
+		assertEquals(Color.RED, l.getEdgeColor());
 	}
 	
 	@Test

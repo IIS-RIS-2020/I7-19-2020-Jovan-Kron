@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import org.junit.*;
 
+import geometry.Point;
+import geometry.Rectangle;
+
 public class DlgRectangleTests {
 	private DlgRectangle dialog;
 	
@@ -215,7 +218,7 @@ public class DlgRectangleTests {
 	
 	@Test
 	public void testFillForAddExpectedTrue() {
-	    dialog.fillForAdd(1, 1, Color.RED, Color.BLUE);
+	    dialog.fillForAdd(new Point(1, 1), Color.RED, Color.BLUE);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertFalse(dialog.getTxtX().isEditable());
@@ -230,7 +233,7 @@ public class DlgRectangleTests {
 	
 	@Test
 	public void testFillForModifyExpectedTrue() {
-	    dialog.fillForModify(1, 1, 10, 20, Color.RED, Color.BLUE);
+	    dialog.fillForModify(new Rectangle(new Point(1, 1), 10, 20, Color.RED, Color.BLUE));
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertEquals("10", dialog.getTxtWidth().getText());
@@ -243,6 +246,19 @@ public class DlgRectangleTests {
 	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
 	    assertEquals(Color.BLUE, dialog.getFillColor());
 	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
+	}
+	
+	@Test
+	public void testCreateRectangleFromInputExpectedEqual() {
+	    dialog.fillForModify(new Rectangle(new Point(1, 1), 10, 20, Color.RED, Color.BLUE));
+	    dialog.getSaveButton().doClick();
+	    Rectangle r = dialog.createRectangleFromInput();
+	    assertEquals(1, r.getUpperLeftPoint().getX());
+		assertEquals(1, r.getUpperLeftPoint().getY());
+		assertEquals(20, r.getHeight());
+		assertEquals(10, r.getWidth());
+		assertEquals(Color.RED, r.getEdgeColor());
+		assertEquals(Color.BLUE, r.getFillColor());
 	}
 	
 	@Test

@@ -33,7 +33,6 @@ public class LogFile implements AnyFile {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error while saving the log file");
         }
-		
 	}
 	
 	public void loadFile(File file) {
@@ -41,16 +40,16 @@ public class LogFile implements AnyFile {
 			JOptionPane.showMessageDialog(frame,"File does not exist");
 			return;
 		}
-		String [] parts = null;
-		String ext = "";
+		String[] parts = null;
+		String extension = "";
 		if(file.getName().contains(".")) {
 			parts = file.getName().split("\\.");
-			ext = parts[parts.length - 1];
+			extension = parts[parts.length - 1];
 		} else {
 			JOptionPane.showMessageDialog(frame,"File can't be loaded");
 			return;
 		}
-		if(ext.equals("log"))
+		if(extension.equals("log"))
 			parseLogFile(file);
 	    else
 			JOptionPane.showMessageDialog(frame,"File has to be of type log");
@@ -63,7 +62,7 @@ public class LogFile implements AnyFile {
 	        while ((textCommand = bufferedReader.readLine()) != null) {
 	        	showDlgCommand(dialog, textCommand);
 	        	if(dialog.isConfirmed())
-	        		executeCommand(textCommand);
+	        		resolveCommand(textCommand);
 	        	else
 	        		break;
             }
@@ -78,31 +77,35 @@ public class LogFile implements AnyFile {
       	dialog.setVisible(true);
 	}
 	
-	private void executeCommand(String text) {
-		Command command = null;
-		shape = null;
-		updatedShape = null;
-		if(text.contains("Executed")) {
-			if(text.contains("CmdRemove"))
-				frame.getController().deleteShapes();
-			else {
-				if(text.contains("Update")) {
-					parseTextToUpdatedShape(text);
-					command = new CmdUpdate(shape, updatedShape);
-				} else
-					command = createAddOrSelectCmd(text);
-				if(command == null)
-					command = createPositioningCmd(text);
-				if(command != null)
-					frame.getController().executeAndLogCommand(command, shape, updatedShape);
-			}
-		} else if (text.contains("Unexecuted"))
+	private void resolveCommand(String text) {
+		if(text.contains("Executed"))
+			executeCommnad(text);
+		else if (text.contains("Unexecuted"))
 			frame.getController().undo();
 		else if (text.contains("Re-executed"))
 			frame.getController().redo();
 	}
 	
-	private void parseTextToUpdatedShape(String text) {
+	private void executeCommnad(String text ) {
+		Command command = null;
+		shape = null;
+		updatedShape = null;
+		if(text.contains("CmdRemove"))
+			frame.getController().deleteShapes();
+		else {
+			if(text.contains("Update")) {
+				parseUpdateTextCmd(text);
+				command = new CmdUpdate(shape, updatedShape);
+			} else
+				command = createAddOrSelectCmd(text);
+			if(command == null)
+				command = createPositioningCmd(text);
+			if(command != null)
+				frame.getController().executeAndLogCommand(command, shape, updatedShape);
+		}
+	}
+	
+	private void parseUpdateTextCmd(String text) {
 		if(text.contains("Point"))
 			modifyPoint(text);
 		else if(text.contains("Line"))
@@ -118,8 +121,8 @@ public class LogFile implements AnyFile {
 	}
 	
 	private Command createAddOrSelectCmd(String text) {
-		parseTextToShape(text);
-		if(text.contains("Add")) {
+		parseTextCmdToShape(text);
+		if(text.contains("CmdAdd")) {
 			shape.addObserver(new ObserverForButtons(model, frame));
 			return new CmdAdd(shape, model);
 		} else if(text.contains("CmdSelect")) {
@@ -129,7 +132,7 @@ public class LogFile implements AnyFile {
 		return null;
 	}
 	
-	private void parseTextToShape(String text) {
+	private void parseTextCmdToShape(String text) {
 		if(text.contains("Point"))
 			shape = new Point().parse(text);
 		else if(text.contains("Line"))

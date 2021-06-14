@@ -1,6 +1,8 @@
 package dialogs;
 
 import java.awt.*;
+import geometry.HexagonAdapter;
+import geometry.Point;
 
 public class DlgHexagon extends DlgCircle {
 	private static final long serialVersionUID = 1L;
@@ -15,5 +17,16 @@ public class DlgHexagon extends DlgCircle {
 	@Override
 	public void defineSaveOperation() {
 		super.defineSaveOperation();	
+	}
+	
+	public void fillForModify(HexagonAdapter hexagonAdapter) {
+		Point hexagonCenter = new Point(hexagonAdapter.getX(), hexagonAdapter.getY());
+		fillForModify(hexagonCenter, hexagonAdapter.getEdgeColor(), hexagonAdapter.getFillColor());
+		getTxtRadius().setText(Integer.toString(hexagonAdapter.getR()));
+	}
+
+	public HexagonAdapter createHexagonAdapterFromInput() {
+		Point basePoint = createBasePointFromInput();
+		return new HexagonAdapter(basePoint.getX(), basePoint.getY(), getRadius(), getEdgeColor(), getFillColor());
 	}
 }

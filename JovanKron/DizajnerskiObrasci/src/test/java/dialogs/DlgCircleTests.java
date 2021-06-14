@@ -3,6 +3,7 @@ package dialogs;
 import static org.junit.Assert.*;
 import java.awt.Color;
 import org.junit.*;
+import geometry.*;
 
 public class DlgCircleTests {
 	private DlgCircle dialog;
@@ -133,7 +134,7 @@ public class DlgCircleTests {
 	
 	@Test
 	public void testFillForAddExpectedTrue() {
-	    dialog.fillForAdd(1, 1, Color.RED, Color.BLUE);
+	    dialog.fillForAdd(new Point(1, 1), Color.RED, Color.BLUE);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertFalse(dialog.getTxtX().isEditable());
@@ -147,7 +148,7 @@ public class DlgCircleTests {
 	
 	@Test
 	public void testFillForModifyExpectedTrue() {
-	    dialog.fillForModify(1, 1, 5, Color.RED, Color.BLUE);
+	    dialog.fillForModify(new Circle(new Point(1, 1), 5, Color.RED, Color.BLUE));
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertEquals("5", dialog.getTxtRadius().getText());
@@ -158,6 +159,18 @@ public class DlgCircleTests {
 	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
 	    assertEquals(Color.BLUE, dialog.getFillColor());
 	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
+	}
+	
+	@Test
+	public void testCreateCircleFromInputExpectedEqual() {
+	    dialog.fillForModify(new Circle(new Point(1, 1), 5, Color.RED, Color.BLUE));
+	    dialog.getSaveButton().doClick();
+	    Circle c = dialog.createCircleFromInput();
+	    assertEquals(1, c.getCenter().getX());
+		assertEquals(1, c.getCenter().getY());
+		assertEquals(5, c.getRadius());
+		assertEquals(Color.RED, c.getEdgeColor());
+		assertEquals(Color.BLUE, c.getFillColor());
 	}
 	
 	@Test

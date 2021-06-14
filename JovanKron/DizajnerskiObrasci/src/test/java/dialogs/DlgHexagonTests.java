@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import org.junit.*;
 
+import geometry.HexagonAdapter;
+import geometry.Point;
+
 public class DlgHexagonTests {
 	private DlgHexagon dialog;
 	
@@ -133,7 +136,7 @@ public class DlgHexagonTests {
 	
 	@Test
 	public void testFillForAddExpectedTrue() {
-	    dialog.fillForAdd(1, 1, Color.RED, Color.BLUE);
+	    dialog.fillForAdd(new Point(1, 1), Color.RED, Color.BLUE);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertFalse(dialog.getTxtX().isEditable());
@@ -147,7 +150,7 @@ public class DlgHexagonTests {
 	
 	@Test
 	public void testFillForModifyExpectedTrue() {
-	    dialog.fillForModify(1, 1, 5, Color.RED, Color.BLUE);
+	    dialog.fillForModify(new HexagonAdapter(1, 1, 5, Color.RED, Color.BLUE));
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertEquals("5", dialog.getTxtRadius().getText());
@@ -158,6 +161,18 @@ public class DlgHexagonTests {
 	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
 	    assertEquals(Color.BLUE, dialog.getFillColor());
 	    assertEquals(Color.BLUE, dialog.getBtnFillColor().getBackground());
+	}
+	
+	@Test
+	public void testCreateHexagonAdapterFromInputExpectedEqual() {
+	    dialog.fillForModify(new HexagonAdapter(1, 1, 5, Color.RED, Color.BLUE));
+	    dialog.getSaveButton().doClick();
+	    HexagonAdapter h = dialog.createHexagonAdapterFromInput();
+	    assertEquals(1, h.getX());
+		assertEquals(1, h.getY());
+		assertEquals(5, h.getR());
+		assertEquals(Color.RED, h.getEdgeColor());
+		assertEquals(Color.BLUE, h.getFillColor());
 	}
 	
 	@Test

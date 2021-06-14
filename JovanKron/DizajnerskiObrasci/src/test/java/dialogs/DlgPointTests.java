@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 import org.junit.*;
 
+import geometry.Point;
+
 public class DlgPointTests {
 	private DlgPoint dialog;
 	private JTextField txtInput;
@@ -89,7 +91,7 @@ public class DlgPointTests {
 	
 	@Test
 	public void testFillForAddExpectedTrue() {
-	    dialog.fillForAdd(1, 1, Color.RED);
+	    dialog.fillForAdd(new Point(1, 1), Color.RED);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertFalse(dialog.getTxtX().isEditable());
@@ -100,13 +102,23 @@ public class DlgPointTests {
 	
 	@Test
 	public void testFillForModifyExpectedTrue() {
-	    dialog.fillForModify(1, 1, Color.RED);
+	    dialog.fillForModify(new Point(1, 1), Color.RED);
 	    assertEquals("1", dialog.getTxtX().getText());
 	    assertEquals("1", dialog.getTxtY().getText());
 	    assertTrue(dialog.getTxtX().isEditable());
 	    assertTrue(dialog.getTxtY().isEditable());
 	    assertEquals(Color.RED, dialog.getEdgeColor());
 	    assertEquals(Color.RED, dialog.getBtnEdgeColor().getBackground());
+	}
+	
+	@Test
+	public void testCreateBasePointFromInputExpectedEqual() {
+	    dialog.fillForModify(new Point(1, 1), Color.RED);
+	    dialog.getSaveButton().doClick();
+	    Point p = dialog.createBasePointFromInput();
+	    assertEquals(1, p.getX());
+		assertEquals(1, p.getY());
+		assertEquals(Color.RED, p.getEdgeColor());
 	}
 	
 	@Test

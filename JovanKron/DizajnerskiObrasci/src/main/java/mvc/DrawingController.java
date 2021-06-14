@@ -31,12 +31,11 @@ public class DrawingController {
 	
 	public void addPointOnClick(MouseEvent click) {
         DlgPoint dialog = new DlgPoint();
-        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor);
+        Point basePoint = new Point(click.getX(), click.getY());
+        dialog.fillForAdd(basePoint, currentEdgeColor);
         dialog.setVisible(true);
-        if(dialog.isConfirmed()) {
-        	Point point = new Point(click.getX(), click.getY(), dialog.getEdgeColor());
-        	addShape(point);
-        }
+        if(dialog.isConfirmed())
+        	addShape(dialog.createBasePointFromInput());
 	}
 	
 	public void addLineOnClick(MouseEvent click) {
@@ -45,11 +44,11 @@ public class DrawingController {
             flagForLine = false;
         } else {
         	DlgLine dialog = new DlgLine();
-        	dialog.fillForAdd(startPoint.getX(), startPoint.getY(), click.getX(), click.getY(), currentEdgeColor);
+        	Point endPoint = new Point(click.getX(), click.getY());
+        	dialog.fillForAdd(startPoint, endPoint, currentEdgeColor);
             dialog.setVisible(true);
             if (dialog.isConfirmed()) {
-            	Line line = new Line(startPoint, new Point(click.getX(), click.getY()), dialog.getEdgeColor());
-                addShape(line);
+                addShape(dialog.createLineFromInput());
                 flagForLine = true;
             }
         }
@@ -57,42 +56,36 @@ public class DrawingController {
 	
 	public void addRectangleOnClick(MouseEvent click) {
          DlgRectangle dialog = new DlgRectangle();
-         dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
-         dialog.setVisible(true);
-         if (dialog.isConfirmed()) {
-         	Rectangle rectangle = new Rectangle(new Point(click.getX(), click.getY()), dialog.getRectangleWidth(), dialog.getRectangleHeight(), dialog.getEdgeColor(), dialog.getFillColor());
-            addShape(rectangle);
-         }
+         showDialogForAddingSurfaceShape(dialog, click);
+         if (dialog.isConfirmed())
+            addShape(dialog.createRectangleFromInput());
 	}
 	
 	public void addCircleOnClick(MouseEvent click) {
         DlgCircle dialog = new DlgCircle();
-        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
-        dialog.setVisible(true);        
-        if(dialog.isConfirmed()) {
-        	Circle circle = new Circle(new Point(click.getX(), click.getY()), dialog.getRadius(), dialog.getEdgeColor(), dialog.getFillColor());
-            addShape(circle);
-        }
+        showDialogForAddingSurfaceShape(dialog, click);      
+        if(dialog.isConfirmed())
+            addShape(dialog.createCircleFromInput());
 	}
 	
 	public void addDonutOnClick(MouseEvent click) {
         DlgDonut dialog = new DlgDonut();
-        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
-        dialog.setVisible(true);
-        if(dialog.isConfirmed()) {
-        	Donut donut = new Donut(new Point(click.getX(), click.getY()), dialog.getOuterRadius(), dialog.getInnerRadius(), dialog.getEdgeColor(), dialog.getFillColor());
-            addShape(donut);
-        }
+        showDialogForAddingSurfaceShape(dialog, click);
+        if(dialog.isConfirmed())
+            addShape(dialog.createDonutFromInput());
 	}
 	
 	public void addHexagonOnClick(MouseEvent click) {
         DlgHexagon dialog = new DlgHexagon();
-        dialog.fillForAdd(click.getX(), click.getY(), currentEdgeColor, currentFillColor);
+        showDialogForAddingSurfaceShape(dialog, click);
+        if(dialog.isConfirmed())
+            addShape(dialog.createHexagonAdapterFromInput());
+	}
+	
+	private void showDialogForAddingSurfaceShape(DlgSurfaceShape dialog, MouseEvent click) {
+		Point basePoint = new Point(click.getX(), click.getY());
+        dialog.fillForAdd(basePoint, currentEdgeColor, currentFillColor);
         dialog.setVisible(true);
-        if(dialog.isConfirmed()) {
-        	HexagonAdapter hexagon = new HexagonAdapter(click.getX(), click.getY(), dialog.getRadius(), dialog.getEdgeColor(), dialog.getFillColor());
-            addShape(hexagon);
-        }
 	}
 	
 	public void selectShape(MouseEvent click) {
@@ -147,75 +140,56 @@ public class DrawingController {
 	
 	private void modifyPoint(Shape originalShape) {
 		Point originalPoint = (Point) originalShape;
-		Shape updatedShape = null;
 		DlgPoint dlgPoint = new DlgPoint();
-		dlgPoint.fillForModify(originalPoint.getX(), originalPoint.getY(), originalPoint.getEdgeColor());
+		dlgPoint.fillForModify(originalPoint, originalPoint.getEdgeColor());
 		dlgPoint.setVisible(true);
-		if(dlgPoint.isConfirmed()) {
-			updatedShape = new Point(dlgPoint.getBaseCoordinateX(), dlgPoint.getBaseCoordinateY(), dlgPoint.getEdgeColor());
-			updateShape(originalShape, updatedShape);
-		}
+		if(dlgPoint.isConfirmed())
+			updateShape(originalShape, dlgPoint.createBasePointFromInput());
 	}
 	
 	private void modifyLine(Shape originalShape) {
 		Line originalLine = (Line) originalShape;
-		Shape updatedShape = null;
         DlgLine dlgLine = new DlgLine();
-        dlgLine.fillForModify(originalLine.getStartPoint().getX(), originalLine.getStartPoint().getY(),
-        		originalLine.getEndPoint().getX(), originalLine.getEndPoint().getY(), originalLine.getEdgeColor());
+        dlgLine.fillForModify(originalLine);
         dlgLine.setVisible(true);
-        if(dlgLine.isConfirmed()) {
-        	updatedShape = new Line(new Point(dlgLine.getBaseCoordinateX(), dlgLine.getBaseCoordinateY()), new Point(dlgLine.getEndX(), dlgLine.getEndY()), dlgLine.getEdgeColor());
-        	updateShape(originalShape, updatedShape);
-        }
+        if(dlgLine.isConfirmed())
+        	updateShape(originalShape, dlgLine.createLineFromInput());
 	}
 	
 	private void modifyRectangle(Shape originalShape) {
 		Rectangle originalRectangle = (Rectangle) originalShape;
-		Shape updatedShape = null;
         DlgRectangle dlgRectangle = new DlgRectangle();
-        dlgRectangle.fillForModify(originalRectangle.getUpperLeftPoint().getX(), originalRectangle.getUpperLeftPoint().getY(), originalRectangle.getWidth(), originalRectangle.getHeight(), originalRectangle.getEdgeColor(), originalRectangle.getFillColor());
+        dlgRectangle.fillForModify(originalRectangle);
         dlgRectangle.setVisible(true);
-        if(dlgRectangle.isConfirmed()) {
-        	updatedShape = new Rectangle(new Point(dlgRectangle.getBaseCoordinateX(), dlgRectangle.getBaseCoordinateY()), dlgRectangle.getRectangleWidth(), dlgRectangle.getRectangleHeight(), dlgRectangle.getEdgeColor(), dlgRectangle.getFillColor());
-        	updateShape(originalShape, updatedShape);
-        }
+        if(dlgRectangle.isConfirmed())
+        	updateShape(originalShape, dlgRectangle.createRectangleFromInput());
 	}
 	
 	private void modifyDonut(Shape originalShape) {
 		Donut originalDonut = (Donut) originalShape;
-		Shape updatedShape = null;
         DlgDonut dlgDonut = new DlgDonut();
-        dlgDonut.fillForModify(originalDonut.getCenter().getX(), originalDonut.getCenter().getY(), originalDonut.getInnerRadius(), originalDonut.getRadius(), originalDonut.getEdgeColor(), originalDonut.getFillColor());
+        dlgDonut.fillForModify(originalDonut);
         dlgDonut.setVisible(true);
-        if(dlgDonut.isConfirmed()) {
-        	updatedShape = new Donut(new Point(dlgDonut.getBaseCoordinateX(), dlgDonut.getBaseCoordinateY()), dlgDonut.getOuterRadius(), dlgDonut.getInnerRadius(), dlgDonut.getEdgeColor(), dlgDonut.getFillColor());
-        	updateShape(originalShape, updatedShape);
-        }
+        if(dlgDonut.isConfirmed())
+        	updateShape(originalShape, dlgDonut.createDonutFromInput());
 	}
 	
 	private void modifyCircle(Shape originalShape) {
 		Circle originalCircle = (Circle) originalShape;
-		Shape updatedShape = null;
         DlgCircle dlgCircle = new DlgCircle();
-        dlgCircle.fillForModify(originalCircle.getCenter().getX(), originalCircle.getCenter().getY(), originalCircle.getRadius(), originalCircle.getEdgeColor(), originalCircle.getFillColor());
+        dlgCircle.fillForModify(originalCircle);
         dlgCircle.setVisible(true);
-        if(dlgCircle.isConfirmed()) {
-        	updatedShape = new Circle(new Point(dlgCircle.getBaseCoordinateX(), dlgCircle.getBaseCoordinateY()), dlgCircle.getRadius(), dlgCircle.getEdgeColor(), dlgCircle.getFillColor());
-        	updateShape(originalShape, updatedShape);
-        }
+        if(dlgCircle.isConfirmed())
+        	updateShape(originalShape, dlgCircle.createCircleFromInput());
 	}
 	
 	private void modifyHexagonAdapter(Shape originalShape) {
 		HexagonAdapter originalHexagonAdapter = (HexagonAdapter) originalShape;
-		Shape updatedShape = null;
         DlgHexagon dlgHexagon = new DlgHexagon();
-        dlgHexagon.fillForModify(originalHexagonAdapter.getX(), originalHexagonAdapter.getY(), originalHexagonAdapter.getR(), originalHexagonAdapter.getEdgeColor(), originalHexagonAdapter.getFillColor());
+        dlgHexagon.fillForModify(originalHexagonAdapter);
         dlgHexagon.setVisible(true);
-        if (dlgHexagon.isConfirmed()) {
-        	updatedShape = new HexagonAdapter(dlgHexagon.getBaseCoordinateX(), dlgHexagon.getBaseCoordinateY(), dlgHexagon.getRadius(), dlgHexagon.getEdgeColor(), dlgHexagon.getFillColor());
-        	updateShape(originalShape, updatedShape);
-        }
+        if (dlgHexagon.isConfirmed())
+        	updateShape(originalShape, dlgHexagon.createHexagonAdapterFromInput());
 	}
 	
 	public void toBack() {
@@ -253,8 +227,10 @@ public class DrawingController {
 	public void undo() {
 		if (undoCommandsStack.peek() instanceof CmdRemove)
 			realizeUndoForCmdRemove();
-		else
-			realizeUndo();
+		else {
+			executeUndo();
+			logUndo();
+		}
 		if(undoCommandsStack.isEmpty())
 			frame.getTglBtnUndo().setEnabled(false);
 		if(!redoCommandsStack.isEmpty())
@@ -269,10 +245,6 @@ public class DrawingController {
 			frame.setAllShapeManipultationButtonsState(false);
 			frame.getTglBtnDelete().setEnabled(true);
 		}
-		realizeUndo();
-	}
-	
-	private void realizeUndo() {
 		executeUndo();
 		logUndo();
 	}

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import geometry.Point;
 
 public abstract class DlgShape extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -137,17 +138,22 @@ public abstract class DlgShape extends JDialog {
 		buttonPanel.add(cancelButton);
 	}
 	
-	public void fillForAdd(int x, int y, Color edgeColor) {
-		fillForModify(x, y, edgeColor);
+	public void fillForAdd(Point point, Color edgeColor) {
+		fillForModify(point, edgeColor);
 		getTxtX().setEditable(false);
 		getTxtY().setEditable(false);
 	}
 	
-	public void fillForModify(int x, int y, Color edgeColor) {
-		getTxtX().setText(Integer.toString(x));
-		getTxtY().setText(Integer.toString(y));
+	public void fillForModify(Point point, Color edgeColor) {
+		getTxtX().setText(Integer.toString(point.getX()));
+		getTxtY().setText(Integer.toString(point.getY()));
 		setEdgeColor(edgeColor);
 		getBtnEdgeColor().setBackground(edgeColor);
+	}
+	
+	public Point createBasePointFromInput() {
+		readBaseCoordinates();
+		return new Point(baseCoordinateX, baseCoordinateY, edgeColor);
 	}
 	
 	public void readBaseCoordinates() {

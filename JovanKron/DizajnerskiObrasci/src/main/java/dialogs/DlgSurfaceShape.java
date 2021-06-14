@@ -3,6 +3,7 @@ package dialogs;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import geometry.Point;
 
 public abstract class DlgSurfaceShape extends DlgShape {
 	private static final long serialVersionUID = 1L;
@@ -45,15 +46,14 @@ public abstract class DlgSurfaceShape extends DlgShape {
 		getContentPanel().add(btnFillColor, gbc_btnFillColor);
 	}
 	
-	public void fillForAdd(int x, int y, Color edgeColor, Color fillColor) {
-		super.fillForAdd(x, y, edgeColor);
+	public void fillForAdd(Point basePoint, Color edgeColor, Color fillColor) {
+		fillForAdd(basePoint, edgeColor);
 		setFillColor(fillColor);
 		getBtnFillColor().setBackground(fillColor);
 	}
 	
-	public void fillForModify(int x, int y, Color edgeColor, Color fillColor)
-	{
-		super.fillForModify(x, y, edgeColor);
+	public void fillForModify(Point basePoint, Color edgeColor, Color fillColor) {
+		fillForModify(basePoint, edgeColor);
 		setFillColor(fillColor);
 		getBtnFillColor().setBackground(fillColor);
 	}
