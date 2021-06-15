@@ -11,7 +11,6 @@ public class DlgPoint extends DlgShape {
 		defineSaveOperation();
 	}
 
-	@Override
 	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

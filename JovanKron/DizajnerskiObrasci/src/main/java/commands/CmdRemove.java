@@ -23,7 +23,6 @@ public class CmdRemove implements Command {
 		return shapesToBeRemoved;
 	}
 
-	@Override
 	public void execute() {
 		for (Shape shapeToBeRemoved : shapesToBeRemoved)
 			oldPositions.add(model.getShapes().indexOf(shapeToBeRemoved));
@@ -31,7 +30,6 @@ public class CmdRemove implements Command {
 			model.remove(shapeToBeRemoved);
 	}
 
-	@Override
 	public void unexecute() {
 		for (int i = 0; i < shapesToBeRemoved.size(); i++)
 			model.addAtIndex(oldPositions.get(i), shapesToBeRemoved.get(i));

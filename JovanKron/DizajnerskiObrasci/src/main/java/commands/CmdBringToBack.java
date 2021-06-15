@@ -13,14 +13,12 @@ public class CmdBringToBack implements Command {
 		this.model = model;
 	}
 	
-	@Override
 	public void execute() {
 		oldPosition = model.getShapes().indexOf(shape);
 		model.getShapes().remove(oldPosition);
 		model.getShapes().add(0, shape);
 	}
 
-	@Override
 	public void unexecute() {
 		model.getShapes().remove(0);
 		model.getShapes().add(oldPosition, shape);

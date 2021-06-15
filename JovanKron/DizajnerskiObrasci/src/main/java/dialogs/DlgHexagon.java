@@ -13,11 +13,6 @@ public class DlgHexagon extends DlgCircle {
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
-
-	@Override
-	public void defineSaveOperation() {
-		super.defineSaveOperation();	
-	}
 	
 	public void fillForModify(HexagonAdapter hexagonAdapter) {
 		Point hexagonCenter = new Point(hexagonAdapter.getX(), hexagonAdapter.getY());
@@ -29,4 +24,5 @@ public class DlgHexagon extends DlgCircle {
 		Point basePoint = createBasePointFromInput();
 		return new HexagonAdapter(basePoint.getX(), basePoint.getY(), getRadius(), getEdgeColor(), getFillColor());
 	}
+	
 }

@@ -16,13 +16,11 @@ public class CmdToBack implements Command {
 		this.model = model;
 	}
 	
-	@Override
 	public void execute() {
 		position = model.getShapes().indexOf(shape);
 		Collections.swap(model.getShapes(), position, position - 1);
 	}
 
-	@Override
 	public void unexecute() {
 		Collections.swap(model.getShapes(), position, position - 1);
 	}

@@ -113,13 +113,13 @@ public class DlgLine extends DlgShape {
 		gbc_separator_1.gridy = 6;
 		getContentPanel().add(separator_1, gbc_separator_1);
 		txtEndY.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
 		});
 	}
 
-	@Override
 	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

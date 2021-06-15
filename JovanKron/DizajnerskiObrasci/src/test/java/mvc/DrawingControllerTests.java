@@ -595,12 +595,22 @@ public class DrawingControllerTests {
 	public void testUndoOnceForAdd() {
 		drawRectangle();
 		drawCircle();
-		drawHexagon();	
+		drawHexagon();
 		pressTab(3);
 		pressSpace(1);
 	    assertEquals(2, model.getShapes().size());
 		assertTrue(model.getShapes().get(0) instanceof Rectangle);
 		assertTrue(model.getShapes().get(1) instanceof Circle);
+	}
+	
+	@Test
+	public void testUndoAllCommands() {
+		drawRectangle();
+		drawCircle();
+		drawHexagon();
+		pressTab(3);
+		pressSpace(3);
+	    assertEquals(0, model.getShapes().size());
 	}
 	
 	@Test

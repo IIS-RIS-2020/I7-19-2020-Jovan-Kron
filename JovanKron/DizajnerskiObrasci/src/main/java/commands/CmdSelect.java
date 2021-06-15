@@ -11,12 +11,10 @@ public class CmdSelect implements Command {
 		this.selected = selected;
 	}
 	
-	@Override
 	public void execute() {
 		shape.setSelected(selected);
 	}
 
-	@Override
 	public void unexecute() {	
 		if (shape.isSelected())
 			shape.setSelected(false);

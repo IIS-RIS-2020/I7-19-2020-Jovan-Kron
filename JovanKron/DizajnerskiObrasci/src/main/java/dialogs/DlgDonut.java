@@ -55,6 +55,7 @@ public class DlgDonut extends DlgSurfaceShape {
 		gbc_txtInnerRaduis.gridy = 3;
 		getContentPanel().add(txtInner, gbc_txtInnerRaduis);
 		txtInner.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
@@ -77,6 +78,7 @@ public class DlgDonut extends DlgSurfaceShape {
 		gbc_txtOuterRadius.gridy = 4;
 		getContentPanel().add(txtOuter, gbc_txtOuterRadius);
 		txtOuter.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
@@ -114,7 +116,6 @@ public class DlgDonut extends DlgSurfaceShape {
 		
 	}
 
-	@Override
 	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

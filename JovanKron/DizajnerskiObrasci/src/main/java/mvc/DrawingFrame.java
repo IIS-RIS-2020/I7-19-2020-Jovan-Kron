@@ -96,7 +96,8 @@ public class DrawingFrame extends JFrame {
 		tglBtnDelete.setEnabled(false);
 		tglBtnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int answer = JOptionPane.showConfirmDialog (null, "Do you want to delete selected shapes?","Warning",JOptionPane.YES_NO_OPTION);
+				String question = "Do you want to delete selected shapes?";
+				int answer = JOptionPane.showConfirmDialog(null, question,"Warning",JOptionPane.YES_NO_OPTION);
 				if(answer == JOptionPane.YES_OPTION)
 					controller.deleteShapes();
 			}
@@ -237,7 +238,6 @@ public class DrawingFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				controller.chooseEdgeColor();
 				tglBtnEdgeColor.setBackground(controller.getCurrentEdgeColor());
-				clickedButton = tglBtnEdgeColor;
 			}
 		});
 		panel.add(tglBtnEdgeColor);
@@ -253,7 +253,6 @@ public class DrawingFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				controller.chooseFillColor();
 				tglBtnFillColor.setBackground(controller.getCurrentFillColor());
-				clickedButton = tglBtnFillColor;
 			}
 		});
 		panel.add(tglBtnFillColor);

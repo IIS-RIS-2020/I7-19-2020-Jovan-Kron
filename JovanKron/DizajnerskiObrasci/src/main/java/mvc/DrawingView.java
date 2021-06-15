@@ -8,7 +8,14 @@ import geometry.Shape;
 public class DrawingView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private DrawingModel model = new DrawingModel();
-
+	
+	@Override
+	public void paint(Graphics graphics) {
+		ListIterator<Shape> iterator = model.getShapes().listIterator();
+		while(iterator.hasNext())
+			iterator.next().draw(graphics);
+	}
+	
 	public void setModel(DrawingModel model) {
 		this.model = model;
 		
@@ -18,10 +25,4 @@ public class DrawingView extends JPanel {
 		return model;
 	}
 	
-	@Override
-	public void paint(Graphics graphics) {
-		ListIterator<Shape> iterator = model.getShapes().listIterator();
-		while(iterator.hasNext())
-			iterator.next().draw(graphics);
-	}
 }

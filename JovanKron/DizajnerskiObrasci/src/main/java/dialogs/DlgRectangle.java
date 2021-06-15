@@ -53,6 +53,7 @@ public class DlgRectangle extends DlgSurfaceShape {
 		gbc_txtHeight.gridy = 3;
 		getContentPanel().add(txtHeight, gbc_txtHeight);
 		txtHeight.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
@@ -75,6 +76,7 @@ public class DlgRectangle extends DlgSurfaceShape {
 		gbc_txtWidth.gridy = 4;
 		getContentPanel().add(txtWidth, gbc_txtWidth);
 		txtWidth.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
@@ -112,7 +114,6 @@ public class DlgRectangle extends DlgSurfaceShape {
 		
 	}
 
-	@Override
 	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

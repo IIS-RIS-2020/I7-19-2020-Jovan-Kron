@@ -12,12 +12,10 @@ public class CmdAdd implements Command {
 		this.model = model;
 	}
 	
-	@Override
 	public void execute() {
 		model.add(shape);
 	}
 
-	@Override
 	public void unexecute() {
 		model.remove(shape);	
 	}

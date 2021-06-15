@@ -48,28 +48,31 @@ public class SerializableFile implements AnyFile {
 			JOptionPane.showMessageDialog(frame,"File can't be loaded");
 			return;
 		}
-		if(ext.equals("ser")) {
-			try {
-				FileInputStream theFile = new FileInputStream(file); 
-		        ObjectInputStream inputStream = new ObjectInputStream(theFile);
-				@SuppressWarnings("unchecked")
-				ArrayList<Shape> shapes = (ArrayList<Shape>) inputStream.readObject();
-		        for (Shape shape : shapes) {
-		        	if(shape != null) {
-		        		shape.addObserver(new ObserverForButtons(model, frame));
-		        		shape.setSelected(false);
-		        		model.add(shape);
-		        	}
-				}
-		        inputStream.close(); 
-		        theFile.close(); 
-			} catch(Exception e) {
-				e.printStackTrace();
-				System.out.println("Objects did not deserialize");
-			}
-		} else {
+		if(ext.equals("ser"))
+			readSerializableFile(file);
+		else
 			JOptionPane.showMessageDialog(frame,"File has to be of type ser");
-		}		
+	}
+	
+	private void readSerializableFile(File file) {
+		try {
+			FileInputStream theFile = new FileInputStream(file); 
+	        ObjectInputStream inputStream = new ObjectInputStream(theFile);
+			@SuppressWarnings("unchecked")
+			ArrayList<Shape> shapes = (ArrayList<Shape>) inputStream.readObject();
+	        for (Shape shape : shapes) {
+	        	if(shape != null) {
+	        		shape.addObserver(new ObserverForButtons(model, frame));
+	        		shape.setSelected(false);
+	        		model.add(shape);
+	        	}
+			}
+	        inputStream.close(); 
+	        theFile.close(); 
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Objects did not deserialize");
+		}
 	}
 	
 }

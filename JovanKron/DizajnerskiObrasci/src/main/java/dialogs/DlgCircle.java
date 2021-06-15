@@ -52,13 +52,13 @@ public class DlgCircle extends DlgSurfaceShape {
 		gbc_txtRaduis.gridy = 3;
 		getContentPanel().add(txtRadius, gbc_txtRaduis);
 		txtRadius.addKeyListener(new KeyAdapter() {
+			@Override
 		    public void keyTyped(KeyEvent e) {
 		    	checkInputText(e);
 		    }
 		});
 	}
 
-	@Override
 	protected void defineSaveOperation() {
 		getSaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	

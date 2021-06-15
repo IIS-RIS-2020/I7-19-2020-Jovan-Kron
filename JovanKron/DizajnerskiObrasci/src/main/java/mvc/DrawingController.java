@@ -106,19 +106,19 @@ public class DrawingController {
 	
 	public void deleteShapes() {
 		CmdRemove cmdRemove = new CmdRemove(model);
-		Shape shape;
-		for(int i = 0; i < model.getShapes().size(); i++) {
-			shape = model.get(i);
+		for (Shape shape : model.getShapes())
 			if(shape.isSelected())
 				cmdRemove.addShapeToRemove(shape);
-		}
 		executeAndLogRemoveCmd(cmdRemove);
 		frame.setAllShapeManipultationButtonsState(false);
     }
 	
 	public void executeAndLogRemoveCmd(CmdRemove cmdRemove) {
-		frame.appendToLogPanel("Executed" + " " + cmdRemove.getClass().getSimpleName() + "_for_" + cmdRemove.getShapesToBeRemoved().size() + "_shape(s)" + "\n");
-		textUndoCommandsStack.push("Executed" + " " + cmdRemove.getClass().getSimpleName() + "_for_" + cmdRemove.getShapesToBeRemoved().size() + "_shape(s)" + "\n");
+		String cmdRemoveClassName = cmdRemove.getClass().getSimpleName();
+		int numberOfShapesToBeRemoved = cmdRemove.getShapesToBeRemoved().size();
+		String textToLog = "Executed " + cmdRemoveClassName + "_for_" + numberOfShapesToBeRemoved + "_shape(s)" + "\n";
+		frame.appendToLogPanel(textToLog);
+		textUndoCommandsStack.push(textToLog);
 		executeCommand(cmdRemove);
 	}
 	
@@ -263,8 +263,10 @@ public class DrawingController {
 	public void redo() {
 		if (redoCommandsStack.peek() instanceof CmdRemove)
 			realizeRedoForCmdRemove();
-		else
-			realizeRedo();
+		else {
+			executeRedo();
+			logRedo();
+		}
 		if(redoCommandsStack.isEmpty())
 			frame.getTglBtnRedo().setEnabled(false);
 		if(!undoCommandsStack.isEmpty())
@@ -272,14 +274,10 @@ public class DrawingController {
 		frame.repaint();
 	}
 	
-	private void realizeRedoForCmdRemove() {		
-		realizeRedo();
-		frame.setAllShapeManipultationButtonsState(false);
-	}
-	
-	private void realizeRedo() {
+	private void realizeRedoForCmdRemove() {
 		executeRedo();
 		logRedo();
+		frame.setAllShapeManipultationButtonsState(false);
 	}
 	
 	private void executeRedo() {
@@ -306,7 +304,8 @@ public class DrawingController {
     }
     
     public void newPainting() {
-		int answer = JOptionPane.showConfirmDialog(null, "Current drawing will be lost, continue anyway?","Warning",JOptionPane.YES_NO_OPTION);
+    	String question = "Current drawing will be lost, continue anyway?";
+		int answer = JOptionPane.showConfirmDialog(null, question, "Warning", JOptionPane.YES_NO_OPTION);
 		if(answer == JOptionPane.YES_OPTION)
 			clearCanvas();
 	}
@@ -321,7 +320,7 @@ public class DrawingController {
 		fileChooser.setDialogTitle("Save file");
         int returnState = fileChooser.showSaveDialog(null);
         if (returnState == JFileChooser.APPROVE_OPTION) {
-        	FileManager fileManager = initalizeFile(fileChooser);
+        	FileManager fileManager = initalizeFileManager(fileChooser);
         	fileManager.saveFile(fileChooser.getSelectedFile());
         }
 	}
@@ -337,13 +336,13 @@ public class DrawingController {
         int returnState = fileChooser.showOpenDialog(null);
         if (returnState == JFileChooser.APPROVE_OPTION) {
     		clearCanvas();
-        	FileManager fileManager = initalizeFile(fileChooser);
+        	FileManager fileManager = initalizeFileManager(fileChooser);
         	fileManager.loadFile(fileChooser.getSelectedFile());
         	frame.repaint();
         }
 	}
 	
-	private FileManager initalizeFile(JFileChooser fileChooser) {
+	private FileManager initalizeFileManager(JFileChooser fileChooser) {
     	if(fileChooser.getFileFilter().getDescription().equals("serialized file (.ser)"))
     		return new FileManager(new SerializableFile(model,frame));
     	else
@@ -365,23 +364,29 @@ public class DrawingController {
 	
 	public void unselectAll() {
 		CmdSelect command;
+		Shape shape;
 		for(int i = model.getShapes().size() - 1; i >= 0; i--) {
-			if(model.get(i).isSelected()) {
-				command = new CmdSelect(model.get(i), false);
-				executeAndLogCommand(command, model.get(i), null);
+			shape = model.get(i);
+			if(shape.isSelected()) {
+				command = new CmdSelect(shape, false);
+				executeAndLogCommand(command, shape, null);
 			}
 		}
 	}
     
     public void executeAndLogCommand(Command command, Shape shape, Shape updatedShape) {
+    	String commandClassName = command.getClass().getSimpleName();
 		if(updatedShape == null) {
-			//execute command before logging so that the new shape state will be logged e.g. CmdSelect changes state from false to true  
+			//execute command before logging so that the new shape state will be logged
+			//e.g. CmdSelect changes state from false to true  
 			executeCommand(command);
-			frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
-			textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "\n");
+			String commonTextToLog = "Executed " + commandClassName + "_" + shape.toString();
+			frame.appendToLogPanel(commonTextToLog + "\n");
+			textUndoCommandsStack.push(commonTextToLog + "\n");
 		} else {
-			frame.appendToLogPanel("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
-			textUndoCommandsStack.push("Executed" + " " + command.getClass().getSimpleName() + "_" + shape.toString() + "_to_" + updatedShape.toString() + "\n");
+			String commonTextToLog = "Executed " + commandClassName + "_" + shape.toString();
+			frame.appendToLogPanel(commonTextToLog + "_to_" + updatedShape.toString() + "\n");
+			textUndoCommandsStack.push(commonTextToLog + "_to_" + updatedShape.toString() + "\n");
 			//execute command after logging, otherwise shape and updatedShape will be the same
 			executeCommand(command);
 		}
