@@ -1,6 +1,9 @@
 package dialogs;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import java.awt.Color;
 import org.junit.*;
 
@@ -9,10 +12,13 @@ import geometry.Rectangle;
 
 public class DlgRectangleTests {
 	private DlgRectangle dialog;
+	private OptionPane optionPane;
 	
 	@Before
 	public void setUp() {
 		dialog = new DlgRectangle();
+		optionPane = mock(OptionPane.class);
+		dialog.setOptionPane(optionPane);
 	}
 	
 	@Test
@@ -24,6 +30,7 @@ public class DlgRectangleTests {
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -31,6 +38,7 @@ public class DlgRectangleTests {
 		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -38,6 +46,7 @@ public class DlgRectangleTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -45,6 +54,7 @@ public class DlgRectangleTests {
 		dialog.getTxtWidth().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -52,6 +62,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -60,6 +71,7 @@ public class DlgRectangleTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -68,6 +80,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -77,6 +90,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -86,6 +100,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -95,6 +110,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -104,6 +120,7 @@ public class DlgRectangleTests {
 		dialog.getTxtWidth().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -114,6 +131,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -124,6 +142,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -134,6 +153,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -144,6 +164,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -154,6 +175,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -164,6 +186,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -174,6 +197,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -184,6 +208,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -194,6 +219,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -204,6 +230,7 @@ public class DlgRectangleTests {
 		dialog.getTxtHeight().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -265,6 +292,14 @@ public class DlgRectangleTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
+	}
+	
+	private void verifyEmptyInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Fault in entering values for numbers");
+	}
+	
+	private void verifyNegativeInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Entered values must be greater than 0 and 1 for width/height!");
 	}
 	
 }

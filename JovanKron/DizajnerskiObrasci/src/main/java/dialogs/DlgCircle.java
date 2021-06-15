@@ -2,8 +2,6 @@ package dialogs;
 
 import javax.swing.*;
 import geometry.Circle;
-import optionpane.OptionPane;
-import optionpane.RealOptionPane;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,7 +9,6 @@ public class DlgCircle extends DlgSurfaceShape {
 	private static final long serialVersionUID = 1L;
 	private int radius;
 	private JTextField txtRadius;
-	private OptionPane optionPane = new RealOptionPane();
 
 	public DlgCircle() {
 		setTitle("Circle dialog");
@@ -69,14 +66,14 @@ public class DlgCircle extends DlgSurfaceShape {
 					readBaseCoordinates();
 					radius = Integer.parseInt(txtRadius.getText());
 					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || radius < 1)
-						optionPane.showMessageDialog(null, "Entered values must be greater than 0 and 1 for radius!");
+						getOptionPane().showMessageDialog(null, "Entered values must be greater than 0 and 1 for radius!");
 					else {
 						setConfirmed(true);
 						dispose();
 					}
 				}
 				catch (NumberFormatException e1) {
-					optionPane.showMessageDialog(null, "Fault in entering values for numbers");
+					getOptionPane().showMessageDialog(null, "Fault in entering values for numbers");
 				}
 			}
 		});
@@ -97,10 +94,6 @@ public class DlgCircle extends DlgSurfaceShape {
 
 	public JTextField getTxtRadius() {
 		return txtRadius;
-	}
-	
-	public void setOptionPane(OptionPane optionPane) {
-	    this.optionPane = optionPane;
 	}
 	
 }

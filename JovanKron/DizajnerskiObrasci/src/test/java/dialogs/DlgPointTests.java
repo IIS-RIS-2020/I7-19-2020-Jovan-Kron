@@ -1,21 +1,21 @@
 package dialogs;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import javax.swing.JTextField;
 import org.junit.*;
-
 import geometry.Point;
 
 public class DlgPointTests {
 	private DlgPoint dialog;
-	private JTextField txtInput;
+	private OptionPane optionPane;
 	
 	@Before
 	public void setUp() {
 		dialog = new DlgPoint();
-		txtInput = new JTextField("545");
+		optionPane = mock(OptionPane.class);
+		dialog.setOptionPane(optionPane);
 	}
 	
 	@Test
@@ -27,52 +27,50 @@ public class DlgPointTests {
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 
 	@Test
 	public void testSaveWithOnlySetXExpectedFalse() {
-		dialog.setTxtX(txtInput);
+		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
 	public void testSaveWithOnlySetYExpectedFalse() {
-		dialog.setTxtY(txtInput);
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
 	public void testSaveWithXLessThanZeroExpectedFalse() {
-		dialog.setTxtX(new JTextField("-5"));
-		dialog.setTxtY(txtInput);
+		dialog.getTxtX().setText("-5");
+		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
 	public void testSaveWithYLessThanZeroExpectedFalse() {
-		dialog.setTxtX(txtInput);
-		dialog.setTxtY(new JTextField("-5"));
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("-5");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
 	public void testSaveWithBothCoordLessThanZeroExpectedFalse() {
-		dialog.setTxtX(new JTextField("-5"));
-		dialog.setTxtY(new JTextField("-5"));
+		dialog.getTxtX().setText("-5");
+		dialog.getTxtY().setText("-5");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
-	}
-	
-	@Test
-	public void testSaveExpectedTrue() {
-		dialog.setTxtX(txtInput);
-		dialog.setTxtY(txtInput);
-		dialog.getSaveButton().doClick();
-		assertTrue(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -87,6 +85,14 @@ public class DlgPointTests {
 	    KeyEvent e = new KeyEvent(new Button("click"), 1, 20, 1, 10, '7');
 		dialog.checkInputText(e);
 		assertFalse(e.isConsumed());
+	}
+	
+	@Test
+	public void testSaveExpectedTrue() {
+		dialog.getTxtX().setText("545");
+		dialog.getTxtY().setText("545");
+		dialog.getSaveButton().doClick();
+		assertTrue(dialog.isConfirmed());
 	}
 	
 	@Test
@@ -127,4 +133,12 @@ public class DlgPointTests {
 		assertFalse(dialog.isActive());
 	}
 
+	private void verifyEmptyInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Fault in entering values for numbers");
+	}
+	
+	private void verifyNegativeInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Entered values must be greater than 0!");
+	}
+	
 }

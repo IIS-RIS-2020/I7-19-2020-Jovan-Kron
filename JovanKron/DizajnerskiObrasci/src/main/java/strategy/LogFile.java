@@ -7,7 +7,6 @@ import dialogs.*;
 import geometry.*;
 import mvc.*;
 import observer.ObserverForButtons;
-import optionpane.*;
 
 public class LogFile implements AnyFile {
 	private DrawingModel model;

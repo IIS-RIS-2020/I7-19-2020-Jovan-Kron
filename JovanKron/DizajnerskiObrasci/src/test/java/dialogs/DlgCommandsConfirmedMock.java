@@ -1,4 +1,4 @@
-package dialogmocks;
+package dialogs;
 
 import javax.swing.JTextPane;
 

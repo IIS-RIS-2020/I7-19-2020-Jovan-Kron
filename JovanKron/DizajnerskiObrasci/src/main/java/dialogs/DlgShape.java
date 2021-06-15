@@ -16,6 +16,7 @@ public abstract class DlgShape extends JDialog {
 	private boolean confirmed;
 	private JButton btnEdgeColor, saveButton, cancelButton;
 	private JLabel lblEdgeColor;
+	private OptionPane optionPane = new RealOptionPane();
 	
 	public DlgShape() {
 		setResizable(false);
@@ -229,6 +230,14 @@ public abstract class DlgShape extends JDialog {
 
 	public void setEdgeColor(Color edgeColor) {
 		this.edgeColor = edgeColor;
+	}
+	
+	public OptionPane getOptionPane() {
+	    return optionPane;
+	}
+	
+	public void setOptionPane(OptionPane optionPane) {
+	    this.optionPane = optionPane;
 	}
 	
 }

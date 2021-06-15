@@ -2,7 +2,6 @@ package dialogs;
 
 import javax.swing.*;
 import geometry.Donut;
-import optionpane.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,7 +9,6 @@ public class DlgDonut extends DlgSurfaceShape {
 	private static final long serialVersionUID = 1L;
 	private int innerRadius, outerRadius;
 	private JTextField txtInner, txtOuter;
-	private OptionPane optionPane = new RealOptionPane();
 
 	public DlgDonut() {
 		setTitle("Donut dialog");
@@ -124,16 +122,16 @@ public class DlgDonut extends DlgSurfaceShape {
 					innerRadius = Integer.parseInt(txtInner.getText());
 					outerRadius = Integer.parseInt(txtOuter.getText());
 					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || innerRadius < 1 || outerRadius <1 )
-						optionPane.showMessageDialog(null, "Entered values must be greater than 0 and 1 for inner/outer radius!");
+						getOptionPane().showMessageDialog(null, "Entered values must be greater than 0 and 1 for inner/outer radius!");
 					else if(innerRadius >= outerRadius)
-						optionPane.showMessageDialog(null, "Inner radius must be smaller than outer by at least 1!");
+						getOptionPane().showMessageDialog(null, "Inner radius must be smaller than outer by at least 1!");
 					else {
 						setConfirmed(true);
 						dispose();
 					}
 				}
 				catch (NumberFormatException e1) {
-					optionPane.showMessageDialog(null, "Fault in entering values for numbers");
+					getOptionPane().showMessageDialog(null, "Fault in entering values for numbers");
 				}
 			}
 		});
@@ -155,10 +153,6 @@ public class DlgDonut extends DlgSurfaceShape {
 
 	public JTextField getTxtOuter() {
 		return txtOuter;
-	}
-	
-	public void setOptionPane(OptionPane optionPane) {
-	    this.optionPane = optionPane;
 	}
 	
 }

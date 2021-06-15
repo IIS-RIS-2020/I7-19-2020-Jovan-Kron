@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import java.awt.Color;
 import org.junit.*;
 import geometry.*;
-import optionpane.OptionPane;
 
 public class DlgDonutTests {
 	private DlgDonut dialog;

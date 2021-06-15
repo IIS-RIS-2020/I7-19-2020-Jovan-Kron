@@ -128,14 +128,14 @@ public class DlgLine extends DlgShape {
 					endX = Integer.parseInt(txtEndX.getText());
 					endY = Integer.parseInt(txtEndY.getText());
 					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || endX < 0 || endY < 0)
-						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0");
+						getOptionPane().showMessageDialog(null, "Entered values must be greater than 0");
 					else {
 						setConfirmed(true);
 						dispose();
 					}
 				}
 				catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
+					getOptionPane().showMessageDialog(null, "Fault in entering values for numbers");
 				}
 			}
 		});

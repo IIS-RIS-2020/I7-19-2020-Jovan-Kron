@@ -122,14 +122,14 @@ public class DlgRectangle extends DlgSurfaceShape {
 					width = Integer.parseInt(txtWidth.getText());
 					height = Integer.parseInt(txtHeight.getText());
 					if(getBaseCoordinateX() < 0 || getBaseCoordinateY() < 0 || width < 1 || height < 1)
-						JOptionPane.showMessageDialog(null,"Entered values must be greater than 0 and 1 for width/height!");
+						getOptionPane().showMessageDialog(null, "Entered values must be greater than 0 and 1 for width/height!");
 					else {
 						setConfirmed(true);
 						dispose();
 					}
 				}
 				catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(null,"Fault in entering values for numbers");
+					getOptionPane().showMessageDialog(null, "Fault in entering values for numbers");
 				}
 			}
 		});

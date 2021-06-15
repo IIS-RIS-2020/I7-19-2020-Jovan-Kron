@@ -8,10 +8,10 @@ import java.awt.Color;
 import java.io.File;
 import org.junit.*;
 
-import dialogmocks.DlgCommandsConfirmedMock;
+import dialogs.DlgCommandsConfirmedMock;
+import dialogs.OptionPane;
 import geometry.*;
 import mvc.*;
-import optionpane.OptionPane;
 
 public class LogFileTests {
 	private DrawingModel model;

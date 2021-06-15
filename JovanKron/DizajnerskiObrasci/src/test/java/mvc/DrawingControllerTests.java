@@ -743,7 +743,7 @@ public class DrawingControllerTests {
 		robot.keyRelease(KeyEvent.VK_0);
 		robot.delay(100);
 		pressEnter(1);
-		robot.delay(500);
+		robot.delay(200);
 	}
 	
 	private void drawDonut() {
@@ -764,7 +764,7 @@ public class DrawingControllerTests {
 		robot.keyRelease(KeyEvent.VK_0);
 		robot.delay(100);
 		pressEnter(1);
-		robot.delay(500);
+		robot.delay(200);
 		
 	}
 	
@@ -779,7 +779,7 @@ public class DrawingControllerTests {
 		robot.keyRelease(KeyEvent.VK_0);
 		robot.delay(100);
 		pressEnter(1);
-		robot.delay(500);
+		robot.delay(200);
 	}
 	
 	private void drawHexagon() {
@@ -793,21 +793,21 @@ public class DrawingControllerTests {
 		robot.keyRelease(KeyEvent.VK_0);
 		robot.delay(100);
 		pressEnter(1);
-		robot.delay(500);
+		robot.delay(200);
 	}
 	
 	private void click(int x, int y) {
 		robot.mouseMove(x, y);
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); 
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		robot.delay(200);
+		robot.delay(100);
 	}
 	
 	private void pressTab(int numberOfPresses) {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_TAB);
 		    robot.keyRelease(KeyEvent.VK_TAB);
-		    robot.delay(150);
+		    robot.delay(100);
 		}
 	}
 	
@@ -831,7 +831,7 @@ public class DrawingControllerTests {
 		for (int i = 0; i < numberOfPresses; i++) {
 			robot.keyPress(KeyEvent.VK_ENTER);
 		    robot.keyRelease(KeyEvent.VK_ENTER);
-		    robot.delay(300);
+		    robot.delay(100);
 		}
 	}
 	

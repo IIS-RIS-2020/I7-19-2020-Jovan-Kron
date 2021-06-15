@@ -1,4 +1,4 @@
-package optionpane;
+package dialogs;
 
 import java.awt.Component;
 

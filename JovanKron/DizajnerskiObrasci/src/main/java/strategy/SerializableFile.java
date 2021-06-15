@@ -3,10 +3,11 @@ package strategy;
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
+import dialogs.OptionPane;
+import dialogs.RealOptionPane;
 import geometry.Shape;
 import mvc.*;
 import observer.ObserverForButtons;
-import optionpane.*;
 
 public class SerializableFile implements AnyFile {
 	private DrawingModel model;

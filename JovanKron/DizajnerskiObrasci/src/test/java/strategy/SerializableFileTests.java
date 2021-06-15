@@ -4,9 +4,10 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import java.io.File;
 import org.junit.*;
+
+import dialogs.OptionPane;
 import geometry.*;
 import mvc.*;
-import optionpane.OptionPane;
 
 public class SerializableFileTests {
 	private DrawingModel model;

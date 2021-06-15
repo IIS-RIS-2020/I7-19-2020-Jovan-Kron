@@ -1,18 +1,20 @@
 package dialogs;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.awt.Color;
 import org.junit.*;
-
-import geometry.HexagonAdapter;
-import geometry.Point;
+import geometry.*;
 
 public class DlgHexagonTests {
 	private DlgHexagon dialog;
+	private OptionPane optionPane;
 	
 	@Before
 	public void setUp() {
 		dialog = new DlgHexagon();
+		optionPane = mock(OptionPane.class);
+		dialog.setOptionPane(optionPane);
 	}
 	
 	@Test
@@ -24,6 +26,7 @@ public class DlgHexagonTests {
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -31,6 +34,7 @@ public class DlgHexagonTests {
 		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -38,6 +42,7 @@ public class DlgHexagonTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -45,6 +50,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -53,6 +59,7 @@ public class DlgHexagonTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -61,6 +68,7 @@ public class DlgHexagonTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -69,6 +77,7 @@ public class DlgHexagonTests {
 		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -78,6 +87,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -87,6 +97,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -96,6 +107,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -105,6 +117,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -114,6 +127,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -123,6 +137,7 @@ public class DlgHexagonTests {
 		dialog.getTxtRadius().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -179,6 +194,14 @@ public class DlgHexagonTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
+	}
+	
+	private void verifyEmptyInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Fault in entering values for numbers");
+	}
+	
+	private void verifyNegativeInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Entered values must be greater than 0 and 1 for radius!");
 	}
 	
 }
