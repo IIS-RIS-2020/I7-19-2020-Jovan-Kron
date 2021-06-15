@@ -1,30 +1,37 @@
 package strategy;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.io.File;
 import org.junit.*;
 import geometry.*;
 import mvc.*;
+import optionpane.OptionPane;
 
 public class SerializableFileTests {
 	private DrawingModel model;
 	private File file;
 	private SerializableFile serializableFile;
+	private OptionPane optionPane;
+	private DrawingFrame frame;
 
 	@Before
 	public void setUp() {
 		model = new DrawingModel();
-		DrawingFrame frame = new DrawingFrame();
+		frame = new DrawingFrame();
         frame.getView().setModel(model);
         DrawingController controller = new DrawingController(model, frame);
         frame.setController(controller);
         serializableFile = new SerializableFile(model, frame);
+        optionPane = mock(OptionPane.class);
+        serializableFile.setOptionPane(optionPane);
 	}
 	
 	@Test
 	public void testSaveFileThatDoesExist() {
 		file = new File("src/test/resources/files/serializableFiles/all-shapes-drawn");
 		serializableFile.saveFile(file);
+		verify(optionPane).showMessageDialog(frame, "File with same name already exists");
 	}
 	
 	@Test
@@ -39,18 +46,22 @@ public class SerializableFileTests {
 	public void testLoadFileThatDoesntExist() {
 		file = new File("src/test/resources/doesntexist");
 		serializableFile.loadFile(file);
+		verify(optionPane).showMessageDialog(frame, "File does not exist");
 	}
 	
 	@Test
 	public void testLoadFileThatHasNoExtension() {
 		file = new File("src/test/resources/files/has-no-extension");
 		serializableFile.loadFile(file);
+		verify(optionPane).showMessageDialog(frame, "File can't be loaded");
+
 	}
 	
 	@Test
 	public void testLoadFileThatHasWrongExtension() {
 		file = new File("src/test/resources/files/has-wrong-extension.json");
 		serializableFile.loadFile(file);
+		verify(optionPane).showMessageDialog(frame, "File has to be of type ser");
 	}
 	
 	@Test

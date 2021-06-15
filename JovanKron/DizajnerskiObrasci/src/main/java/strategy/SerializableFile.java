@@ -3,23 +3,24 @@ package strategy;
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import geometry.Shape;
 import mvc.*;
 import observer.ObserverForButtons;
+import optionpane.*;
 
 public class SerializableFile implements AnyFile {
 	private DrawingModel model;
 	private DrawingFrame frame;
+	private OptionPane optionPane = new RealOptionPane();
 	
-	public SerializableFile (DrawingModel model,DrawingFrame frame) {
+	public SerializableFile (DrawingModel model, DrawingFrame frame) {
 		this.model=model;
 		this.frame=frame;
 	}
 	
 	public void saveFile(File file) {
 		if(Files.exists(Paths.get(file.toString() + ".ser"))) { 
-			JOptionPane.showMessageDialog(frame,"File with same name already exists");
+			optionPane.showMessageDialog(frame,"File with same name already exists");
 			return;
 		}
 		try {
@@ -28,7 +29,7 @@ public class SerializableFile implements AnyFile {
 	         outputStream.writeObject(model.getShapes()); 
 	         outputStream.close(); 
 	         theFile.close();
-	         JOptionPane.showMessageDialog(null, "The serializable file was saved successfully");
+	         optionPane.showMessageDialog(null, "The serializable file was saved successfully");
 		} catch(Exception e) {
 				 System.out.println("Objects did not serialize");
 		}
@@ -36,7 +37,7 @@ public class SerializableFile implements AnyFile {
 
 	public void loadFile(File file) {
 		if(!Files.exists(Paths.get(file.toString()))) { 
-			JOptionPane.showMessageDialog(frame,"File does not exist");
+			optionPane.showMessageDialog(frame, "File does not exist");
 			return;
 		}
 		String [] parts = null;
@@ -45,13 +46,13 @@ public class SerializableFile implements AnyFile {
 			parts = file.getName().split("\\.");
 			ext = parts[parts.length - 1];
 		} else {
-			JOptionPane.showMessageDialog(frame,"File can't be loaded");
+			optionPane.showMessageDialog(frame, "File can't be loaded");
 			return;
 		}
 		if(ext.equals("ser"))
 			readSerializableFile(file);
 		else
-			JOptionPane.showMessageDialog(frame,"File has to be of type ser");
+			optionPane.showMessageDialog(frame, "File has to be of type ser");
 	}
 	
 	private void readSerializableFile(File file) {
@@ -73,6 +74,10 @@ public class SerializableFile implements AnyFile {
 			e.printStackTrace();
 			System.out.println("Objects did not deserialize");
 		}
+	}
+	
+	public void setOptionPane(OptionPane optionPane) {
+	    this.optionPane = optionPane;
 	}
 	
 }

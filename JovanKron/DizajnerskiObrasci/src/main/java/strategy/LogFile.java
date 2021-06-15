@@ -2,17 +2,19 @@ package strategy;
 
 import java.io.*;
 import java.nio.file.*;
-import javax.swing.JOptionPane;
 import commands.*;
-import dialogs.DlgCommands;
+import dialogs.*;
 import geometry.*;
 import mvc.*;
 import observer.ObserverForButtons;
+import optionpane.*;
 
 public class LogFile implements AnyFile {
 	private DrawingModel model;
 	private DrawingFrame frame;
 	private Shape shape, updatedShape;
+	private OptionPane optionPane = new RealOptionPane();
+	private DlgCommandsAnswer dialog = new DlgCommands();
 	
 	public LogFile (DrawingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -21,23 +23,23 @@ public class LogFile implements AnyFile {
 	
 	public void saveFile(File file) {
 		if(Files.exists(Paths.get(file.toString() + ".log"))) { 
-			JOptionPane.showMessageDialog(frame,"File with same name already exists");
+			optionPane.showMessageDialog(frame,"File with same name already exists");
 			return;
 		}
 		try {
 			FileWriter fileWriter = new FileWriter(file + ".log");
 			fileWriter.write(frame.getLogPanel().getText());
 			fileWriter.close();
-            JOptionPane.showMessageDialog(null, "The log file was saved successfully");
+			optionPane.showMessageDialog(frame, "The log file was saved successfully");
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error while saving the log file");
+            optionPane.showMessageDialog(frame, "Error while saving the log file");
         }
 	}
 	
 	public void loadFile(File file) {
 		if(!Files.exists(Paths.get(file.toString()))) { 
-			JOptionPane.showMessageDialog(frame,"File does not exist");
+			optionPane.showMessageDialog(frame,"File does not exist");
 			return;
 		}
 		String[] parts = null;
@@ -46,21 +48,22 @@ public class LogFile implements AnyFile {
 			parts = file.getName().split("\\.");
 			extension = parts[parts.length - 1];
 		} else {
-			JOptionPane.showMessageDialog(frame,"File can't be loaded");
+			optionPane.showMessageDialog(frame,"File can't be loaded");
 			return;
 		}
 		if(extension.equals("log"))
 			parseLogFile(file);
 	    else
-			JOptionPane.showMessageDialog(frame,"File has to be of type log");
+	    	optionPane.showMessageDialog(frame,"File has to be of type log");
 	}
 	
 	private void parseLogFile(File file) {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-	   	 	DlgCommands dialog = new DlgCommands();
+	   	 	
 	   	 	String textCommand;
 	        while ((textCommand = bufferedReader.readLine()) != null) {
-	        	showDlgCommand(dialog, textCommand);
+	        	//DlgCommands dialog = new DlgCommands();
+	        	showDlgCommand(textCommand);
 	        	if(dialog.isConfirmed())
 	        		resolveCommand(textCommand);
 	        	else
@@ -68,11 +71,11 @@ public class LogFile implements AnyFile {
             }
         } catch (Exception e2) {
 			e2.printStackTrace();
-			JOptionPane.showMessageDialog(frame,"Error reading the log file");
+			optionPane.showMessageDialog(frame,"Error reading the log file");
 		}
 	}
 
-	private void showDlgCommand(DlgCommands dialog, String textCommand) {
+	private void showDlgCommand(String textCommand) {
 		dialog.getTextPane().setText(textCommand);
       	dialog.setVisible(true);
 	}
@@ -211,6 +214,14 @@ public class LogFile implements AnyFile {
  		else if(text.contains("CmdToFront"))
  			return new CmdToFront(shape, model);
 		return null;
+	}
+	
+	public void setOptionPane(OptionPane optionPane) {
+	    this.optionPane = optionPane;
+	}
+	
+	public void setDlgCommandsAnswer(DlgCommandsAnswer dlgCommandsAnswer) {
+	    this.dialog = dlgCommandsAnswer;
 	}
 	
 }

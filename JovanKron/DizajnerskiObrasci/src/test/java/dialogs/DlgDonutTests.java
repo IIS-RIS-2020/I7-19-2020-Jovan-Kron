@@ -1,18 +1,21 @@
 package dialogs;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.awt.Color;
 import org.junit.*;
-
-import geometry.Donut;
-import geometry.Point;
+import geometry.*;
+import optionpane.OptionPane;
 
 public class DlgDonutTests {
 	private DlgDonut dialog;
+	private OptionPane optionPane;
 	
 	@Before
 	public void setUp() {
 		dialog = new DlgDonut();
+		optionPane = mock(OptionPane.class);
+		dialog.setOptionPane(optionPane);
 	}
 	
 	@Test
@@ -24,6 +27,7 @@ public class DlgDonutTests {
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -31,6 +35,7 @@ public class DlgDonutTests {
 		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -38,6 +43,7 @@ public class DlgDonutTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -45,6 +51,7 @@ public class DlgDonutTests {
 		dialog.getTxtInner().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -52,6 +59,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -60,6 +68,7 @@ public class DlgDonutTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -68,6 +77,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -77,6 +87,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -86,6 +97,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -95,6 +107,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -104,6 +117,7 @@ public class DlgDonutTests {
 		dialog.getTxtInner().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyEmptyInputInfoMessage();
 	}
 	
 	@Test
@@ -114,6 +128,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("20");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyInnerRadiusGreaterThanOuterInputInfoMessage();
 	}
 	
 	@Test
@@ -124,6 +139,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("20");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyInnerRadiusGreaterThanOuterInputInfoMessage();
 	}
 	
 	@Test
@@ -134,6 +150,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -144,6 +161,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -154,6 +172,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -164,6 +183,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -174,6 +194,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -184,6 +205,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -194,6 +216,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -204,6 +227,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -214,6 +238,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -224,6 +249,7 @@ public class DlgDonutTests {
 		dialog.getTxtOuter().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage();
 	}
 	
 	@Test
@@ -285,6 +311,18 @@ public class DlgDonutTests {
 	public void testCancelExpectedFalse() {
 		dialog.getCancelButton().doClick();
 		assertFalse(dialog.isActive());
+	}
+	
+	private void verifyEmptyInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Fault in entering values for numbers");
+	}
+	
+	private void verifyInnerRadiusGreaterThanOuterInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Inner radius must be smaller than outer by at least 1!");
+	}
+	
+	private void verifyNegativeInputAndGreaterThanOneForInnerOuterInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Entered values must be greater than 0 and 1 for inner/outer radius!");
 	}
 	
 }

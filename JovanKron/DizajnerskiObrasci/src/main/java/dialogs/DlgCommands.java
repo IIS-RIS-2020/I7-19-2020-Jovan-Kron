@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class DlgCommands extends JDialog {
+public class DlgCommands extends JDialog implements DlgCommandsAnswer {
 	private static final long serialVersionUID = 1L;
 	private boolean confirmed;
 	private JTextPane textPane;

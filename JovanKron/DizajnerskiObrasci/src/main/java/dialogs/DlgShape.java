@@ -157,8 +157,8 @@ public abstract class DlgShape extends JDialog {
 	}
 	
 	public void readBaseCoordinates() {
-		setBaseCoordinateX(Integer.parseInt(getTxtX().getText()));
-		setBaseCoordinateY(Integer.parseInt(getTxtY().getText()));
+		baseCoordinateX = Integer.parseInt(getTxtX().getText());
+		baseCoordinateY = Integer.parseInt(getTxtY().getText());
 	}
 	
 	public void checkInputText(KeyEvent e) {
@@ -211,16 +211,8 @@ public abstract class DlgShape extends JDialog {
 		return baseCoordinateX;
 	}
 
-	private void setBaseCoordinateX(int baseCoordinateX) {
-		this.baseCoordinateX = baseCoordinateX;
-	}
-
 	public int getBaseCoordinateY() {
 		return baseCoordinateY;
-	}
-
-	private void setBaseCoordinateY(int baseCoordinateY) {
-		this.baseCoordinateY = baseCoordinateY;
 	}
 
 	public boolean isConfirmed() {

@@ -1,32 +1,43 @@
 package strategy;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import java.awt.Color;
 import java.io.File;
 import org.junit.*;
+
+import dialogmocks.DlgCommandsConfirmedMock;
 import geometry.*;
 import mvc.*;
+import optionpane.OptionPane;
 
 public class LogFileTests {
 	private DrawingModel model;
 	private File file;
 	private LogFile logFile;
+	private OptionPane optionPane;
+	private DrawingFrame frame;
 
 	@Before
 	public void setUp() {
 		model = new DrawingModel();
-		DrawingFrame frame = new DrawingFrame();
+		frame = new DrawingFrame();
         frame.getView().setModel(model);
         DrawingController controller = new DrawingController(model, frame);
         frame.setController(controller);
         logFile = new LogFile(model, frame);
-        
+        optionPane = mock(OptionPane.class);
+        logFile.setOptionPane(optionPane);
+        logFile.setDlgCommandsAnswer(new DlgCommandsConfirmedMock());
 	}
 	
 	@Test
 	public void testSaveFileThatDoesExist() {
 		file = new File("src/test/resources/files/logFiles/addShape/add-point");
 		logFile.saveFile(file);
+		verify(optionPane).showMessageDialog(frame, "File with same name already exists");
 	}
 	
 	@Test
@@ -34,25 +45,29 @@ public class LogFileTests {
 		file = new File("src/test/resources/files/logFiles/addShape/test");
 		logFile.saveFile(file);
 		file = new File("src/test/resources/files/logFiles/addShape/test.log");
-		file.delete();
+		assertTrue(file.delete());
+		verify(optionPane).showMessageDialog(frame, "The log file was saved successfully");
 	}
 	
 	@Test
 	public void testLoadFileThatDoesntExist() {
 		file = new File("src/test/resources/doesntexist");
 		logFile.loadFile(file);
+		verify(optionPane).showMessageDialog(frame, "File does not exist");
 	}
 	
 	@Test
 	public void testLoadFileThatHasNoExtension() {
 		file = new File("src/test/resources/files/has-no-extension");
 		logFile.loadFile(file);
+		verify(optionPane).showMessageDialog(frame, "File can't be loaded");
 	}
 	
 	@Test
 	public void testLoadFileThatHasWrongExtension() {
 		file = new File("src/test/resources/files/has-wrong-extension.json");
 		logFile.loadFile(file);
+		verify(optionPane).showMessageDialog(frame, "File has to be of type log");
 	}
 	
 	@Test

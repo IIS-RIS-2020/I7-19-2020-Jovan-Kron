@@ -1,16 +1,21 @@
 package dialogs;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.awt.Color;
 import org.junit.*;
 import geometry.*;
+import optionpane.OptionPane;
 
 public class DlgCircleTests {
 	private DlgCircle dialog;
+	private OptionPane optionPane;
 	
 	@Before
 	public void setUp() {
 		dialog = new DlgCircle();
+		optionPane = mock(OptionPane.class);
+		dialog.setOptionPane(optionPane);
 	}
 	
 	@Test
@@ -22,6 +27,7 @@ public class DlgCircleTests {
 	public void testSaveExpectedFalse() {
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -29,6 +35,7 @@ public class DlgCircleTests {
 		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -36,6 +43,7 @@ public class DlgCircleTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -43,6 +51,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -51,6 +60,7 @@ public class DlgCircleTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -59,6 +69,7 @@ public class DlgCircleTests {
 		dialog.getTxtY().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -67,6 +78,7 @@ public class DlgCircleTests {
 		dialog.getTxtX().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyWrongInputInfoMessage();
 	}
 	
 	@Test
@@ -76,6 +88,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -85,6 +98,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -94,6 +108,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -103,6 +118,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -112,6 +128,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -121,6 +138,7 @@ public class DlgCircleTests {
 		dialog.getTxtRadius().setText("-545");
 		dialog.getSaveButton().doClick();
 		assertFalse(dialog.isConfirmed());
+		verifyNegativeInputInfoMessage();
 	}
 	
 	@Test
@@ -179,4 +197,11 @@ public class DlgCircleTests {
 		assertFalse(dialog.isActive());
 	}
 	
+	private void verifyWrongInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Fault in entering values for numbers");
+	}
+	
+	private void verifyNegativeInputInfoMessage() {
+		verify(optionPane).showMessageDialog(null, "Entered values must be greater than 0 and 1 for radius!");
+	}
 }
