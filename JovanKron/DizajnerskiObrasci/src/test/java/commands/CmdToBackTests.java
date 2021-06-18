@@ -18,7 +18,7 @@ public class CmdToBackTests {
 		circle = new Circle(new Point(1, 1), 10);
 		model.add(point);
 		model.add(circle);
-		cmdToBack = new CmdToBack(circle, model);
+		cmdToBack = new CmdToBack(1, model);
 	}
 	
 	@Test

@@ -69,7 +69,7 @@ public class DrawingControllerTests {
 	}
 	
 	@Test
-	public void tesLoadSerializableFile() {
+	public void testLoadSerializableFile() {
 		pressTab(2);
 		pressSpace(1);
 		pressTab(1);
@@ -77,10 +77,15 @@ public class DrawingControllerTests {
 		robot.keyPress(KeyEvent.VK_UP);
 		robot.keyRelease(KeyEvent.VK_UP);
 		pressSpace(1);
+		pressBackspace(2);
 		pressTab(9);
-		pressSpace(1);
-		pressEnter(2);
-		robot.delay(2000);
+		for (int i = 0; i < 5; i++) {
+			robot.keyPress(KeyEvent.VK_DOWN);
+			robot.keyRelease(KeyEvent.VK_DOWN);
+			pressEnter(1);
+			robot.delay(500);
+		}
+		robot.delay(1000);
 		assertEquals(6, model.getShapes().size());
 		assertTrue(model.get(0) instanceof Point);
 		assertTrue(model.get(1) instanceof Line);
@@ -106,9 +111,28 @@ public class DrawingControllerTests {
 	public void testLoadLogFile() {
 		pressTab(2);
 		pressSpace(1);
-		pressTab(10);
-		pressSpace(1);
+		pressTab(1);
+		pressBackspace(2);
+		pressTab(9);
+		for (int i = 0; i < 3; i++) {
+			robot.keyPress(KeyEvent.VK_DOWN);
+			robot.keyRelease(KeyEvent.VK_DOWN);
+			pressEnter(1);
+			robot.delay(500);
+		}
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.delay(500);
+		robot.keyPress(KeyEvent.VK_UP);
+		robot.keyRelease(KeyEvent.VK_UP);
 		pressEnter(1);
+		for (int i = 0; i < 5; i++) {
+			robot.keyPress(KeyEvent.VK_DOWN);
+			robot.keyRelease(KeyEvent.VK_DOWN);
+			robot.delay(100);
+		}
+		pressEnter(1);
+		robot.delay(500);
 		pressSpace(6);
 		assertEquals(3, model.getShapes().size());
 		assertTrue(model.get(0) instanceof Line);

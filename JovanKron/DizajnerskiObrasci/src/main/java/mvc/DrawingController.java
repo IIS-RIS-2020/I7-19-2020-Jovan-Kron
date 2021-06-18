@@ -194,32 +194,36 @@ public class DrawingController {
 	
 	public void toBack() {
 		Shape shapeToMove = findMostTopSelectedShape();
-		if(model.getShapes().indexOf(shapeToMove) != 0)
-			executeAndLogCommand(new CmdToBack(shapeToMove, model), shapeToMove, null);
+		int indexOfShapeToMove = findIndexOfMostTopSelectedShape();
+		if(indexOfShapeToMove != 0)
+			executeAndLogCommand(new CmdToBack(indexOfShapeToMove, model), shapeToMove, null);
 		else
 			JOptionPane.showMessageDialog(null, "Shape is already on the back");
 	}
 	
 	public void toFront() {
 		Shape shapeToMove = findMostTopSelectedShape();
-		if(model.getShapes().indexOf(shapeToMove) != model.getShapes().size() - 1)
-			executeAndLogCommand(new CmdToFront(shapeToMove, model), shapeToMove, null);
+		int indexOfShapeToMove = findIndexOfMostTopSelectedShape();
+		if(indexOfShapeToMove != model.getShapes().size() - 1)
+			executeAndLogCommand(new CmdToFront(indexOfShapeToMove, model), shapeToMove, null);
 		else
 			JOptionPane.showMessageDialog(null, "Shape is already on the front");
 	}
 	
 	public void bringToBack() {
 		Shape shapeToMove = findMostTopSelectedShape();
-		if(model.getShapes().indexOf(shapeToMove) != 0)
-			executeAndLogCommand(new CmdBringToBack(shapeToMove, model), shapeToMove, null);
+		int indexOfShapeToMove = findIndexOfMostTopSelectedShape();
+		if(indexOfShapeToMove != 0)
+			executeAndLogCommand(new CmdBringToBack(indexOfShapeToMove, model), shapeToMove, null);
 		else
 			JOptionPane.showMessageDialog(null, "Shape is already on the back");
 	}
 	
 	public void bringToFront() {
 		Shape shapeToMove = findMostTopSelectedShape();
-		if(model.getShapes().indexOf(shapeToMove) != model.getShapes().size() - 1)
-			executeAndLogCommand(new CmdBringToFront(shapeToMove, model), shapeToMove, null);
+		int indexOfShapeToMove = findIndexOfMostTopSelectedShape();
+		if(indexOfShapeToMove != model.getShapes().size() - 1)
+			executeAndLogCommand(new CmdBringToFront(indexOfShapeToMove, model), shapeToMove, null);
 		else
 			JOptionPane.showMessageDialog(null, "Shape is already on the front");
 	}
@@ -408,6 +412,13 @@ public class DrawingController {
 				return model.get(i);
 		return null;
 	}
+    
+    public int findIndexOfMostTopSelectedShape() {
+    	for(int i = model.getShapes().size() - 1; i >= 0; i--)
+			if(model.get(i).isSelected())
+				return i;
+		return -1;
+    }
     
     private void clearCanvas() {
 		undoCommandsStack.clear();

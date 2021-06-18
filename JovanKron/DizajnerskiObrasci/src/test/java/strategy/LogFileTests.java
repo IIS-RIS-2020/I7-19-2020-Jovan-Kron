@@ -260,4 +260,14 @@ public class LogFileTests {
 		assertTrue(model.get(0) instanceof HexagonAdapter);
 	}
 	
+	@Test
+	public void testLoadFileAllPosCmdsOnSameCoordAndDimShapes() {
+		file = new File("src/test/resources/files/logFiles/positioning/all-pos-cmds-on-same-coord-and-dim-shapes.log");
+		logFile.loadFile(file);
+		assertEquals(2, model.getShapes().size());
+		assertTrue(model.get(0) instanceof Circle);
+		assertTrue(model.get(1) instanceof Circle);
+		assertEquals(Color.RED, ((SurfaceShape) model.get(0)).getFillColor());
+		assertEquals(Color.BLUE, ((SurfaceShape) model.get(1)).getFillColor());
+	}
 }

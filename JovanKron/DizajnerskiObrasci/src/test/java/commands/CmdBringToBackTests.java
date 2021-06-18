@@ -19,7 +19,7 @@ public class CmdBringToBackTests {
 		circle = new Circle(new Point(1, 1), 10);
 		model.add(point);
 		model.add(circle);
-		cmdBringToBack = new CmdBringToBack(circle, model);
+		cmdBringToBack = new CmdBringToBack(1, model);
 	}
 	
 	@Test

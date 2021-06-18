@@ -204,14 +204,15 @@ public class LogFile implements AnyFile {
 	}
 
 	private Command createPositioningCmd(String text) {
+		int indexOfShapeToMove = frame.getController().findIndexOfMostTopSelectedShape();
 		if(text.contains("BringToBack"))
-	 		return new CmdBringToBack(shape, model);
+	 		return new CmdBringToBack(indexOfShapeToMove, model);
  		else if(text.contains("BringToFront"))
- 			return new CmdBringToFront(shape, model);
+ 			return new CmdBringToFront(indexOfShapeToMove, model);
  		else if(text.contains("CmdToBack"))
- 			return new CmdToBack(shape, model);
+ 			return new CmdToBack(indexOfShapeToMove, model);
  		else if(text.contains("CmdToFront"))
- 			return new CmdToFront(shape, model);
+ 			return new CmdToFront(indexOfShapeToMove, model);
 		return null;
 	}
 	

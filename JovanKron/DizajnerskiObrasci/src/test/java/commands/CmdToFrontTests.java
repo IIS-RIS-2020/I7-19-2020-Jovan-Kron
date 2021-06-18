@@ -18,7 +18,7 @@ public class CmdToFrontTests {
 		circle = new Circle(new Point(1, 1), 10);
 		model.add(point);
 		model.add(circle);
-		cmdToFront = new CmdToFront(point, model);
+		cmdToFront = new CmdToFront(0, model);
 	}
 	
 	@Test

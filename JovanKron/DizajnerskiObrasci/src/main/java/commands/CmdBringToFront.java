@@ -1,27 +1,24 @@
 package commands;
 
 import mvc.DrawingModel;
-import geometry.Shape;
 
 public class CmdBringToFront implements Command {
 	private DrawingModel model;
-	private Shape shape;
-	private int oldPosition;
+	private int position;
 	
-	public CmdBringToFront(Shape shape, DrawingModel model) {
-		this.shape = shape;
+	public CmdBringToFront(int position, DrawingModel model) {
+		this.position = position;
 		this.model = model;
 	}
 	
 	public void execute() {
-		oldPosition = model.getShapes().indexOf(shape);
-		model.getShapes().remove(oldPosition);
-		model.getShapes().add(shape);
+		model.getShapes().add(model.get(position));
+		model.getShapes().remove(position);
 	}
 
 	public void unexecute() {
-		model.getShapes().remove(model.getShapes().size()-1);
-		model.getShapes().add(oldPosition, shape);
+		model.getShapes().add(position, model.get(model.getShapes().size() - 1));
+		model.getShapes().remove(model.getShapes().size() - 1);
 	}
 	
 }
